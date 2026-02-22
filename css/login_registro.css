@@ -1,0 +1,54 @@
+.main-login, .main-registro {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 85px;
+}
+
+.titulo-login, .titulo-registro {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.contenedor-formulario {
+    background-color: #e6e6e6;
+    width: 600px;
+    margin: 0 auto; /* centrar horizontalmente */
+    padding: 50px;
+}
+
+.grupo-password {
+    position: relative;
+}
+
+/*cajas de texto */
+.input-oscuro {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #999999;
+    border: none;
+    box-sizing: border-box;
+}
+
+/* checkbox y enlaces*/
+.opciones-login, .opciones-registro {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+/* enlaces sin subrayado */
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.btn-entrar, .btn-registro {
+    background-color: #808080;
+    padding: 15px 50px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
