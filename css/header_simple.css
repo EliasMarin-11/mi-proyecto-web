@@ -1,0 +1,35 @@
+/* ==========================================================================
+   COMPONENTE: HEADER SIMPLE (Centrado Absoluto)
+   ========================================================================== */
+
+.header-principal {
+    display: flex;
+    justify-content: space-between; /* Mantiene el botón home a la izquierda */
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #333333; /* Heredamos tu tema oscuro */
+    position: relative; /* ¡CRÍTICO! Esto le dice al logo centrado que su límite es esta cabecera y no la pantalla entera */
+}
+
+/* --- BOTÓN IZQUIERDO --- */
+.img-home {
+    width: 50px;
+    height: 50px;
+    background-color: #cccccc;
+    display: block;
+    border-radius: 8px; /* Aplicamos tus bordes redondeados corporativos */
+}
+
+/* --- EL TRUCO DEL CENTRADO ABSOLUTO --- */
+.header-logo-centro {
+    position: absolute; /* Lo saca del flujo normal de Flexbox */
+    left: 50%; /* Lo mueve a la mitad exacta de la pantalla */
+    transform: translateX(-50%); /* Lo retrocede la mitad de su propio ancho para que quede centrado perfecto */
+}
+
+.img-logo-centro {
+    width: 300px;
+    height: 50px; /* Reducido a 50px (igual que el home) para que no deforme la altura de la cabecera */
+    background-color: #786f6f; /* El color de tu diseño original */
+    display: block;
+}

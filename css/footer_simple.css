@@ -1,0 +1,67 @@
+/* ==========================================================================
+   COMPONENTE: FOOTER MINIMALISTA (Adaptado al Header)
+   ========================================================================== */
+
+.footer-minimalista {
+    background-color: #333333; /* Fondo oscuro del header */
+    padding: 20px 40px; /* Mismo padding exacto que tu header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: sans-serif;
+    color: white;
+}
+
+/* --- LOGO --- */
+.footer-mini-logo img {
+    width: 120px;
+    height: 60px;
+    background-color: #cccccc; /* Color de tu .img-logo */
+    display: block;
+}
+
+/* --- COPYRIGHT --- */
+.footer-mini-copy p {
+    margin: 0;
+    font-size: 14px;
+    color: #cccccc;
+    font-weight: bold;
+}
+
+/* --- ENLACES CENTRALES --- */
+.footer-mini-links {
+    font-size: 14px;
+    color: #cccccc;
+    font-weight: bold;
+}
+
+.footer-mini-links a {
+    text-decoration: none;
+    color: #cccccc;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.footer-mini-links a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+/* --- REDES SOCIALES (Derecha) --- */
+.footer-mini-social {
+    display: flex;
+    gap: 15px; /* Mismo gap que tus botones del header */
+}
+
+.icon-square {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: #818181; /* Color de tus .btn-dummy */
+    cursor: pointer;
+    border-radius: 8px; /* Bordes redondeados heredados del header */
+}
+
+.icon-square:hover {
+    background-color: #a0a0a0; /* Efecto hover para las redes */
+}

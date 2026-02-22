@@ -1,0 +1,93 @@
+/* ==========================================================================
+   COMPONENTE: FOOTER PRINCIPAL (Adaptado al Header)
+   ========================================================================== */
+
+.footer-principal {
+    background-color: #333333; /* Fondo oscuro del header */
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: sans-serif; /* Tipografía de tu header */
+    color: white; /* Texto por defecto en blanco para contrastar */
+}
+
+/* --- ESTRUCTURA DE LAS CAJAS --- */
+.footer-bloque-izq, .footer-bloque-der {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.footer-bloque-der {
+    margin-right: 40px;
+}
+
+.footer-links-izq, .footer-links-der {
+    display: flex;
+    gap: 60px;
+}
+
+/* --- LOGO --- */
+.footer-logo img {
+    width: 180px;
+    height: 60px;
+    background-color: #cccccc; /* Color de tu .img-logo */
+    display: block;
+}
+
+/* --- REDES SOCIALES --- */
+.footer-social h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: white;
+    font-weight: bold; /* Negrita de tu header */
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px; /* Mismo gap que tu .header-centro */
+}
+
+.social-icons .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: #818181; /* Color de tus .btn-dummy */
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px; /* El borde redondeado de tus botones */
+    font-weight: bold;
+}
+
+/* --- TEXTO Y ENLACES --- */
+.columna h4 {
+    margin: 0 0 15px 0;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+}
+
+.columna ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.columna ul li a {
+    text-decoration: none;
+    color: #cccccc; /* Un gris claro para los enlaces inactivos */
+    font-size: 14px;
+    font-weight: bold; /* Negrita de tu header */
+}
+
+.columna ul li a:hover {
+    text-decoration: underline;
+    color: white; /* Se ilumina al pasar el ratón */
+}
