@@ -1,0 +1,83 @@
+/* ESTILOS BASE */
+footer {
+    background-color: #e6e6e6;
+    font-family: Arial, sans-serif;
+    padding: 20px 40px;
+    color: #000;
+}
+
+/* FOOTER SIMPLE */
+.footer-minimalista {
+    display: flex;
+    justify-content: space-between; /* Distribuye elementos en la linea */
+    align-items: center;
+}
+
+.footer-mini-links a {
+    text-decoration: none;
+    color: #000;
+}
+
+.icon-square {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-color: #8a8a8a;
+    margin-left: 10px;
+}
+
+/* FOOTER PRINCIPAL (EXTENDIDO) */
+.footer-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px;
+}
+
+/* Parte superior */
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+/* Iconos dummy */
+.icon {
+    width: 35px;
+    height: 35px;
+    background-color: #b3b3b3;
+    border: 1px solid #777;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Columnas de links */
+.footer-links {
+    display: flex;
+    justify-content: space-between;
+}
+
+.columna h4 {
+    margin: 0 0 15px 0;
+}
+
+.columna ul {
+    list-style: none;
+    padding: 0;
+}
+
+.columna li {
+    margin-bottom: 8px;
+}
+
+.columna a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}

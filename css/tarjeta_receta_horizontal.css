@@ -1,0 +1,114 @@
+/* COMPONENTE: TARJETA RECETA */
+
+.tarjeta-receta {
+    display: flex;
+    background-color: #e6e6e6;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    gap: 25px;
+    max-width: 850px;
+    font-family: Arial, sans-serif;
+    margin: 0 auto;
+}
+
+/* Imagen */
+.receta-dummy-img {
+    width: 200px;
+    height: 150px;
+    background-color: #b3b3b3;
+    border-radius: 4px;
+    position: relative;
+}
+
+/* X de la imagen */
+.receta-dummy-img::after {
+    content: "X";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333;
+    font-size: 40px;
+}
+
+/* Contenedor de texto */
+.receta-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Titulo y cerrar */
+.receta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.receta-titulo {
+    margin: 0;
+    font-size: 20px;
+    color: #111;
+    font-weight: bold;
+}
+
+.btn-cerrar-receta {
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* Columnas inferiores */
+.receta-detalles {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+/* Columna izquierda */
+.detalles-datos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 120px;
+}
+
+.lista-mini {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+    color: #444;
+}
+
+.lista-mini li {
+    margin-bottom: 5px;
+}
+
+/* Iconos pequeños */
+.fila-iconos-receta {
+    display: flex;
+    gap: 6px;
+}
+
+.fila-iconos-receta span {
+    width: 22px;
+    height: 14px;
+    background-color: #8a8a8a;
+    border-radius: 2px;
+}
+
+/* Columna derecha */
+.detalles-desc {
+    flex-grow: 1;
+}
+
+.detalles-desc p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+    text-align: justify;
+}
