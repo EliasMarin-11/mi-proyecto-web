@@ -1,0 +1,67 @@
+.contenedor-busqueda {
+    background-color: transparent;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Etiqueta superior */
+.busqueda-label {
+    grid-column: 1 / -1;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Barra de input */
+.barra-busqueda {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.barra-busqueda input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    background-color: #e6e6e6;
+    font-size: 18px;
+}
+
+.icono-cerrar-busqueda {
+    position: absolute;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Boton buscar */
+.btn-buscar-dummy {
+    background-color: #b3b3b3;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/* Tags inferiores */
+.busqueda-tags {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+}
+
+.tag {
+    background-color: #e6e6e6;
+    padding: 5px 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #ccc;
+}
