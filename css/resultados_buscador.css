@@ -1,0 +1,9 @@
+/* Espaciado para la lista de resultados */
+#resultados-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Separacion entre tarjetas */
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto; /* Centra la lista */
+}
