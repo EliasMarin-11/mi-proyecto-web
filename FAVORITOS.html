@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrarse</title>
+    <title>Mis Favoritos</title>
 
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/BUSCADOR.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/buscador.css">
     <link rel="stylesheet" href="css/tarjeta_receta_horizontal.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="BUSCADOR.css">
 
     <script src="xlu-include-file.js"></script>
 </head>
@@ -16,6 +17,14 @@
 <header id="main_header" xlu-include-file="templates/header.html"></header>
 
 <section id="main_section" xlu-include-file="templates/buscador_simple.html"></section>
+
+<main id="lista-favoritos" style="padding: 20px;">
+    <h2 style="text-align: center; font-family: Arial; margin-bottom: 30px;">MIS RECETAS FAVORITAS</h2>
+
+    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
+    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
+    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
+</main>
 
 <footer id="main_footer" xlu-include-file="templates/footer_simple.html"></footer>
 
