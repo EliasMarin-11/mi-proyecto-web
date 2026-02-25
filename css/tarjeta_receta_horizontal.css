@@ -1,114 +1,92 @@
-/* COMPONENTE: TARJETA RECETA */
-
+/* COMPONENTE: TARJETA RECETA (TAMAÑO PRO) */
 .tarjeta-receta {
     display: flex;
     background-color: #e6e6e6;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    padding: 20px;
-    gap: 25px;
-    max-width: 850px;
+    border: 1px solid #999;
+    padding: 25px; /* Más espacio interno */
+    gap: 35px;
+    max-width: 950px; /* Más ancha para albergar el texto largo */
     font-family: Arial, sans-serif;
-    margin: 0 auto;
+    margin: 15px auto;
 }
 
-/* Imagen */
+/* Imagen con X - Más grande */
 .receta-dummy-img {
-    width: 200px;
-    height: 150px;
+    width: 250px; /* Aumentado */
+    height: 180px; /* Aumentado */
     background-color: #b3b3b3;
-    border-radius: 4px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* X de la imagen */
 .receta-dummy-img::after {
     content: "X";
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    color: #333;
-    font-size: 40px;
+    color: #444;
+    font-size: 60px;
 }
 
-/* Contenedor de texto */
+/* Contenedor de información */
 .receta-info {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-/* Titulo y cerrar */
+/* Cabecera */
 .receta-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
     margin-bottom: 15px;
 }
 
 .receta-titulo {
     margin: 0;
-    font-size: 20px;
-    color: #111;
+    font-size: 22px; /* Título más imponente */
     font-weight: bold;
 }
 
-.btn-cerrar-receta {
-    font-size: 24px;
-    color: #666;
-    cursor: pointer;
-    line-height: 1;
-}
-
-/* Columnas inferiores */
+/* Detalles y Descripción */
 .receta-detalles {
     display: flex;
     justify-content: space-between;
-    gap: 30px;
+    gap: 50px; /* Espacio generoso entre columnas */
 }
 
-/* Columna izquierda */
+/* Columna de Alérgenos y Datos */
 .detalles-datos {
+    min-width: 180px; /* Asegura espacio para iconos grandes */
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    min-width: 120px;
-}
-
-.lista-mini {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 14px;
-    color: #444;
+    gap: 25px;
 }
 
 .lista-mini li {
-    margin-bottom: 5px;
+    font-size: 16px;
+    margin-bottom: 6px;
 }
 
-/* Iconos pequeños */
+/* Iconos de alérgenos (Más grandes) */
 .fila-iconos-receta {
     display: flex;
-    gap: 6px;
+    gap: 10px;
 }
 
 .fila-iconos-receta span {
-    width: 22px;
-    height: 14px;
+    width: 35px; /* Tamaño solicitado aumentado */
+    height: 22px;
     background-color: #8a8a8a;
-    border-radius: 2px;
 }
 
-/* Columna derecha */
+/* Columna de Descripción (3-4 líneas) */
 .detalles-desc {
-    flex-grow: 1;
+    flex: 3; /* Le damos mucho más peso a la descripción */
 }
 
 .detalles-desc p {
     margin: 0;
-    font-size: 13px;
-    color: #666;
-    line-height: 1.5;
-    text-align: justify;
+    font-size: 15px;
+    line-height: 1.6; /* Mejora la lectura de las 4 líneas */
+    color: #222;
+    text-align: left;
 }
