@@ -1,0 +1,38 @@
+.alergeno-item {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.alergeno-icono {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: #888;
+    border-radius: 3px;
+}
+
+/* La ventanita oculta */
+.alergeno-tooltip {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 100;
+    bottom: 130%; /* Sale por arriba */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Mostrar al pasar el ratón */
+.alergeno-item:hover .alergeno-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
