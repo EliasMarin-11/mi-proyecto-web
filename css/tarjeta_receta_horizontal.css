@@ -1,19 +1,45 @@
-/* COMPONENTE: TARJETA RECETA (TAMAÑO PRO) */
+/* RESET ENLACE */
+.enlace-tarjeta {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
+    margin-bottom: 20px;
+}
+
+/* CONTENEDOR TARJETA */
 .tarjeta-receta {
     display: flex;
     background-color: #e6e6e6;
     border: 1px solid #999;
-    padding: 25px; /* Más espacio interno */
+    padding: 25px;
     gap: 35px;
-    max-width: 950px; /* Más ancha para albergar el texto largo */
+    max-width: 950px;
     font-family: Arial, sans-serif;
     margin: 15px auto;
+    transition: 0.3s;
+    position: relative; /* Necesario para el z-index del icono */
 }
 
-/* Imagen con X - Más grande */
+/* ICONO FAVORITO (LIKE) */
+.btn-fav-receta {
+    font-size: 26px;
+    color: #999;
+    cursor: pointer;
+    transition: 0.2s;
+    line-height: 1;
+    position: relative;
+    z-index: 10; /* Prioridad de click sobre el enlace */
+}
+
+.btn-fav-receta:hover {
+    color: #ff4757; /* Color tipo "like" */
+    transform: scale(1.2);
+}
+
+/* IMAGEN DUMMY */
 .receta-dummy-img {
-    width: 250px; /* Aumentado */
-    height: 180px; /* Aumentado */
+    width: 250px;
+    height: 180px;
     background-color: #b3b3b3;
     display: flex;
     align-items: center;
@@ -26,14 +52,13 @@
     font-size: 60px;
 }
 
-/* Contenedor de información */
+/* INFO Y TEXTOS */
 .receta-info {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
-/* Cabecera */
 .receta-header {
     display: flex;
     justify-content: space-between;
@@ -42,23 +67,28 @@
 
 .receta-titulo {
     margin: 0;
-    font-size: 22px; /* Título más imponente */
+    font-size: 22px;
     font-weight: bold;
+    color: #111;
 }
 
-/* Detalles y Descripción */
+/* COLUMNAS DETALLES */
 .receta-detalles {
     display: flex;
     justify-content: space-between;
-    gap: 50px; /* Espacio generoso entre columnas */
+    gap: 50px;
 }
 
-/* Columna de Alérgenos y Datos */
 .detalles-datos {
-    min-width: 180px; /* Asegura espacio para iconos grandes */
+    min-width: 180px;
     display: flex;
     flex-direction: column;
     gap: 25px;
+}
+
+.lista-mini {
+    list-style: none;
+    padding: 0;
 }
 
 .lista-mini li {
@@ -66,27 +96,34 @@
     margin-bottom: 6px;
 }
 
-/* Iconos de alérgenos (Más grandes) */
+/* ICONOS ALERGENOS */
 .fila-iconos-receta {
     display: flex;
     gap: 10px;
 }
 
 .fila-iconos-receta span {
-    width: 35px; /* Tamaño solicitado aumentado */
+    width: 35px;
     height: 22px;
     background-color: #8a8a8a;
 }
 
-/* Columna de Descripción (3-4 líneas) */
+/* DESCRIPCION */
 .detalles-desc {
-    flex: 3; /* Le damos mucho más peso a la descripción */
+    flex: 3;
 }
 
 .detalles-desc p {
     margin: 0;
     font-size: 15px;
-    line-height: 1.6; /* Mejora la lectura de las 4 líneas */
+    line-height: 1.6;
     color: #222;
     text-align: left;
+}
+
+/* HOVER TARJETA */
+.enlace-tarjeta:hover .tarjeta-receta {
+    background-color: #dbdbdb;
+    border-color: #888;
+    transform: translateY(-3px);
 }

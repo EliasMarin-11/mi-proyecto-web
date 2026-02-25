@@ -1,25 +1,19 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
+/* CONTENEDOR GENERAL */
 .contenedor-busqueda {
-    background-color: transparent;
-    padding: 20px 0;
     font-family: Arial, sans-serif;
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 15px;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 20px auto;
+    padding: 20px;
 }
 
 /* Etiqueta superior */
 .busqueda-label {
     grid-column: 1 / -1;
-    margin: 0 0 5px 0;
     font-size: 14px;
-    color: #333;
+    margin-bottom: 5px;
 }
 
 /* Barra de input */
@@ -32,16 +26,23 @@ body {
 .barra-busqueda input {
     width: 100%;
     padding: 12px 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #999;
     background-color: #e6e6e6;
     font-size: 18px;
+    outline: none;
 }
 
+/* X de la barra principal */
 .icono-cerrar-busqueda {
     position: absolute;
     right: 15px;
     font-size: 20px;
-    cursor: pointer;
+    cursor: pointer; /* Hace que sea pulsable */
+    color: #333;
+}
+
+.icono-cerrar-busqueda:hover {
+    color: #000;
 }
 
 /* Boton buscar */
@@ -54,7 +55,7 @@ body {
     font-size: 12px;
 }
 
-/* Tags inferiores */
+/* CONTENEDOR DE TAGS */
 .busqueda-tags {
     grid-column: 1 / -1;
     display: flex;
@@ -63,10 +64,27 @@ body {
 
 .tag {
     background-color: #e6e6e6;
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 5px 12px;
+    font-size: 13px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* LAS X DE LOS TAGS (PULSABLES) */
+.tag span {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer; /* Aparece la mano al pasar por encima */
+    color: #666;
+    display: inline-block;
+    line-height: 1;
+    transition: 0.2s;
+}
+
+.tag span:hover {
+    color: #ff0000; /* Se pone roja al querer borrarla */
+    transform: scale(1.2); /* Crece un poquito */
 }
