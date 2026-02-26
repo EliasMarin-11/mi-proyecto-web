@@ -1,4 +1,9 @@
-/* Espaciado para la lista de resultados */
+body, input, button, textarea, select {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+/* Espaciado para la lista de resultados cuando salen las recetas*/
 #resultados-lista {
     display: flex;
     flex-direction: column;
@@ -6,4 +11,25 @@
     padding: 40px 20px;
     max-width: 1000px;
     margin: 0 auto; /* Centra la lista */
+}
+
+#titulo_trending {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+#tarjetas_trending {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+}
+
+.enlace_tarjeta{
+    text-decoration: none;
+    color: inherit;
+    display: block; /* que toda la tarjeta sea enlace*/
 }

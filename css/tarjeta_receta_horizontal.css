@@ -17,7 +17,7 @@
     font-family: Arial, sans-serif;
     margin: 15px auto;
     transition: 0.3s;
-    position: relative; /* Necesario para el z-index del icono */
+    position: relative;
 }
 
 /* ICONO FAVORITO (LIKE) */

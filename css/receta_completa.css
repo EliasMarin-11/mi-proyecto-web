@@ -171,5 +171,5 @@
     margin-bottom: 20px;
     line-height: 1.6;
     font-size: 15px;
-    word-break: break-word; /* ESTA ES LA CLAVE QUE FALTABA PARA EL BLOQUE DE ABAJO */
+    word-break: break-word;
 }

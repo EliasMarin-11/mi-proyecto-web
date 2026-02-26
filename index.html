@@ -7,15 +7,35 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/buscador.css">
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/tarjeta_receta_horizontal.css">
+    <link rel="stylesheet" href="css/tarjeta_receta_vertical.css">
+    <link rel="stylesheet" href="MAIN.css">
 
     <script src="xlu-include-file.js"></script>
 </head>
 <body>
 
 <header id="main_header" xlu-include-file="templates/header.html"></header>
+<main>
+    <section id="buscador_main" xlu-include-file="templates/buscador.html"></section>
 
-<section id="main_section" xlu-include-file="templates/buscador.html"></section>
+    <h2 id="titulo_trending">Loremipsunloremipsun</h2>
+    <section id="tarjetas_trending">
+        <a href="VER_RECETAS.html" class="enlace_tarjeta">
+            <article class="tarjeta_receta_vertical" xlu-include-file="templates/tarjeta_receta_vertical.html"></article>
+        </a>
+        <a href="VER_RECETAS.html" class="enlace_tarjeta">
+            <article class="tarjeta_receta_vertical" xlu-include-file="templates/tarjeta_receta_vertical.html"></article>
+        </a>
+        <a href="VER_RECETAS.html" class="enlace_tarjeta">
+            <article class="tarjeta_receta_vertical" xlu-include-file="templates/tarjeta_receta_vertical.html"></article>
+        </a>
+        <a href="VER_RECETAS.html" class="enlace_tarjeta">
+            <article class="tarjeta_receta_vertical" xlu-include-file="templates/tarjeta_receta_vertical.html"></article>
+        </a>
+    </section>
+
+</main>
+
 
 <footer id="main_footer" xlu-include-file="templates/footer.html"></footer>
 
