@@ -1,0 +1,122 @@
+/* ESTILOS BASE CONTENEDOR PERFIL */
+.perfil-contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Ajusta al fondo general de tu web */
+}
+
+/* TARJETA CENTRAL */
+.perfil-tarjeta {
+    background-color: #e6e6e6; /* Mismo tono gris de tu footer */
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* AVATAR */
+.perfil-avatar {
+    width: 90px;
+    height: 90px;
+    background-color: #4d4d4d;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+/* CABECERA DE USUARIO (Nombre + Lápiz) */
+.perfil-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.perfil-nombre {
+    margin: 0;
+    font-size: 22px;
+    color: #000;
+}
+
+.icon-dummy-pencil {
+    width: 20px;
+    height: 20px;
+    background-color: #8a8a8a; /* Mismo gris que tus .icon-square */
+}
+
+/* FORMULARIO Y CAMPOS */
+.perfil-formulario {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-grupo {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-grupo label {
+    font-size: 11px;
+    color: #333;
+    margin-bottom: 5px;
+    margin-left: 2px;
+}
+
+.input-dummy {
+    padding: 15px;
+    border: none;
+    font-size: 16px;
+    color: #000;
+}
+
+.input-oscuro {
+    background-color: #a6a6a6;
+}
+
+.input-claro {
+    background-color: #cccccc;
+}
+
+/* BOTONES PRINCIPALES PERFIL */
+.btn-perfil {
+    width: 100%;
+    padding: 15px;
+    background-color: #a6a6a6;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+/* SEPARADOR */
+.perfil-separador {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #000;
+    margin: 10px 0 25px 0;
+}
+
+/* ENLACES INFERIORES */
+.perfil-enlaces-inferiores {
+    text-align: center;
+    font-size: 11px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.perfil-enlaces-inferiores p {
+    margin: 0 0 5px 0;
+}
+
+.perfil-enlaces-inferiores a {
+    color: #000;
+    text-decoration: underline;
+}
