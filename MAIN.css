@@ -31,7 +31,7 @@ main {
  --------------------------------------------- */
 
 /* Bloque 3 cuadrados */
-.grid-3-cuadrados {
+.instrucciones {
     display: flex;
     justify-content: space-between;
     gap: 20px;
