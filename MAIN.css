@@ -1,5 +1,5 @@
-body, input, button, textarea, select {
-    font-family: 'Times New Roman', "Times New Roman";
+body, input, button, textarea, select, {
+    font-family: 'Showcard Gothic', "Times New Roman";
     margin: 0;
     padding: 0;
 }
