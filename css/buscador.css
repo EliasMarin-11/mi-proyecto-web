@@ -87,3 +87,29 @@
     color: #ff0000; /* Se pone roja al querer borrarla */
     transform: scale(1.2); /* Crece un poquito */
 }
+
+.mensaje-sin-resultados {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 40px auto;
+    color: #333;
+}
+
+.icono-ups {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.mensaje-sin-resultados h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.mensaje-sin-resultados p {
+    font-size: 16px;
+    color: #666;
+}

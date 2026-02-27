@@ -54,3 +54,18 @@ a {
     margin-bottom: 30px;
     cursor: pointer;
 }
+
+/* Añadir al final de tu CSS actual */
+.enlace-registro {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.link-subrayado {
+    text-decoration: underline; /* Esto fuerza la línea por debajo */
+    font-weight: bold;
+}
+
+.link-subrayado:hover {
+    color: #555555; /* Cambia un poco de color al pasar el ratón */
+}
