@@ -1,0 +1,179 @@
+.contenedor-crear-receta {
+    max-width: 950px;
+    margin: 40px auto;
+    font-family: Arial, sans-serif;
+    color: #111;
+}
+
+.cabecera-formulario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.titulo-principal {
+    font-size: 22px;
+    background-color: #d9d9d9;
+    padding: 8px 20px;
+    border-radius: 5px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.btn-cerrar {
+    text-decoration: none;
+    color: #888;
+    font-size: 30px;
+}
+
+.formulario-dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.columna-izquierda {
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.grupo-input {
+    margin-bottom: 15px;
+}
+
+.input-linea {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #555;
+    background: transparent;
+    padding: 5px 0;
+    font-size: 15px;
+    outline: none;
+}
+
+.grupo-etiquetas {
+    display: flex;
+    gap: 10px;
+    margin: 25px 0;
+}
+
+.etiqueta {
+    background-color: #999;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.seccion-lista {
+    margin-top: 30px;
+}
+
+.seccion-lista h3 {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.fila-ingrediente {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.input-caja {
+    width: 100%;
+    background-color: #b3b3b3;
+    border: none;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 13px;
+    outline: none;
+}
+
+.textarea-paso {
+    width: 100%;
+    background-color: #999;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    resize: vertical;
+    min-height: 45px;
+    outline: none;
+}
+
+.textarea-paso::placeholder {
+    color: #ddd;
+}
+
+.btn-añadir {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+    display: block;
+    margin: 15px auto 0 auto;
+}
+
+.columna-derecha {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.caja-subir-foto {
+    background-color: #d9d9d9;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    cursor: pointer;
+}
+
+.icono-foto {
+    font-size: 80px;
+    line-height: 1;
+}
+
+.grupo-descripcion {
+    background-color: #d9d9d9;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.grupo-descripcion h3 {
+    margin: 0 0 15px 0;
+    font-size: 15px;
+}
+
+.textarea-desc {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    resize: vertical;
+    min-height: 180px;
+    outline: none;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.btn-guardar-principal {
+    background-color: #888;
+    color: #fff;
+    border: none;
+    padding: 12px 35px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: center;
+}

@@ -1,0 +1,61 @@
+<main class="contenedor-crear-receta">
+  <div class="cabecera-formulario">
+    <h1 class="titulo-principal">Título de la Receta</h1>
+    <a href="index.html" class="btn-cerrar">X</a>
+  </div>
+
+  <form action="#" method="POST" class="formulario-dos-columnas">
+
+    <div class="columna-izquierda">
+      <div class="grupo-input">
+        <input type="text" placeholder="Nombre de la receta" class="input-linea">
+      </div>
+      <div class="grupo-input">
+        <input type="text" placeholder="Subtítulo corto" class="input-linea">
+      </div>
+
+      <div class="grupo-etiquetas">
+        <span class="etiqueta">Categoría 1</span>
+        <span class="etiqueta">Categoría 2</span>
+        <span class="etiqueta">Categoría 3</span>
+      </div>
+
+      <div class="seccion-lista">
+        <h3>Ingredientes</h3>
+        <div class="fila-ingrediente">
+          <input type="text" placeholder="Cant." class="input-caja">
+          <input type="text" placeholder="Unidad" class="input-caja">
+          <input type="text" placeholder="Ingrediente" class="input-caja">
+        </div>
+        <div class="fila-ingrediente">
+          <input type="text" placeholder="Cant." class="input-caja">
+          <input type="text" placeholder="Unidad" class="input-caja">
+          <input type="text" placeholder="Ingrediente" class="input-caja">
+        </div>
+        <button type="button" class="btn-añadir">+ Añadir ingrediente</button>
+      </div>
+
+      <div class="seccion-lista">
+        <h3>Pasos</h3>
+        <textarea placeholder="Paso 1" class="textarea-paso"></textarea>
+        <textarea placeholder="Paso 2" class="textarea-paso"></textarea>
+        <button type="button" class="btn-añadir">+ Añadir paso</button>
+      </div>
+    </div>
+
+    <div class="columna-derecha">
+      <div class="caja-subir-foto">
+        <span class="icono-foto">X</span>
+        <p>Añadir foto</p>
+      </div>
+
+      <div class="grupo-descripcion">
+        <h3>Descripción</h3>
+        <textarea placeholder="Escribe una breve descripción de tu receta..." class="textarea-desc"></textarea>
+      </div>
+
+      <button type="submit" class="btn-guardar-principal">Guardar Receta</button>
+    </div>
+
+  </form>
+</main>
