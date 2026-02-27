@@ -69,3 +69,8 @@ a {
 .link-subrayado:hover {
     color: #555555; /* Cambia un poco de color al pasar el ratón */
 }
+
+.enlace-login {
+    margin-top: 20px;
+    font-size: 14px;
+}
