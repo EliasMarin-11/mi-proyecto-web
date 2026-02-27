@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nueva Receta</title>
+
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/formulario_receta.css">
+    <link rel="stylesheet" href="css/footer.css">
+
+    <script src="xlu-include-file.js"></script>
 </head>
-<body>
+<body style="background-color: #f6f6f6; margin: 0; padding: 0;">
+
+<header id="main_header" xlu-include-file="templates/header.html"></header>
+
+<div xlu-include-file="templates/formulario_receta.html"></div>
+
+<footer id="main_footer" xlu-include-file="templates/footer_simple.html"></footer>
+
+<script>
+    xLuIncludeFile();
+</script>
 
 </body>
 </html>
