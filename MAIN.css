@@ -3,41 +3,103 @@ body, input, button, textarea, select {
     margin: 0;
     padding: 0;
 }
-/* Espaciado para la lista de resultados cuando salen las recetas*/
-#resultados-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Separacion entre tarjetas */
-    padding: 40px 20px;
-    max-width: 1000px;
-    margin: 0 auto; /* Centra la lista */
+
+/* Limitamos el main para que no se estire al infinito en tu pantalla */
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-#titulo_trending {
+/* Títulos generales */
+.titulo_centrado {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 50px;
     margin-bottom: 30px;
     font-size: 28px;
 }
 
+.titulo_izq {
+    text-align: left;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/*---------------------------------------------
+            INDEX
+ --------------------------------------------- */
+
+/* Bloque 3 cuadrados */
+.grid-3-cuadrados {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: center;
+}
+
+.foto_cuadrada {
+    width: 250px;
+    height: 250px;
+    background-color: #b3b3b3;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #666;
+}
+
+/* Tarjetas Trending */
 #tarjetas_trending {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 40px 20px;
+    padding: 0 50px 50px;
     flex-wrap: wrap;
 }
 
-.enlace_tarjeta{
+.enlace_tarjeta {
     text-decoration: none;
     color: inherit;
-    display: block; /* que toda la tarjeta sea enlace*/
+    display: block;
 }
 
-/* Añade esto debajo de tu #resultados-lista */
-.titulo-favoritos {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #111;
-    /* font-family ya lo hereda de tu body, así que no hace falta ponerlo */
+/* Bloque Inferior Horizontales */
+.fila_horizontal {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.foto_rectangular {
+    width: 280px;
+    height: 180px;
+    background-color: #aeabab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #666;
+}
+
+.textos_columna {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+/*---------------------------------------------
+            FAVORITOS Y BUSCADOR
+ --------------------------------------------- */
+
+#resultados_lista {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
 }
