@@ -1,75 +1,134 @@
+/* =========================================================
+   LOGIN Y REGISTRO: CENTRADO TOTAL Y XXL
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+
+/* CONFIGURACIÓN GLOBAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* CONTENEDOR PRINCIPAL: CENTRADO TOTAL */
 .main-login, .main-registro {
-    text-align: center;
-    margin-top: 85px;
-    margin-bottom: 100px;
-    padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* CENTRADO VERTICAL */
+    min-height: 100vh;       /* Ocupa toda la altura de la ventana */
+    padding: 20px;
+    background-color: #FFF5E9; /* Fondo crema característico */
 }
 
-.titulo-login, .titulo-registro {
-    font-size: 30px;
+/* LOGO SUPERIOR (Si lo tienes en el HTML) */
+.logo-formulario {
+    width: 120px;
+    height: 120px;
+    background-color: #FFFFFF;
+    border: 3px solid #4E1A0A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
+/* TÍTULOS */
+.titulo-login, .titulo-registro {
+    font-size: 32px; /* Un poco más grande para impactar */
+    color: #4E1A0A;  /* Marrón chocolate */
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 35px;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* CONTENEDOR XXL */
 .contenedor-formulario {
-    background-color: #e6e6e6;
-    width: 600px;
-    margin: 0 auto; /* centrar horizontalmente */
-    padding: 50px;
+    background-color: #FFFFFF;
+    border: 4px solid #4E1A0A; /* Borde grueso definido */
+    border-radius: 45px;       /* Bordes muy redondeados */
+    padding: 60px 70px;        /* Espacio interno generoso */
+    width: 95%;
+    max-width: 750px;          /* ANCHO XXL para mayor presencia */
+    box-shadow: 20px 20px 0px rgba(78, 26, 10, 0.08); /* Sombra sólida "Sticker" */
+    transition: transform 0.3s ease;
 }
 
-.grupo-password {
-    position: relative;
+.formulario-login, .formulario-registro {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Más espacio entre campos */
 }
 
-/*cajas de texto */
+/* INPUTS DE ALTA FIDELIDAD */
 .input-oscuro {
     width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #999999;
-    border: none;
-    box-sizing: border-box;
+    padding: 20px 30px;
+    border: 3px solid #4E1A0A;
+    border-radius: 25px;
+    background-color: #FDFDFD;
+    font-size: 17px;
+    color: #4E1A0A;
+    outline: none;
+    transition: all 0.3s ease;
 }
 
-/* checkbox y enlaces*/
+.input-oscuro:focus {
+    border-color: #E3412B;     /* Cambio a coral intenso al activar */
+    box-shadow: 0 0 10px rgba(227, 65, 43, 0.1);
+}
+
+/* OPCIONES SECUNDARIAS */
 .opciones-login, .opciones-registro {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-/* enlaces sin subrayado */
-a {
-    color: #000;
-    text-decoration: none;
-}
-
-.btn-entrar, .btn-registro {
-    background-color: #808080;
-    padding: 15px 50px;
-    border: none;
+    align-items: center;
     font-size: 16px;
-    margin-bottom: 30px;
+    color: #4E1A0A;
+    font-weight: 600;
+}
+
+.link-olvido {
+    color: #E3412B;            /* Color coral para enlaces clave */
+    text-decoration: none;
+    font-weight: 700;
+}
+
+/* BOTÓN DE ACCIÓN CORAL */
+.btn-entrar, .btn-registro {
+    background-color: #E3412B; /* Rojo coral brillante */
+    color: #FFFFFF;
+    border: none;
+    padding: 22px;
+    border-radius: 60px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.12);
 }
 
-/* Añadir al final de tu CSS actual */
-.enlace-registro {
-    margin-top: 20px;
-    font-size: 14px;
+.btn-entrar:hover, .btn-registro:hover {
+    transform: translateY(-6px);
+    box-shadow: 14px 14px 0px rgba(78, 26, 10, 0.15);
+    background-color: #f04a36;
 }
 
+/* ENLACES DE PIE */
 .link-subrayado {
-    text-decoration: underline; /* Esto fuerza la línea por debajo */
-    font-weight: bold;
-}
-
-.link-subrayado:hover {
-    color: #555555; /* Cambia un poco de color al pasar el ratón */
-}
-
-.enlace-login {
+    display: block;
+    text-align: center;
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #4E1A0A;
+    font-weight: 600;
+    text-decoration: underline;
 }

@@ -1,82 +1,225 @@
-/* ESTILOS BASE */
-footer {
-    background-color: #e6e6e6;
-    padding: 20px 40px;
-    color: #000;
-}
+/* 1. IMPORTAMOS LAS FUENTES EN LA LÍNEA 1 (La regla de oro) */
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Outfit:wght@400;600;700&display=swap');
 
-/* FOOTER SIMPLE */
-.footer-minimalista {
-    display: flex;
-    justify-content: space-between; /* Distribuye elementos en la linea */
-    align-items: center;
-}
+/* =========================================================
+   TEMPLATE: FOOTER PRINCIPAL (Estética Coherente)
+   ========================================================= */
 
-.footer-mini-links a {
-    text-decoration: none;
-    color: #000;
-}
-
-.icon-square {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    background-color: #8a8a8a;
-    margin-left: 10px;
-}
-
-/* FOOTER PRINCIPAL (EXTENDIDO) */
 .footer-principal {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 40px;
+    --f-fondo: #FFF5E9;       /* Fondo crema melocotón para cerrar la web */
+    --f-texto: #4E1A0A;       /* Marrón chocolate */
+    --f-acento: #E3412B;      /* Rojo coral vibrante */
+    --f-blanco: #FFFFFF;
+
+    background-color: var(--f-fondo);
+    color: var(--f-texto);
+    font-family: 'Outfit', sans-serif;
+    padding: 60px 40px;
+    border-top: 5px solid var(--f-acento); /* Línea roja gruesa para separarlo del contenido principal */
 }
 
-/* Parte superior */
+/* =========================================
+   2. PARTE SUPERIOR (Logo y Redes)
+   ========================================= */
 .footer-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 3px dashed var(--f-texto); /* Línea punteada decorativa marrón */
 }
 
+.footer-logo img {
+    max-width: 150px; /* Controlamos el tamaño del logo */
+    /* Si la imagen está rota, al menos no se verá gigante */
+}
+
+.footer-social p {
+    font-family: 'Mochiy Pop P One', sans-serif;
+    color: var(--f-acento); /* Rojo coral para el texto de "Síguenos" */
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Contenedor de los iconos [X] */
 .social-icons {
     display: flex;
     gap: 15px;
 }
 
-/* Iconos dummy */
-.icon {
-    width: 35px;
-    height: 35px;
-    background-color: #b3b3b3;
-    border: 1px solid #777;
+/* Estilizamos los [X] para que parezcan botones cuadrados/redondeados */
+.social-icons .icon {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    background-color: var(--f-blanco);
+    border: 3px solid var(--f-texto); /* Borde marrón grueso */
+    border-radius: 12px; /* Cuadraditos con bordes suaves */
+    font-weight: 700;
+    color: var(--f-texto);
+    cursor: pointer;
+    box-shadow: 0px 3px 0px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
 }
 
-/* Columnas de links */
-.footer-links {
-    display: flex;
-    justify-content: space-between;
+/* Efecto al pasar el ratón por los iconos */
+.social-icons .icon:hover {
+    background-color: var(--f-acento);
+    color: var(--f-blanco);
+    border-color: var(--f-acento);
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 0px rgba(0,0,0,0.15);
 }
+
+/* =========================================
+   3. PARTE INFERIOR (Columnas de Enlaces)
+   ========================================= */
+.footer-links {
+    display: grid;
+    /* Esto es magia: crea columnas del mismo tamaño automáticamente según el espacio */
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 30px;
+}
+
+/* =========================================
+   REVISIÓN: Títulos de Columnas del Footer
+   ========================================= */
 
 .columna h4 {
-    margin: 0 0 15px 0;
+    /* CAMBIO: Usamos Outfit para una estética limpia */
+    font-family: 'Outfit', sans-serif;
+
+    color: var(--f-acento); /* Mantenemos el Rojo Coral */
+
+    /* CAMBIO: Tamaño más profesional y sutil */
+    font-size: 14px;
+    font-weight: 700; /* Negrita para que resalte */
+
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+
+    /* ESPACIADO: Le da ese toque de diseño de alta fidelidad */
+    letter-spacing: 1.2px;
 }
 
+/* Opcional: Si quieres que el texto de "SÍGUENOS" (footer-top) también cambie */
+.footer-social p {
+    font-family: 'Outfit', sans-serif;
+    color: var(--f-acento);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+/* Quitamos los puntos de las listas */
 .columna ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
-.columna li {
-    margin-bottom: 8px;
+.columna ul li {
+    margin-bottom: 15px;
 }
 
-.columna a {
-    text-decoration: none;
-    color: #333;
+/* Estilo de los enlaces */
+.columna ul li a {
+    text-decoration: none; /* Quitamos la línea fea de debajo */
+    color: var(--f-texto); /* Marrón oscuro */
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    display: inline-block; /* Necesario para el efecto de movimiento */
+}
+
+/* Efecto muy sutil y profesional al pasar el ratón por un enlace */
+.columna ul li a:hover {
+    color: var(--f-acento); /* Se vuelve coral */
+    transform: translateX(5px); /* Se mueve un poquito a la derecha indicando interactividad */
+}
+
+/* =========================================================
+   TEMPLATE: FOOTER MINIMALISTA (100% Limpio y Horizontal)
+   ========================================================= */
+
+.footer-minimalista {
+    --fm-fondo: #FFF5E9;       /* Fondo crema melocotón */
+    --fm-texto: #4E1A0A;       /* Marrón chocolate */
+    --fm-acento: #E3412B;      /* Rojo coral vibrante */
+
+    background-color: var(--fm-fondo);
+    /* Usamos Outfit para TODO este footer. Ni rastro de la fuente antigua. */
+    font-family: 'Outfit', sans-serif;
+    color: var(--fm-texto);
+
+    padding: 20px 40px;
+    border-top: 4px solid var(--fm-acento); /* Línea coral para cerrar la web */
+
+    /* Magia Flexbox para poner los 4 bloques en una sola línea */
+    display: flex;
+    justify-content: space-between; /* Espacia los elementos automáticamente */
+    align-items: center;            /* Los centra verticalmente */
+    flex-wrap: wrap;                /* Si la pantalla es pequeña, se acomodan solos */
+    gap: 20px;
+}
+
+/* 1. EL LOGO MINI */
+.footer-mini-logo img {
+    max-height: 35px; /* Pequeñito y discreto */
+    display: block;
+}
+
+/* 2. EL TEXTO DEL COPYRIGHT (LOREMIPSUM 2026) */
+.footer-mini-copy p {
+    margin: 0;
     font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px; /* Separamos un poco las letras para que se vea premium */
+}
+
+/* 3. LOS ENLACES CON LOS PUNTITOS (&bull;) */
+.footer-mini-links {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fm-acento); /* Los puntitos (&bull;) se verán en coral */
+}
+
+.footer-mini-links a {
+    color: var(--fm-texto); /* Los enlaces en marrón */
+    text-decoration: none;
+    margin: 0 8px; /* Separación entre el texto y el puntito */
+    transition: color 0.2s ease;
+}
+
+.footer-mini-links a:hover {
+    color: var(--fm-acento); /* Al pasar el ratón se vuelven coral */
+}
+
+/* 4. LOS ICONOS SOCIALES VACÍOS (<span class="icon-square">) */
+.footer-mini-social {
+    display: flex;
+    gap: 12px;
+}
+
+.icon-square {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-color: var(--fm-texto); /* Cuadraditos marrones */
+    border-radius: 8px; /* Bordes ligeramente redondeados, no un círculo total */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.icon-square:hover {
+    background-color: var(--fm-acento); /* Cambian a coral al pasar el ratón */
+    transform: translateY(-3px); /* Saltan un poquito */
+    box-shadow: 0px 4px 0px rgba(0,0,0,0.1);
 }

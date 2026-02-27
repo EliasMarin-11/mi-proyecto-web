@@ -1,115 +1,103 @@
-/* CONTENEDOR GENERAL */
+/* 1. IMPORTAMOS LAS FUENTES EN LA LÍNEA 1 (VITAL) */
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Outfit:wght@400;600;700&display=swap');
+
+/* =========================================================
+   TEMPLATE: BUSCADOR (Minimalista y Horizontal)
+   ========================================================= */
+
 .contenedor-busqueda {
+    /* Paleta de Colores Establecida */
+    --b-fondo: #FFF5E9;       /* Fondo crema melocotón */
+    --b-texto: #4E1A0A;       /* Marrón chocolate */
+    --b-acento: #E3412B;      /* Rojo coral */
+    --b-blanco: #FFFFFF;
+
+    background-color: var(--b-fondo);
+    padding: 30px 20px; /* Reducimos padding total */
+
+    /* Mantenemos CSS Grid para reordenar sin tocar HTML */
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 15px;
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
+    /* Columna 1 (barra) ocupa hasta 750px, Columna 2 (botón) ocupa lo justo */
+    grid-template-columns: minmax(300px, 750px) auto;
+    grid-template-areas:
+        "titulo ."        /* Fila 1: Título a la izquierda, hueco a la derecha */
+        "barra boton";    /* Fila 2: Barra a la izquierda, botón a la derecha */
+
+    justify-content: center; /* Centramos todo el bloque */
+    align-items: end;        /* Alineamos la barra y el botón por abajo */
+    gap: 5px 15px;           /* Solo 5px de espacio vertical entre título y barra */
+    border: none;             /* Sin línea decorativa abajo */
 }
 
-/* Etiqueta superior */
+/* 2. EL TÍTULO (Mucho más pequeño y tipografía limpia) */
 .busqueda-label {
-    grid-column: 1 / -1;
-    font-size: 16px;
-    margin-bottom: 5px;
+    grid-area: titulo;
+    /* CAMBIO: Usamos 'Outfit' (limpia) en lugar de 'Momo' */
+    font-family: 'Outfit', sans-serif;
+    color: var(--b-acento); /* Rojo coral */
+
+    /* CAMBIO: Súper pequeño y sutil */
+    font-size: 13px;
+    font-weight: 700; /* Negrita para que sea legible a pesar de ser pequeño */
+
+    margin: 0 0 0 18px; /* Un pelín separado de la izquierda para encajar con el input */
+    text-transform: uppercase;
+    letter-spacing: 1px; /* Espaciado premium entre letras */
+    text-align: left;
 }
 
-/* Barra de input */
+/* 3. EL CONTenEDOR DE LA BARRA */
 .barra-busqueda {
-    position: relative;
-    display: flex;
-    align-items: center;
+    grid-area: barra;
+    width: 100%;
 }
 
+/* 4. EL CAMPO DE TEXTO (Largo y Estilo Pastilla) */
 .barra-busqueda input {
     width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #999;
-    background-color: #e6e6e6;
-    font-size: 18px;
-    outline: none;
-}
-
-/* X de la barra principal */
-.icono-cerrar-busqueda {
-    position: absolute;
-    right: 15px;
-    font-size: 20px;
-    cursor: pointer; /* Hace que sea pulsable */
-    color: #333;
-}
-
-.icono-cerrar-busqueda:hover {
-    color: #000;
-}
-
-/* Boton buscar */
-.btn-buscar-dummy {
-    background-color: #b3b3b3;
-    border: none;
-    padding: 0 20px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-/* CONTENEDOR DE TAGS */
-.busqueda-tags {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 10px;
-}
-
-.tag {
-    background-color: #e6e6e6;
-    padding: 5px 12px;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-/* LAS X DE LOS TAGS (PULSABLES) */
-.tag span {
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer; /* Aparece la mano al pasar por encima */
-    color: #666;
-    display: inline-block;
-    line-height: 1;
-    transition: 0.2s;
-}
-
-.tag span:hover {
-    color: #ff0000; /* Se pone roja al querer borrarla */
-    transform: scale(1.2); /* Crece un poquito */
-}
-
-.mensaje-sin-resultados {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: #e6e6e6;
-    border-radius: 10px;
-    max-width: 600px;
-    margin: 40px auto;
-    color: #333;
-}
-
-.icono-ups {
-    font-size: 50px;
-    margin-bottom: 15px;
-}
-
-.mensaje-sin-resultados h3 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    margin-top: 0;
-}
-
-.mensaje-sin-resultados p {
+    box-sizing: border-box;
+    padding: 16px 25px; /* Mantenemos buena altura para que sea visual */
+    font-family: 'Outfit', sans-serif;
     font-size: 16px;
-    color: #666;
+    font-weight: 600;
+    color: var(--b-texto);
+    background-color: var(--b-blanco);
+    border: 3px solid var(--b-acento); /* Borde coral vibrante */
+    border-radius: 50px; /* Redondeado total */
+    outline: none;
+    box-shadow: inset 4px 4px 8px rgba(0,0,0,0.04);
+    transition: all 0.3s ease;
+}
+
+.barra-busqueda input:focus {
+    border-color: var(--b-texto); /* Al escribir el borde se vuelve marrón */
+}
+
+/* 5. EL BOTÓN MARRÓN (Más pequeño y compacto) */
+.btn-buscar-dummy {
+    grid-area: boton;
+    background-color: var(--b-texto); /* Marrón chocolate de tus botones del header */
+    color: var(--b-blanco);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+
+    /* CAMBIO: Letra más pequeña */
+    font-size: 14px;
+    text-transform: uppercase;
+
+    /* CAMBIO: Padding muy reducido para hacerlo compacto (era 18px 45px) */
+    padding: 12px 30px;
+
+    border: none;
+    border-radius: 50px; /* Estilo pastilla */
+    cursor: pointer;
+    box-shadow: 0px 3px 0px rgba(0,0,0,0.15); /* Sombra 3D más sutil */
+    transition: all 0.2s ease;
+    margin: 0;
+}
+
+.btn-buscar-dummy:hover {
+    background-color: var(--b-acento); /* Coral al pasar el ratón */
+    transform: translateY(-2px);
+    box-shadow: 0px 5px 0px rgba(0,0,0,0.15);
 }

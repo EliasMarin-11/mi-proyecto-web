@@ -1,34 +1,104 @@
-/* TARJETA VERTICAL PEQUEÑA */
+/* 1. IMPORTACIÓN ÚNICA DE FUENTE PROFESIONAL */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+
+/* =========================================================
+   CONTENEDOR: FUERZA LA LÍNEA HORIZONTAL
+   ========================================================= */
+.contenedor-recetas {
+    display: flex;          /* Activa el modo horizontal */
+    flex-wrap: nowrap;      /* Evita que bajen a la siguiente línea */
+    overflow-x: auto;       /* Si hay muchas, permite hacer scroll lateral */
+    gap: 25px;              /* Espacio perfecto entre tarjetas */
+    padding: 40px 20px;
+    justify-content: center; /* Las centra en la pantalla */
+}
+
+/* =========================================================
+   TARJETA VERTICAL (Diseño Limpio)
+   ========================================================= */
 .tarjeta-v {
-    background-color: #e6e6e6;
-    border: 6px solid #999;
-    border-radius: 20px;
+    --t-fondo: #FFFFFF;       /* Blanco puro */
+    --t-borde: #4E1A0A;       /* Marrón chocolate */
+    --t-acento: #E3412B;      /* Rojo coral */
+
+    background-color: var(--t-fondo);
+    border: 3px solid var(--t-borde);
+    border-radius: 30px;      /* Esquinas redondeadas suaves */
+    min-width: 280px;         /* Ancho mínimo para que no se aplasten */
+    max-width: 300px;
+    overflow: hidden;
+    /* Sombra sólida estilo "sticker" */
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.15);
+    font-family: 'Outfit', sans-serif; /* TIPOGRAFÍA ÚNICA */
+    transition: all 0.3s ease;
+}
+
+.tarjeta-v:hover {
+    transform: translateY(-8px); /* Salta un poquito al pasar el ratón */
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
+}
+
+/* Título de la tarjeta (Header) */
+.tarjeta-v-header {
+    background-color: var(--t-acento); /* Fondo coral */
     padding: 15px;
-    width: 220px; /* Tamaño reducido */
     text-align: center;
+    border-bottom: 3px solid var(--t-borde);
 }
 
-/* Titulo */
 .tarjeta-v-header h2 {
-    margin: 0 0 15px 0;
-    font-size: 18px;
+    color: white;
+    font-size: 16px;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700; /* Outfit en negrita */
 }
 
-/* Imagen */
+/* Área de Imagen con la X técnica */
+.tarjeta-v-img {
+    height: 180px;
+    background-color: #F5F5F5;
+    position: relative;
+    border-bottom: 2px solid #EEE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .placeholder-v {
     width: 100%;
-    height: 100px;
-    background-color: #777;
-    border-radius: 6px;
-    margin-bottom: 15px;
+    height: 100%;
+    position: relative;
+    opacity: 0.3; /* Hacemos la X sutil */
 }
 
-/* Texto de una sola columna */
+.placeholder-v::before, .placeholder-v::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 130%; height: 2px;
+    background: var(--t-borde);
+}
+.placeholder-v::before { transform: translate(-50%, -50%) rotate(35deg); }
+.placeholder-v::after { transform: translate(-50%, -50%) rotate(-35deg); }
+
+/* Contenido de texto */
+.tarjeta-v-content {
+    padding: 20px;
+    color: var(--t-borde);
+}
+
 .tarjeta-v-content p {
-    margin: 5px 0;
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* El primer párrafo actúa como subtítulo resaltado */
+.tarjeta-v-content p:first-child {
+    font-weight: 700;
+    color: var(--t-acento);
     font-size: 13px;
-    color: #333;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-transform: uppercase;
 }
