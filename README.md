@@ -6,8 +6,8 @@
 
 Este proyecto en grupo trata de una página web de recetas donde los usuarios pueden buscar ideas sobre qué cocinar, subir sus propios platos y guardar sus recetas favoritas.
 
-El grupo está formado por Elías Marín Otero, Pablo Campos Rico y Alejandro Mentado García, 
-estudiantes de Programación Web y Móvil de 3º de Ingeniería Informática en la ULPGC
+El grupo está formado por Elías Marín Otero, Pablo Campos Rico y Alejandro Mentado García,
+estudiantes de 3º de Ingeniería Informática en la ULPGC.
 
 # Estructura del Proyecto
 
@@ -32,5 +32,24 @@ En la carpeta `mockups/` se encuentran los bocetos iniciales en formato PNG que 
 * **`registro.png`**: El diseño de la pantalla visual para crear una cuenta desde cero.
 * **`suscripcion.png`**: El dibujo de cómo se presentan las opciones y los botones para suscribirse.
 
+## 🛠️ Tecnologías utilizadas
+
+Este proyecto está construido únicamente con lenguajes base, sin usar programas externos complejos:
+* **HTML**: Para crear la estructura de todas las páginas y formularios.
+* **CSS**: Para los colores, los tamaños y organizar el diseño en columnas.
+* **JavaScript**: Para las funciones interactivas (aún no implementadas) y para unir los moldes (templates) a las páginas.
+
+## 🚀 Cómo abrir el proyecto
+
+Para ver esta página web en tu ordenador, no necesitas instalar nada especial:
+
+1. Descarga o clona esta carpeta en tu ordenador.
+2. Busca el archivo llamado `index.html` en la carpeta principal.
+3. Haz doble clic sobre él. Se abrirá automáticamente en tu navegador web (Chrome, Edge, Safari, etc.) y podrás navegar por todas las pantallas.
+
+## 📌 Estado del proyecto
+
+El proyecto se encuentra en su fase de diseño estático (Frontend). Las pantallas están conectadas entre sí mediante enlaces para simular la experiencia de usuario completa.
+
 ---
-*Proyecto creado para clase de desarrollo web.*
+*Proyecto creado para la asignatura de Programación Web y Móvil.*
