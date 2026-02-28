@@ -1,134 +1,109 @@
-/* =========================================================
-   LOGIN Y REGISTRO: CENTRADO TOTAL Y XXL
-   ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
-
-/* CONFIGURACIÓN GLOBAL */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Outfit', sans-serif !important;
-}
-
-/* CONTENEDOR PRINCIPAL: CENTRADO TOTAL */
 .main-login, .main-registro {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* CENTRADO VERTICAL */
-    min-height: 100vh;       /* Ocupa toda la altura de la ventana */
-    padding: 20px;
-    background-color: #FFF5E9; /* Fondo crema característico */
-}
-
-/* LOGO SUPERIOR (Si lo tienes en el HTML) */
-.logo-formulario {
-    width: 120px;
-    height: 120px;
-    background-color: #FFFFFF;
-    border: 3px solid #4E1A0A;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    overflow: hidden;
-}
-
-/* TÍTULOS */
-.titulo-login, .titulo-registro {
-    font-size: 32px; /* Un poco más grande para impactar */
-    color: #4E1A0A;  /* Marrón chocolate */
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin-bottom: 35px;
     text-align: center;
-    font-weight: 700;
+    margin-top: 85px;
+    margin-bottom: 100px;
+    padding-bottom: 20px;
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
-/* CONTENEDOR XXL */
+.titulo-login, .titulo-registro {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #4E1A0A;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
 .contenedor-formulario {
-    background-color: #FFFFFF;
-    border: 4px solid #4E1A0A; /* Borde grueso definido */
-    border-radius: 45px;       /* Bordes muy redondeados */
-    padding: 60px 70px;        /* Espacio interno generoso */
-    width: 95%;
-    max-width: 750px;          /* ANCHO XXL para mayor presencia */
-    box-shadow: 20px 20px 0px rgba(78, 26, 10, 0.08); /* Sombra sólida "Sticker" */
-    transition: transform 0.3s ease;
+    background-color: #FFF5E9;
+    width: 600px;
+    margin: 0 auto;
+    padding: 50px;
+    border-radius: 30px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
 }
 
-.formulario-login, .formulario-registro {
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* Más espacio entre campos */
+.grupo-password {
+    position: relative;
 }
 
-/* INPUTS DE ALTA FIDELIDAD */
 .input-oscuro {
     width: 100%;
-    padding: 20px 30px;
+    padding: 18px 25px;
+    margin-bottom: 25px;
+    background-color: #FFFFFF;
     border: 3px solid #4E1A0A;
-    border-radius: 25px;
-    background-color: #FDFDFD;
-    font-size: 17px;
+    border-radius: 60px;
+    box-sizing: border-box;
+    font-family: 'Momo Trust Display', sans-serif;
+    font-size: 16px;
     color: #4E1A0A;
-    outline: none;
     transition: all 0.3s ease;
 }
 
 .input-oscuro:focus {
-    border-color: #E3412B;     /* Cambio a coral intenso al activar */
-    box-shadow: 0 0 10px rgba(227, 65, 43, 0.1);
+    border-color: #E3412B;
+    outline: none;
+    box-shadow: 4px 4px 0px rgba(227, 65, 43, 0.2);
 }
 
-/* OPCIONES SECUNDARIAS */
 .opciones-login, .opciones-registro {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    margin-bottom: 30px;
     font-size: 16px;
     color: #4E1A0A;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-.link-olvido {
-    color: #E3412B;            /* Color coral para enlaces clave */
+a {
+    color: #4E1A0A;
     text-decoration: none;
-    font-weight: 700;
+    transition: color 0.3s ease;
 }
 
-/* BOTÓN DE ACCIÓN CORAL */
+a:hover {
+    color: #E3412B;
+}
+
 .btn-entrar, .btn-registro {
-    background-color: #E3412B; /* Rojo coral brillante */
+    background-color: #4E1A0A;
     color: #FFFFFF;
+    padding: 16px 50px;
     border: none;
-    padding: 22px;
-    border-radius: 60px;
-    font-size: 20px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
     cursor: pointer;
+    border-radius: 60px;
+    font-family: 'Momo Trust Display', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.12);
 }
 
 .btn-entrar:hover, .btn-registro:hover {
-    transform: translateY(-6px);
-    box-shadow: 14px 14px 0px rgba(78, 26, 10, 0.15);
-    background-color: #f04a36;
+    background-color: #E3412B;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
 }
 
-/* ENLACES DE PIE */
-.link-subrayado {
-    display: block;
-    text-align: center;
+.enlace-registro, .enlace-login {
     margin-top: 20px;
     font-size: 16px;
     color: #4E1A0A;
-    font-weight: 600;
+}
+
+.link-subrayado {
     text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+    font-weight: bold;
+    color: #4E1A0A;
+}
+
+.link-subrayado:hover {
+    color: #E3412B;
 }

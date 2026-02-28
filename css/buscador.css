@@ -1,103 +1,156 @@
-/* 1. IMPORTAMOS LAS FUENTES EN LA LÍNEA 1 (VITAL) */
-@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Outfit:wght@400;600;700&display=swap');
-
-/* =========================================================
-   TEMPLATE: BUSCADOR (Minimalista y Horizontal)
-   ========================================================= */
-
+/* CONTENEDOR GENERAL */
 .contenedor-busqueda {
-    /* Paleta de Colores Establecida */
-    --b-fondo: #FFF5E9;       /* Fondo crema melocotón */
-    --b-texto: #4E1A0A;       /* Marrón chocolate */
-    --b-acento: #E3412B;      /* Rojo coral */
-    --b-blanco: #FFFFFF;
-
-    background-color: var(--b-fondo);
-    padding: 30px 20px; /* Reducimos padding total */
-
-    /* Mantenemos CSS Grid para reordenar sin tocar HTML */
     display: grid;
-    /* Columna 1 (barra) ocupa hasta 750px, Columna 2 (botón) ocupa lo justo */
-    grid-template-columns: minmax(300px, 750px) auto;
-    grid-template-areas:
-        "titulo ."        /* Fila 1: Título a la izquierda, hueco a la derecha */
-        "barra boton";    /* Fila 2: Barra a la izquierda, botón a la derecha */
-
-    justify-content: center; /* Centramos todo el bloque */
-    align-items: end;        /* Alineamos la barra y el botón por abajo */
-    gap: 5px 15px;           /* Solo 5px de espacio vertical entre título y barra */
-    border: none;             /* Sin línea decorativa abajo */
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #FFF5E9;
+    border-radius: 20px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.1);
 }
 
-/* 2. EL TÍTULO (Mucho más pequeño y tipografía limpia) */
+/* Etiqueta superior */
 .busqueda-label {
-    grid-area: titulo;
-    /* CAMBIO: Usamos 'Outfit' (limpia) en lugar de 'Momo' */
-    font-family: 'Outfit', sans-serif;
-    color: var(--b-acento); /* Rojo coral */
-
-    /* CAMBIO: Súper pequeño y sutil */
-    font-size: 13px;
-    font-weight: 700; /* Negrita para que sea legible a pesar de ser pequeño */
-
-    margin: 0 0 0 18px; /* Un pelín separado de la izquierda para encajar con el input */
-    text-transform: uppercase;
-    letter-spacing: 1px; /* Espaciado premium entre letras */
-    text-align: left;
+    grid-column: 1 / -1;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Momo Trust Display', sans-serif;
+    color: #4E1A0A;
+    font-weight: bold;
 }
 
-/* 3. EL CONTenEDOR DE LA BARRA */
+/* Barra de input */
 .barra-busqueda {
-    grid-area: barra;
-    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-/* 4. EL CAMPO DE TEXTO (Largo y Estilo Pastilla) */
 .barra-busqueda input {
     width: 100%;
-    box-sizing: border-box;
-    padding: 16px 25px; /* Mantenemos buena altura para que sea visual */
-    font-family: 'Outfit', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--b-texto);
-    background-color: var(--b-blanco);
-    border: 3px solid var(--b-acento); /* Borde coral vibrante */
-    border-radius: 50px; /* Redondeado total */
+    padding: 16px 45px 16px 25px;
+    border: 3px solid #4E1A0A;
+    background-color: #FFFFFF;
+    font-size: 18px;
     outline: none;
-    box-shadow: inset 4px 4px 8px rgba(0,0,0,0.04);
+    border-radius: 60px;
+    font-family: 'Momo Trust Display', sans-serif;
+    color: #4E1A0A;
     transition: all 0.3s ease;
 }
 
-.barra-busqueda input:focus {
-    border-color: var(--b-texto); /* Al escribir el borde se vuelve marrón */
+.barra-busqueda input:focus { /*EFECTO BOTÓN*/
+    border-color: #E3412B;
+    box-shadow: 4px 4px 0px rgba(227, 65, 43, 0.2);
 }
 
-/* 5. EL BOTÓN MARRÓN (Más pequeño y compacto) */
+/* X de la barra principal */
+.icono-cerrar-busqueda {
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer; /* Hace que sea pulsable */
+    color: #4E1A0A;
+    transition: color 0.3s ease;
+}
+
+.icono-cerrar-busqueda:hover {
+    color: #E3412B;
+}
+
+/* Boton buscar */
 .btn-buscar-dummy {
-    grid-area: boton;
-    background-color: var(--b-texto); /* Marrón chocolate de tus botones del header */
-    color: var(--b-blanco);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-
-    /* CAMBIO: Letra más pequeña */
-    font-size: 14px;
-    text-transform: uppercase;
-
-    /* CAMBIO: Padding muy reducido para hacerlo compacto (era 18px 45px) */
-    padding: 12px 30px;
-
+    background-color: #4E1A0A;
+    color: #FFFFFF;
     border: none;
-    border-radius: 50px; /* Estilo pastilla */
+    padding: 0 36px;
     cursor: pointer;
-    box-shadow: 0px 3px 0px rgba(0,0,0,0.15); /* Sombra 3D más sutil */
-    transition: all 0.2s ease;
-    margin: 0;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 60px;
+    font-family: 'Momo Trust Display', sans-serif;
+    letter-spacing: 1.5px;
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.btn-buscar-dummy:hover {
-    background-color: var(--b-acento); /* Coral al pasar el ratón */
-    transform: translateY(-2px);
-    box-shadow: 0px 5px 0px rgba(0,0,0,0.15);
+.btn-buscar-dummy:hover { /*EFECTO*/
+    background-color: #E3412B;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+}
+
+/* CONTENEDOR DE TAGS */
+.busqueda-tags {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: #FFFFFF;
+    padding: 8px 18px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #4E1A0A;
+    border-radius: 30px;
+    font-family: 'Momo Trust Display', sans-serif;
+    color: #4E1A0A;
+    font-weight: bold;
+    box-shadow: 3px 3px 0px rgba(78, 26, 10, 0.1);
+}
+
+/* LAS X DE LOS TAGS (PULSABLES) */
+.tag span {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer; /* Aparece la mano al pasar por encima */
+    color: #4E1A0A;
+    display: inline-block;
+    line-height: 1;
+    transition: 0.2s;
+    transition: all 0.2s ease;
+}
+
+.tag span:hover {
+    color: #E3412B; /* Se pone roja al querer borrarla */
+    transform: scale(1.3) rotate(90deg);
+}
+
+.mensaje-sin-resultados {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #FFF5E9;
+    border-radius: 20px;
+    border: 4px dashed #4E1A0A;
+    max-width: 600px;
+    margin: 40px auto;
+    color: #4E1A0A;
+}
+
+.icono-ups {
+    font-size: 60px;
+    margin-bottom: 20px;
+    color: #E3412B;
+
+}
+
+.mensaje-sin-resultados h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    font-family: 'Momo Trust Display', sans-serif;
+}
+
+.mensaje-sin-resultados p {
+    font-size: 18px;
+    color: #4E1A0A;
+    font-family: 'Momo Trust Display', sans-serif;
 }

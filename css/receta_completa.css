@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
 /* =========================================
@@ -12,47 +13,46 @@
 ========================================= */
 .bloque-superior {
     display: flex;
-    border-radius: 20px;
+    border-radius: 30px;
     overflow: hidden;
-    background-color: #d9d9d9;
+    background-color: #FFFFFF;
     min-height: 350px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
 }
 
-/* Mitad Izquierda (Foto más grande y fija) */
 .bloque-foto {
     width: 45%;
     flex-shrink: 0;
-    background-color: #a6a6a6;
+    background-color: #FFF5E9;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 120px;
-    color: #555;
-    border-right: 2px solid #999;
+    color: #4E1A0A;
+    border-right: 4px solid #4E1A0A;
 }
 
-/* Mitad Derecha (Textos) */
 .bloque-info {
     flex: 1;
     padding: 40px;
     position: relative;
-    color: #111;
+    color: #4E1A0A;
 }
 
-/* Corazón Favorito (Interactivo) */
 .btn-fav-detalle {
     position: absolute;
-    top: 30px;
-    right: 30px;
+    top: 38px;
+    right: 40px;
     font-size: 30px;
-    color: #999;
+    color: #4E1A0A;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.3s ease;
     user-select: none;
 }
 
 .btn-fav-detalle:hover {
-    color: #ff4757;
+    color: #E3412B;
     transform: scale(1.2);
 }
 
@@ -62,16 +62,19 @@
 
 .bloque-info h2 {
     margin: 0 0 20px 0;
-    font-size: 24px;
+    font-size: 32px;
     padding-right: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .info-linea-iconos {
     display: flex;
     gap: 20px;
     margin-bottom: 20px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
 .bloque-alergenos {
@@ -80,6 +83,7 @@
     gap: 15px;
     margin-bottom: 30px;
     font-size: 15px;
+    font-weight: bold;
 }
 
 .cuadritos {
@@ -90,20 +94,23 @@
 .cuadritos span {
     width: 20px;
     height: 20px;
-    background-color: #888;
-    border-radius: 3px;
+    background-color: #E3412B;
+    border-radius: 4px;
+    border: 2px solid #4E1A0A;
 }
 
 .bloque-info h3 {
     font-size: 18px;
     margin-bottom: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .bloque-info p {
     line-height: 1.6;
-    font-size: 15px;
+    font-size: 16px;
     margin: 0;
-    word-break: break-word; /* Soluciona palabras largas arriba */
+    word-break: break-word;
 }
 
 /* =========================================
@@ -111,22 +118,26 @@
 ========================================= */
 .bloque-inferior {
     display: flex;
-    border-radius: 20px;
+    border-radius: 30px;
     overflow: hidden;
     min-height: 450px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
 }
 
-/* Izquierda: Ingredientes */
 .col-ingredientes {
     width: 35%;
-    background-color: #b3b3b3;
+    background-color: #FFF5E9;
     padding: 40px;
-    box-sizing: border-box; /* Mantiene el padding por dentro */
+    box-sizing: border-box;
+    border-right: 4px solid #4E1A0A;
 }
 
 .col-ingredientes h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin: 0 0 20px 0;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .lista-ingredientes-alergenos {
@@ -140,35 +151,37 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-    font-size: 15px;
-    color: #111;
+    font-size: 16px;
+    color: #4E1A0A;
+    font-weight: 500;
 }
 
-/* Cuadritos más pequeños para la lista inferior */
 .lista-ingredientes-alergenos .cuadritos span {
     width: 15px;
     height: 15px;
-    background-color: #666;
-    border-radius: 2px;
+    background-color: #4E1A0A;
+    border-radius: 3px;
 }
 
-/* Derecha: Instrucciones */
 .col-instrucciones {
     width: 65%;
-    background-color: #d9d9d9;
+    background-color: #FFFFFF;
     padding: 40px;
-    padding-right: 60px; /* Margen extra a la derecha */
-    box-sizing: border-box; /* Mantiene el padding por dentro */
+    padding-right: 60px;
+    box-sizing: border-box;
 }
 
 .col-instrucciones h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin: 0 0 20px 0;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .parrafos-instrucciones p {
     margin-bottom: 20px;
     line-height: 1.6;
-    font-size: 15px;
+    font-size: 16px;
+    color: #4E1A0A;
     word-break: break-word;
 }

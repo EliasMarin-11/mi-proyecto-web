@@ -1,131 +1,126 @@
-/* 1. CONFIGURACIÓN GLOBAL Y FUENTE */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
-
-* {
+body, input, button, textarea, select {
+    font-family: 'Showcard Gothic', "Times New Roman";
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Outfit', sans-serif !important;
+    color: #4a322d;
 }
 
-body {
-    background-color: #FFF5E9; /* Crema suave */
-    color: #4E1A0A;
+/* Limitamos el main para que no se estire al infinito en tu pantalla */
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
 }
 
-/* 2. AJUSTE DEL BUSCADOR: Más abajo del header */
-#buscador_main {
-    margin-top: 80px; /* Añadimos espacio extra respecto al header */
-    margin-bottom: 40px;
-}
-
+/* Títulos generales */
 .titulo_centrado {
     text-align: center;
-    font-size: 22px;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    margin: 100px 0 50px 0;
-    font-weight: 700;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #4a322d;
 }
 
-/* 3. INSTRUCCIONES (PASO A PASO) */
+.titulo_izq {
+    text-align: left;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #4a322d
+}
+
+/*---------------------------------------------
+            INDEX
+ --------------------------------------------- */
+
+/* Bloque 3 cuadrados */
 .instrucciones {
     display: flex;
-    justify-content: center;
-    gap: 120px;
-    margin-bottom: 120px;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: center;
 }
 
 .foto_cuadrada {
-    width: 160px;
-    height: 160px;
-    background-color: #FFFFFF;
-    border: 3px solid #4E1A0A;
-    border-radius: 40px;
-    margin: 0 auto 20px;
-    position: relative;
-    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.05);
-}
-
-.foto_cuadrada::before, .foto_cuadrada::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 120%; height: 2px;
-    background: #E3412B; /* Rojo coral vibrante */
-}
-.foto_cuadrada::before { transform: translate(-50%, -50%) rotate(45deg); }
-.foto_cuadrada::after { transform: translate(-50%, -50%) rotate(-45deg); }
-
-/* 4. RECETAS TRENDING (ANIMACIÓN LATERAL) */
-.slider_horizontal {
-    display: flex;
-    justify-content: center;
-    gap: 35px;
-    padding-bottom: 100px;
-}
-
-.enlace_tarjeta {
-    text-decoration: none;
-    flex: 0 0 290px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.enlace_tarjeta:hover {
-    /* Animación lateral e inclinada */
-    transform: translateX(18px) rotate(5deg) scale(1.02);
-}
-
-/* 5. BLOQUES INFERIORES XXL (ORGÁNICOS Y LARGOS) */
-.bloque_inferior {
-    max-width: 1200px; /* Más ancho para que los componentes crezcan */
-    margin: 0 auto 150px;
-    padding: 0 20px;
-}
-
-.fila_horizontal {
-    display: flex;
-    align-items: center;
-    gap: 60px; /* Más espacio entre foto y texto */
-    padding: 50px;
-    margin-bottom: 80px;
-    border: none; /* Aspecto orgánico sin bordes */
-}
-
-/* Alternancia de orden para dinamismo */
-.fila_horizontal.reverse {
-    flex-direction: row-reverse;
-}
-
-.foto_rectangular {
-    flex: 0 0 450px; /* FOTO MUCHO MÁS GRANDE */
-    height: 280px;   /* Proporción de gran formato */
-    background-color: #FFFFFF;
-    border-radius: 40px;
+    width: 250px;
+    height: 250px;
+    background-color: #fffaf0;
+    border: 3px solid #4a322d;
+    border-radius: 20px;
+    margin: 0 auto 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 40px;
-    color: #DDD;
-    box-shadow: 15px 15px 0px rgba(78, 26, 10, 0.03);
+    color: #4a322d;
+    box-shadow: 6px 6px 0px #4a322d;
+}
+
+/* Tarjetas Trending */
+#tarjetas_trending {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 50px 50px;
+    flex-wrap: wrap;
+}
+
+.enlace_tarjeta {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Bloque Inferior Horizontales */
+.fila_horizontal {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 50px;
+    padding: 20px;
+}
+
+.fila_horizontal:nth-of-type(even) { /*Invierte el orden para el zigzag (segunda fila) */
+    flex-direction: row-reverse;
+}
+
+
+.foto_rectangular {
+    width: 320px;
+    height: 200px;
+    background-color: #fffaf0;
+    border: 3px solid #4a322d;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #4a322d;
+    box-shadow: 8px 8px 0px #4a322d;
+    flex-shrink: 0;
 }
 
 .textos_columna {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     flex: 1;
 }
 
-.textos_columna p:first-child {
-    color: #E3412B; /* Título en coral intenso */
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 24px; /* Texto más grande */
-    margin-bottom: 20px;
-    letter-spacing: 1.5px;
+/*---------------------------------------------
+            FAVORITOS Y BUSCADOR
+ --------------------------------------------- */
+
+#resultados_lista {
+    display: flex;
+    flex-direction: column;    /* CAMBIO: Volvemos a vertical (una encima de otra) */
+    gap: 40px;                 /* CAMBIO: Más espacio entre cada receta */
+    padding: 40px 20px;
+    max-width: 1100px;         /* CAMBIO: Un poco más estrecho para que se vea centrado */
+    margin: 0 auto;
 }
 
-.textos_columna p:not(:first-child) {
-    font-size: 18px; /* Texto de cuerpo más legible y largo */
-    line-height: 1.8;
-    color: #4E1A0A;
-    margin-bottom: 10px;
+#resultados_lista > * {
+    flex: 0 0 300px;
 }

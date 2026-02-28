@@ -1,113 +1,90 @@
-/* =========================================================
-   TARJETA RECETA HORIZONTAL (High Fidelity)
-   ========================================================= */
-
-/* RESET ENLACE */
 .enlace-tarjeta {
     text-decoration: none !important;
     color: inherit;
     display: block;
     margin-bottom: 30px;
-    transition: all 0.3s ease;
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
-/* CONTENEDOR TARJETA */
 .tarjeta-receta {
     display: flex;
-    background-color: #FFFFFF; /* Blanco para resaltar sobre el crema */
-    border: 3px solid #4E1A0A; /* Borde marrón chocolate */
-    border-radius: 40px;       /* Bordes muy redondeados */
-    padding: 30px;
+    background-color: #FFFFFF;
+    border: 4px solid #4E1A0A;
+    border-radius: 30px;
+    padding: 35px;
     gap: 40px;
-    max-width: 1000px;
-    margin: 20px auto;
+    max-width: 950px;
+    margin: 15px auto;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
-    /* Sombra sólida estilo sticker */
-    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.08);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
 }
 
-/* ANIMACIÓN HOVER: Ligera inclinación y elevación */
-.enlace-tarjeta:hover .tarjeta-receta {
-    transform: translateY(-8px) rotate(1deg);
-    box-shadow: 15px 15px 0px rgba(78, 26, 10, 0.05);
-    background-color: #fffaf5;
-}
-
-/* ICONO FAVORITO (LIKE) */
 .btn-fav-receta {
-    font-size: 28px;
-    color: #4E1A0A; /* Marrón por defecto */
+    font-size: 35px;
+    color: #4E1A0A;
     cursor: pointer;
-    transition: 0.2s;
+    transition: all 0.3s ease;
     line-height: 1;
     position: relative;
     z-index: 10;
 }
 
 .btn-fav-receta:hover {
-    color: #E3412B; /* Rojo coral al hacer hover */
-    transform: scale(1.2);
+    color: #E3412B;
+    transform: scale(1.3) rotate(10deg);
 }
 
-/* IMAGEN DUMMY CON LA X TÉCNICA */
 .receta-dummy-img {
-    flex: 0 0 280px;
-    height: 200px;
-    background-color: #F5F5F5;
-    border: 2px solid #EEE;
-    border-radius: 25px;
+    width: 280px;
+    height: 220px;
+    background-color: #FFF5E9;
+    border: 4px solid #4E1A0A;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
+    box-shadow: inset 4px 4px 0px rgba(78, 26, 10, 0.05);
 }
 
 .receta-dummy-img::after {
     content: "X";
-    color: #E3412B; /* X en rojo coral */
-    font-size: 60px;
-    font-weight: 700;
-    opacity: 0.2;
+    color: #4E1A0A;
+    font-size: 80px;
+    font-weight: bold;
 }
 
-/* INFO Y TEXTOS */
 .receta-info {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    font-family: 'Outfit', sans-serif !important;
 }
 
 .receta-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 20px;
 }
 
 .receta-titulo {
     margin: 0;
-    font-size: 24px;
-    font-weight: 700;
-    color: #E3412B; /* Títulos en Rojo Coral */
+    font-size: 28px;
+    font-weight: bold;
+    color: #4E1A0A;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
-/* COLUMNAS DETALLES */
 .receta-detalles {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
+    gap: 50px;
 }
 
 .detalles-datos {
     min-width: 200px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .lista-mini {
@@ -116,35 +93,39 @@
 }
 
 .lista-mini li {
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 18px;
+    margin-bottom: 10px;
     color: #4E1A0A;
-    font-weight: 600;
+    font-weight: bold;
 }
 
-/* ICONOS ALERGENOS */
 .fila-iconos-receta {
     display: flex;
     gap: 12px;
 }
 
 .fila-iconos-receta span {
-    width: 32px;
-    height: 32px;
-    background-color: #4E1A0A; /* Cajas chocolate */
-    border-radius: 8px;
-    display: inline-block;
+    width: 35px;
+    height: 25px;
+    background-color: #E3412B;
+    border: 2px solid #4E1A0A;
+    border-radius: 6px;
 }
 
-/* DESCRIPCIÓN */
 .detalles-desc {
     flex: 3;
 }
 
 .detalles-desc p {
     margin: 0;
-    font-size: 16px;
-    line-height: 1.7;
-    color: #4E1A0A; /* Cuerpo en marrón chocolate */
+    font-size: 18px;
+    line-height: 1.6;
+    color: #4E1A0A;
     text-align: left;
+}
+
+.enlace-tarjeta:hover .tarjeta-receta {
+    background-color: #FFF5E9;
+    transform: translateY(-5px);
+    box-shadow: 15px 15px 0px rgba(78, 26, 10, 0.15);
 }
