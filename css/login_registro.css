@@ -3,73 +3,107 @@
     margin-top: 85px;
     margin-bottom: 100px;
     padding-bottom: 20px;
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
 .titulo-login, .titulo-registro {
-    font-size: 30px;
-    margin-bottom: 20px;
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #4E1A0A;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .contenedor-formulario {
-    background-color: #e6e6e6;
+    background-color: #FFF5E9;
     width: 600px;
-    margin: 0 auto; /* centrar horizontalmente */
+    margin: 0 auto;
     padding: 50px;
+    border-radius: 30px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
 }
 
 .grupo-password {
     position: relative;
 }
 
-/*cajas de texto */
 .input-oscuro {
     width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #999999;
-    border: none;
+    padding: 18px 25px;
+    margin-bottom: 25px;
+    background-color: #FFFFFF;
+    border: 3px solid #4E1A0A;
+    border-radius: 60px;
     box-sizing: border-box;
+    font-family: 'Momo Trust Display', sans-serif;
+    font-size: 16px;
+    color: #4E1A0A;
+    transition: all 0.3s ease;
 }
 
-/* checkbox y enlaces*/
+.input-oscuro:focus {
+    border-color: #E3412B;
+    outline: none;
+    box-shadow: 4px 4px 0px rgba(227, 65, 43, 0.2);
+}
+
 .opciones-login, .opciones-registro {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
-    font-size: 14px;
-}
-
-/* enlaces sin subrayado */
-a {
-    color: #000;
-    text-decoration: none;
-}
-
-.btn-entrar, .btn-registro {
-    background-color: #808080;
-    padding: 15px 50px;
-    border: none;
     font-size: 16px;
-    margin-bottom: 30px;
-    cursor: pointer;
-}
-
-/* Añadir al final de tu CSS actual */
-.enlace-registro {
-    margin-top: 20px;
-    font-size: 14px;
-}
-
-.link-subrayado {
-    text-decoration: underline; /* Esto fuerza la línea por debajo */
+    color: #4E1A0A;
     font-weight: bold;
 }
 
-.link-subrayado:hover {
-    color: #555555; /* Cambia un poco de color al pasar el ratón */
+a {
+    color: #4E1A0A;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
-.enlace-login {
+a:hover {
+    color: #E3412B;
+}
+
+.btn-entrar, .btn-registro {
+    background-color: #4E1A0A;
+    color: #FFFFFF;
+    padding: 16px 50px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    cursor: pointer;
+    border-radius: 60px;
+    font-family: 'Momo Trust Display', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-entrar:hover, .btn-registro:hover {
+    background-color: #E3412B;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+}
+
+.enlace-registro, .enlace-login {
     margin-top: 20px;
-    font-size: 14px;
+    font-size: 16px;
+    color: #4E1A0A;
+}
+
+.link-subrayado {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+    font-weight: bold;
+    color: #4E1A0A;
+}
+
+.link-subrayado:hover {
+    color: #E3412B;
 }

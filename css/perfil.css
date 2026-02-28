@@ -1,53 +1,66 @@
-/* ESTILOS BASE CONTENEDOR PERFIL */
 .perfil-contenedor {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 60px 20px;
-    background-color: #ffffff; /* Ajusta al fondo general de tu web */
+    padding: 80px 20px;
+    background-color: #FFF5E9;
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
-/* TARJETA CENTRAL */
 .perfil-tarjeta {
-    background-color: #e6e6e6; /* Mismo tono gris de tu footer */
+    background-color: #FFFFFF;
     width: 100%;
-    max-width: 450px;
-    padding: 40px 50px;
+    max-width: 500px;
+    padding: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-radius: 30px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
 }
 
-/* AVATAR */
 .perfil-avatar {
-    width: 90px;
-    height: 90px;
-    background-color: #4d4d4d;
+    width: 120px;
+    height: 120px;
+    background-color: #FFFFFF;
     border-radius: 50%;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.1);
 }
 
-/* CABECERA DE USUARIO (Nombre + Lápiz) */
 .perfil-cabecera {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 30px;
+    gap: 15px;
+    margin-bottom: 40px;
 }
 
 .perfil-nombre {
     margin: 0;
-    font-size: 22px;
-    color: #000;
+    font-size: 32px;
+    color: #4E1A0A;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .icon-dummy-pencil {
-    width: 20px;
-    height: 20px;
-    background-color: #8a8a8a; /* Mismo gris que tus .icon-square */
+    width: 35px;
+    height: 35px;
+    background-color: #FFFFFF;
+    border: 3px solid #4E1A0A;
+    border-radius: 50%;
+    box-shadow: 3px 3px 0px rgba(78, 26, 10, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-/* FORMULARIO Y CAMPOS */
+.icon-dummy-pencil:hover {
+    background-color: #E3412B;
+    transform: translateY(-2px);
+}
+
 .perfil-formulario {
     width: 100%;
     display: flex;
@@ -55,67 +68,95 @@
 }
 
 .form-grupo {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
 }
 
 .form-grupo label {
-    font-size: 11px;
-    color: #333;
-    margin-bottom: 5px;
-    margin-left: 2px;
+    font-size: 14px;
+    color: #4E1A0A;
+    margin-bottom: 8px;
+    margin-left: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .input-dummy {
-    padding: 15px;
-    border: none;
+    padding: 18px 25px;
+    border: 3px solid #4E1A0A;
     font-size: 16px;
-    color: #000;
+    color: #4E1A0A;
+    border-radius: 60px;
+    font-family: 'Momo Trust Display', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.input-dummy:focus {
+    border-color: #E3412B;
+    box-shadow: 4px 4px 0px rgba(227, 65, 43, 0.2);
 }
 
 .input-oscuro {
-    background-color: #a6a6a6;
+    background-color: #FFF5E9;
 }
 
 .input-claro {
-    background-color: #cccccc;
+    background-color: #FFFFFF;
 }
 
-/* BOTONES PRINCIPALES PERFIL */
 .btn-perfil {
     width: 100%;
-    padding: 15px;
-    background-color: #a6a6a6;
+    padding: 18px;
+    background-color: #4E1A0A;
     border: none;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    color: #000;
+    color: #FFFFFF;
     cursor: pointer;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    border-radius: 60px;
+    font-family: 'Momo Trust Display', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* SEPARADOR */
+.btn-perfil:hover {
+    background-color: #E3412B;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+}
+
 .perfil-separador {
     width: 100%;
     border: 0;
-    border-top: 1px solid #000;
-    margin: 10px 0 25px 0;
+    border-top: 4px dashed #4E1A0A;
+    margin: 20px 0 30px 0;
 }
 
-/* ENLACES INFERIORES */
 .perfil-enlaces-inferiores {
     text-align: center;
-    font-size: 11px;
-    color: #666;
-    margin-top: 5px;
+    font-size: 14px;
+    color: #4E1A0A;
+    margin-top: 10px;
 }
 
 .perfil-enlaces-inferiores p {
-    margin: 0 0 5px 0;
+    margin: 0 0 10px 0;
 }
 
 .perfil-enlaces-inferiores a {
-    color: #000;
+    color: #4E1A0A;
     text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.perfil-enlaces-inferiores a:hover {
+    color: #E3412B;
 }

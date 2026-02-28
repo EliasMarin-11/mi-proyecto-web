@@ -1,36 +1,55 @@
 /* ESTILOS BASE */
 footer {
-    background-color: #e6e6e6;
-    padding: 20px 40px;
-    color: #000;
+    background-color: #FFF5E9;
+    padding: 60px 80px;
+    color: #4E1A0A;
+    border-top: 5px solid #E3412B;
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
 /* FOOTER SIMPLE */
 .footer-minimalista {
     display: flex;
-    justify-content: space-between; /* Distribuye elementos en la linea */
+    justify-content: space-between;
     align-items: center;
 }
 
 .footer-mini-links a {
     text-decoration: none;
-    color: #000;
+    color: #4E1A0A;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.footer-mini-links a:hover {
+    color: #E3412B;
 }
 
 .icon-square {
     display: inline-block;
-    width: 25px;
-    height: 25px;
-    background-color: #8a8a8a;
-    margin-left: 10px;
+    width: 45px;
+    height: 45px;
+    background-color: #FFFFFF;
+    margin-left: 15px;
+    border: 3px solid #4E1A0A;
+    border-radius: 50%;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.1);
+    transition: all 0.3s ease;
+}
+
+.icon-square:hover {
+    background-color: #E3412B;
+    transform: translateY(-4px);
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.15);
 }
 
 /* FOOTER PRINCIPAL (EXTENDIDO) */
 .footer-principal {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    padding: 40px;
+    gap: 60px;
+    padding: 20px 0;
 }
 
 /* Parte superior */
@@ -42,28 +61,45 @@ footer {
 
 .social-icons {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 
 /* Iconos dummy */
 .icon {
-    width: 35px;
-    height: 35px;
-    background-color: #b3b3b3;
-    border: 1px solid #777;
+    width: 60px;
+    height: 60px;
+    background-color: #FFFFFF;
+    border: 4px solid #4E1A0A;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #4E1A0A;
+    font-size: 24px;
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon:hover {
+    background-color: #E3412B;
+    color: #FFFFFF;
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.15);
 }
 
 /* Columnas de links */
 .footer-links {
     display: flex;
     justify-content: space-between;
+    gap: 40px;
 }
 
 .columna h4 {
-    margin: 0 0 15px 0;
+    margin: 0 0 25px 0;
+    font-size: 22px;
+    color: #4E1A0A;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .columna ul {
@@ -72,11 +108,19 @@ footer {
 }
 
 .columna li {
-    margin-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 .columna a {
     text-decoration: none;
-    color: #333;
-    font-size: 14px;
+    color: #4E1A0A;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+.columna a:hover {
+    color: #E3412B;
+    transform: translateX(8px);
 }

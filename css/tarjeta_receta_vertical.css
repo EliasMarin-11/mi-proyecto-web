@@ -1,34 +1,44 @@
-/* TARJETA VERTICAL PEQUEÑA */
 .tarjeta-v {
-    background-color: #e6e6e6;
-    border: 6px solid #999;
-    border-radius: 20px;
-    padding: 15px;
-    width: 220px; /* Tamaño reducido */
+    background-color: #FFFFFF;
+    border: 4px solid #4E1A0A;
+    border-radius: 30px;
+    padding: 25px;
+    width: 280px;
     text-align: center;
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: 'Momo Trust Display', sans-serif;
 }
 
-/* Titulo */
+.tarjeta-v:hover {
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 0px rgba(78, 26, 10, 0.15);
+}
+
 .tarjeta-v-header h2 {
-    margin: 0 0 15px 0;
-    font-size: 18px;
+    margin: 0 0 20px 0;
+    font-size: 24px;
+    color: #4E1A0A;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-/* Imagen */
 .placeholder-v {
     width: 100%;
-    height: 100px;
-    background-color: #777;
-    border-radius: 6px;
-    margin-bottom: 15px;
+    height: 140px;
+    background-color: #FFF5E9;
+    border: 3px solid #4E1A0A;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: inset 4px 4px 0px rgba(78, 26, 10, 0.05);
 }
 
-/* Texto de una sola columna */
 .tarjeta-v-content p {
-    margin: 5px 0;
-    font-size: 13px;
-    color: #333;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #4E1A0A;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: bold;
 }
