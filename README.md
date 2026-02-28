@@ -23,18 +23,18 @@ El proyecto está organizado de una forma limpia y modular para separar los dise
 
 En la carpeta `mockups/` se encuentran los bocetos iniciales en formato PNG que muestran cómo se planeó el diseño visual de cada pantalla antes de escribir el código:
 
-* **`index.png`**: El dibujo de la portada principal, mostrando cómo se colocan los elementos al entrar a la web.
-* **`buscador.png`**: El diseño visual de la barra de búsqueda y cómo se ven las etiquetas para filtrar platos.
+* **`index.png`**: El dibujo de la portada principal o homepage. En el que se observa el buscador seguido de un pequeño resumen del funcionamiento de la app con imágenes intuitiva, además de las recetas "Trending". A continuación las ventajas de la suscripción, y finalmente la posibilidad de descargar la app móvil con un QR.
+* **`buscador.png`**: El diseño visual de la página de búsqueda, cómo se ven las etiquetas para filtrar platos y un listado de las recetas que coinciden con la búsqueda.
 * **`favoritos.png`**: El boceto que muestra cómo se organizan las tarjetas de las recetas guardadas por el usuario.
-* **`ver_receta.png`**: El esquema de cómo se reparte el espacio para la foto, los ingredientes y los pasos de un plato.
+* **`ver_receta.png`**: El esquema de cómo se reparte el espacio para ver una receta ampliada, donde encontramos una foto, los ingredientes y los pasos de un plato.
 * **`subir_receta.png`**: El diseño a dos columnas del formulario para que el usuario escriba una receta nueva.
 * **`login.png`**: El boceto de la caja central para introducir el usuario y la contraseña.
 * **`registro.png`**: El diseño de la pantalla visual para crear una cuenta desde cero.
-* **`suscripcion.png`**: El dibujo de cómo se presentan las opciones y los botones para suscribirse.
+* **`suscripcion.png`**: El dibujo de cómo se presentan las opciones o planes y los botones para suscribirse.
 
 ## Tecnologías utilizadas
 
-Este proyecto está construido únicamente con lenguajes base, sin usar programas externos complejos:
+Este proyecto está construido con lenguajes base, sin usar programas externos complejos:
 * **HTML**: Para crear la estructura de todas las páginas y formularios.
 * **CSS**: Para los colores, los tamaños y organizar el diseño en columnas.
 * **JavaScript**: Para las funciones interactivas (aún no implementadas) y para unir los moldes (templates) a las páginas.
