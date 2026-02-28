@@ -63,7 +63,7 @@ main {
     justify-content: center;
     gap: 30px;
     padding: 0 50px 50px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .enlace_tarjeta {
@@ -114,10 +114,10 @@ main {
 
 #resultados_lista {
     display: flex;
-    flex-direction: column;    /* CAMBIO: Volvemos a vertical (una encima de otra) */
-    gap: 40px;                 /* CAMBIO: Más espacio entre cada receta */
+    flex-direction: column;
+    gap: 40px;
     padding: 40px 20px;
-    max-width: 1100px;         /* CAMBIO: Un poco más estrecho para que se vea centrado */
+    max-width: 1100px;
     margin: 0 auto;
 }
 

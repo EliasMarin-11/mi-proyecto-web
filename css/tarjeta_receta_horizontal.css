@@ -47,13 +47,6 @@
     box-shadow: inset 4px 4px 0px rgba(78, 26, 10, 0.05);
 }
 
-.receta-dummy-img::after {
-    content: "X";
-    color: #4E1A0A;
-    font-size: 80px;
-    font-weight: bold;
-}
-
 .receta-info {
     display: flex;
     flex-direction: column;
