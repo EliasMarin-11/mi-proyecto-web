@@ -2,7 +2,7 @@
 # Link presentación CANVA -> https://www.canva.com/design/DAHCKkFJX5U/Men0FcSpnxM_x_brc17D0w/edit?utm_content=DAHCKkFJX5U&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 
-# What's in your fridge 🍳
+## What's in your fridge 
 
 Este proyecto en grupo trata de una página web de recetas donde los usuarios pueden buscar ideas sobre qué cocinar, subir sus propios platos y guardar sus recetas favoritas.
 
@@ -19,7 +19,7 @@ El proyecto está organizado de una forma limpia y modular para separar los dise
 * **`MAIN.css`**: Es el archivo principal de diseño general.
 * **Archivo Javascript (`xlu-include-file.js`)**: El código que se nos proporcionó para poder unir los templates con las páginas principales HTML.
 
-## 🖼️ Diseños y Mockups
+## Diseños y Mockups
 
 En la carpeta `mockups/` se encuentran los bocetos iniciales en formato PNG que muestran cómo se planeó el diseño visual de cada pantalla antes de escribir el código:
 
@@ -32,14 +32,14 @@ En la carpeta `mockups/` se encuentran los bocetos iniciales en formato PNG que 
 * **`registro.png`**: El diseño de la pantalla visual para crear una cuenta desde cero.
 * **`suscripcion.png`**: El dibujo de cómo se presentan las opciones y los botones para suscribirse.
 
-## 🛠️ Tecnologías utilizadas
+## Tecnologías utilizadas
 
 Este proyecto está construido únicamente con lenguajes base, sin usar programas externos complejos:
 * **HTML**: Para crear la estructura de todas las páginas y formularios.
 * **CSS**: Para los colores, los tamaños y organizar el diseño en columnas.
 * **JavaScript**: Para las funciones interactivas (aún no implementadas) y para unir los moldes (templates) a las páginas.
 
-## 🚀 Cómo abrir el proyecto
+## Cómo abrir el proyecto
 
 Para ver esta página web en tu ordenador, no necesitas instalar nada especial:
 
@@ -47,7 +47,7 @@ Para ver esta página web en tu ordenador, no necesitas instalar nada especial:
 2. Busca el archivo llamado `index.html` en la carpeta principal.
 3. Haz doble clic sobre él. Se abrirá automáticamente en tu navegador web (Chrome, Edge, Safari, etc.) y podrás navegar por todas las pantallas.
 
-## 📌 Estado del proyecto
+## Estado del proyecto
 
 El proyecto se encuentra en su fase de diseño estático (Frontend). Las pantallas están conectadas entre sí mediante enlaces para simular la experiencia de usuario completa.
 
