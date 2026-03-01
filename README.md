@@ -29,9 +29,9 @@ Este proyecto está construido con lenguajes base, sin usar programas externos c
 * **JavaScript**: Para las funciones interactivas (aún no implementadas) y para unir los moldes (templates) a las páginas.
 
 ##  Recursos Adjuntos
-* [Descargar Proyecto (WebStorm ZIP)](PROYECTO_WEBSTORM.zip) 
-*  [Presentación del Proyecto (PDF)](#)
-
+* [Descargar Proyecto (WebStorm ZIP)](recursos/PROYECTO_WEBSTORM.zip) 
+*  [Presentación del Proyecto (PDF)](recursos/PresentacionSprint1G43.2.pdf)
+*  [Video del Proyecto (mp4)](recursos/VideoSprint1G43.2.mp4)
 
 ---
 *Proyecto creado para la asignatura de Programación Web y Móvil.*
