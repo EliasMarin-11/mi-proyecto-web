@@ -71,7 +71,6 @@
     font-weight: bold;
     font-size: 16px;
     border-radius: 60px;
-    font-family: 'Momo Trust Display', sans-serif;
     letter-spacing: 1.5px;
     box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -101,7 +100,6 @@
     gap: 10px;
     border: 2px solid #4E1A0A;
     border-radius: 30px;
-    font-family: 'Momo Trust Display', sans-serif;
     color: #4E1A0A;
     font-weight: bold;
     box-shadow: 3px 3px 0px rgba(78, 26, 10, 0.1);

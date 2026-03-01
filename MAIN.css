@@ -1,5 +1,5 @@
-body, input, button, textarea, select {
-    font-family: 'Showcard Gothic', "Times New Roman";
+body, input, button, textarea, select, h1, h2, h3, h4, h5, h6, p, a {
+    font-family: 'Inter', 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     color: #4a322d;

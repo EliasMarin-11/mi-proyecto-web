@@ -3,7 +3,6 @@
     margin-top: 85px;
     margin-bottom: 100px;
     padding-bottom: 20px;
-    font-family: 'Momo Trust Display', sans-serif;
 }
 
 .titulo-login, .titulo-registro {
@@ -36,7 +35,6 @@
     border: 3px solid #4E1A0A;
     border-radius: 60px;
     box-sizing: border-box;
-    font-family: 'Momo Trust Display', sans-serif;
     font-size: 16px;
     color: #4E1A0A;
     transition: all 0.3s ease;
@@ -77,7 +75,6 @@ a:hover {
     margin-bottom: 30px;
     cursor: pointer;
     border-radius: 60px;
-    font-family: 'Momo Trust Display', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
