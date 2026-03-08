@@ -124,3 +124,34 @@ footer {
     color: #E3412B;
     transform: translateX(8px);
 }
+
+/* Controlamos el tamaño del logo en el footer */
+.img-footer {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Quitamos el subrayado de los links de redes sociales */
+.social-icons a {
+    text-decoration: none;
+    font-weight: 900;
+}
+
+/* Ajuste de color para los títulos de columna si no usas variables */
+.columna h4 {
+    color: #4E1A0A; /* El marrón de tu marca */
+}
+
+/* Fix para que los logos de redes sociales no se desborden */
+.icon img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+}
+
+/* Este ajuste compensa que el logo de YouTube sea más horizontal */
+.img-extra-grande {
+    width: 52px; /* Le damos 10px más de ancho */
+    height: auto;
+}
