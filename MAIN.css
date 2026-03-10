@@ -55,6 +55,7 @@ main {
     font-size: 40px;
     color: #4a322d;
     box-shadow: 6px 6px 0px #4a322d;
+    overflow: hidden;
 }
 
 /* Tarjetas Trending */
