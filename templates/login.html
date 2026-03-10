@@ -3,14 +3,27 @@
     <h2 class="titulo-login">Inicia Sesión</h2>
 
     <div class="contenedor-formulario">
-        <form action="#" method="POST" class="formulario-login">
+        <form id="form-login" action="#" method="POST" class="formulario-login">
 
             <div class="grupo-input">
-                <input type="text" placeholder="E-mail" required class="input-oscuro">
+                <input
+                        type="email"
+                        id="emailLogin"
+                        placeholder="E-mail"
+                        required
+                        class="input-oscuro"
+                >
             </div>
 
             <div class="grupo-input">
-                <input type="password" placeholder="Contraseña" required class="input-oscuro">
+                <input
+                        type="password"
+                        id="passLogin"
+                        placeholder="Contraseña"
+                        required
+                        minlength="6"
+                        class="input-oscuro"
+                >
             </div>
 
             <div class="opciones-login">
