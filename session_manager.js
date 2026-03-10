@@ -27,8 +27,7 @@ function gestionarSesion() {
             if (usuario.foto && usuario.foto !== "") {
                 btnAuth.innerHTML = `<img src="${usuario.foto}" class="avatar-header" title="${usuario.nombre}">`;
             } else {
-                btnAuth.innerHTML = `<div class="icono-perfil-header" title="${usuario.nombre}">👤</div>`;
-            }
+                btnAuth.innerHTML = `<img src="img/Usuario SINFONDO.png" class="avatar-header" title="${usuario.nombre}">`;            }
         }
 
         // B. LÓGICA DE ROLES (Premium vs Básico)

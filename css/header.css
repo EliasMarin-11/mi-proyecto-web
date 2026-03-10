@@ -49,12 +49,6 @@
     justify-content: center;
 }
 
-.img-home {
-    width: auto;
-    height: 80px;
-    background-color: transparent;
-    display: block;
-}
 
 .header-centro, .header-derecha {
     display: flex;
@@ -62,6 +56,9 @@
 }
 
 .boton-sesion, .btn-nav-inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--marron-boton);
     color: white;
     text-decoration: none;
@@ -81,21 +78,6 @@
     box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
 }
 
-/* Le damos el mismo tamaño al icono del usuario que a la casita */
-.img-perfil {
-    width: auto;
-    height: 80px;
-    background-color: transparent;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-/* Un pequeño efecto para que los iconos de los lados se amplíen al pasar el ratón */
-.img-home:hover, .img-perfil:hover {
-    transform: scale(1.1);
-}
-
 /* 2. ESTADO BLOQUEADO */
 .boton-bloqueado {
     background-color: #d1c7bd !important; /* Un marrón muy clarito/grisáceo */
@@ -103,8 +85,8 @@
     cursor: not-allowed; /* Icono de prohibido */
     pointer-events: none; /* No permite hacer clic */
     box-shadow: 2px 2px 0px rgba(78, 26, 10, 0.1) !important;
-    opacity: 0.7;
-    filter: grayscale(0.5);
+    opacity: 0.9;
+    filter: grayscale(0.8);
 }
 
 /* 3. ESTADO PREMIUM ACTIVO */
@@ -113,20 +95,6 @@
     color: var(--marron-boton) !important;
     border: 3px solid var(--marron-boton);
     box-shadow: 6px 6px 0px var(--marron-boton);
-}
-
-/* 4. ESTILOS PARA EL AVATAR DE PERFIL */
-.avatar-header {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 3px solid var(--marron-boton);
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.avatar-header:hover {
-    transform: scale(1.1) rotate(5deg);
 }
 
 .icono-perfil-header {
@@ -139,4 +107,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+/* Ajustamos el tamaño de los iconos laterales para que tengan presencia */
+.img-home, .img-perfil, .avatar-header {
+    width: 70px;            /* Tamaño grande */
+    height: 70px;           /* Proporción 1:1 */
+    border-radius: 50%;      /* Círculo perfecto */
+    border: 4px solid var(--marron-boton); /* Borde Neo-brutalista */
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2); /* Sombra dura */
+    object-fit: cover;       /* Para que la foto no se estire */
+    background-color: transparent; /* Mantiene tu PNG sin fondo */
+    transition: transform 0.3s ease;
+}
+
+/* El efecto de hover que ya tenías, pero aplicado a todos */
+.img-home:hover, .img-perfil:hover, .avatar-header:hover {
+    transform: scale(1.1);
 }
