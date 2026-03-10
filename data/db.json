@@ -1,0 +1,75 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "email": "maria@ejemplo.com",
+      "password": "123",
+      "nombre": "María Cocinitas",
+      "rol": "premium"
+    },
+    {
+      "id": 2,
+      "email": "juan@ejemplo.com",
+      "password": "456",
+      "nombre": "Juan Novato",
+      "rol": "basico"
+    }
+  ],
+  "recetas": [
+    {
+      "id": 1,
+      "titulo": "Pollo al Horno con Limón",
+      "imagen": "img/pollo.jpg",
+      "tiempo": "45 min",
+      "dificultad": "Fácil",
+      "raciones": 4,
+      "descripcion": "Un clásico que nunca falla. Queda súper jugoso por dentro y con la piel crujiente por fuera.",
+      "ingredientes": [
+        "1 Pollo entero",
+        "2 Limones",
+        "4 Patatas medianas",
+        "3 Dientes de ajo",
+        "Aceite de oliva, sal y pimienta"
+      ],
+      "instrucciones": [
+        "Precalienta el horno a 200°C. Lava bien las patatas, córtalas en rodajas gruesas y ponlas en el fondo de una bandeja.",
+        "Salpimienta el pollo. Corta un limón por la mitad y mételo dentro del pollo junto con los ajos. Colócalo sobre las patatas.",
+        "Exprime el otro limón por encima, echa un chorro de aceite y hornea 45 minutos."
+      ],
+      "enlace": "VER_RECETA.html?id=1"
+    },
+    {
+      "id": 2,
+      "titulo": "Pasta Pesto Italiana",
+      "imagen": "img/pasta.jpg",
+      "tiempo": "20 min",
+      "dificultad": "Media",
+      "etiquetas": ["Rápido", "Vegetariano"],
+      "enlace": "VER_RECETA.html?id=2"
+    },
+    {
+      "id": 3,
+      "titulo": "Ensalada César Original",
+      "imagen": "img/ensalada.jpg",
+      "tiempo": "15 min",
+      "dificultad": "Fácil",
+      "etiquetas": ["Fresco", "Saludable"],
+      "enlace": "VER_RECETA.html?id=3"
+    },
+    {
+      "id": 4,
+      "titulo": "Wok de Ternera y Verduras",
+      "imagen": "img/wok.jpg",
+      "tiempo": "30 min",
+      "dificultad": "Media",
+      "etiquetas": ["Aprovechamiento", "Alto Proteína"],
+      "enlace": "VER_RECETA.html?id=4"
+    }
+  ],
+  "contenido": {
+    "home": {
+      "titulo_instrucciones": "¿Cómo funciona What's In Your Fridge?",
+      "titulo_trending": "Recetas que son tendencia"
+    }
+  }
+}
