@@ -16,11 +16,19 @@
 }
 
 .tarjeta-v-header h2 {
-    margin: 0 0 20px 0;
-    font-size: 24px;
+    margin: 0 0 15px 0;
+    font-size: 22px;
     color: #4E1A0A;
     font-weight: bold;
     text-transform: uppercase;
+
+    /* TRUCO MÁGICO PARA TITULOS: */
+    height: 54px;            /* Altura fija para el título (aprox 2 líneas) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   /* Corta el texto a partir de la 2ª línea */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .placeholder-v {
@@ -29,8 +37,9 @@
     background-color: #FFF5E9;
     border: 3px solid #4E1A0A;
     border-radius: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     box-shadow: inset 4px 4px 0px rgba(78, 26, 10, 0.05);
+    overflow: hidden;
 }
 
 .tarjeta-v-content p {

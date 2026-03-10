@@ -6,14 +6,19 @@ fetch('data/db.json')
 
         // 2. IMPORTANTE: Ahora iteramos sobre data.recetas (no sobre data a secas)
         data.recetas.forEach(receta => {
+            // Dentro del fetch de main.js, cambia el bloque de la tarjeta por este:
             const tarjetaHTML = `
                 <a href="${receta.enlace}" class="enlace_tarjeta">
-                    <article class="tarjeta_receta_vertical">
-                        <div class="foto_rectangular">
-                            <img src="${receta.imagen}" alt="${receta.titulo}" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+                    <article class="tarjeta-v">
+                         <div class="placeholder-v">
+                             <img src="${receta.imagen}" alt="${receta.titulo}" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
                         </div>
-                        <h3>${receta.titulo}</h3>
-                        <p>⏱️ ${receta.tiempo} | Dificultad: ${receta.dificultad}</p>
+                        <div class="tarjeta-v-header">
+                            <h2>${receta.titulo}</h2>
+                        </div>
+                        <div class="tarjeta-v-content">
+                            <p>⏱️ ${receta.tiempo} | ${receta.dificultad}</p>
+                        </div>
                     </article>
                 </a>
             `;

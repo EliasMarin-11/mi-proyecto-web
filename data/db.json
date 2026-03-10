@@ -24,6 +24,7 @@
       "dificultad": "Fácil",
       "raciones": 4,
       "descripcion": "Un clásico que nunca falla. Queda súper jugoso por dentro y con la piel crujiente por fuera.",
+      "alergenos": [],
       "ingredientes": [
         "1 Pollo entero",
         "2 Limones",
@@ -44,7 +45,23 @@
       "imagen": "img/pasta.jpg",
       "tiempo": "20 min",
       "dificultad": "Media",
-      "etiquetas": ["Rápido", "Vegetariano"],
+      "raciones": 2,
+      "descripcion": "La auténtica receta genovesa. Un plato rápido, aromático y delicioso para cualquier día de la semana.",
+      "alergenos": ["gluten", "lacteo", "frutoseco"],
+      "ingredientes": [
+        "200g de Pasta (Spaghetti o Macarrones)",
+        "50g de Hojas de Albahaca fresca",
+        "1 Diente de Ajo",
+        "30g de Piñones",
+        "50g de Queso Parmesano rallado",
+        "Aceite de Oliva Virgen Extra y Sal"
+      ],
+      "instrucciones": [
+        "Pon a hervir abundante agua con sal en una olla grande y cuece la pasta según las instrucciones del fabricante.",
+        "Mientras se hace la pasta, pon en un mortero o batidora la albahaca, el ajo, los piñones y un chorro generoso de aceite de oliva. Tritura bien.",
+        "Añade el queso parmesano a la mezcla y remueve hasta crear una salsa espesa.",
+        "Escurre la pasta (guardando un poco del agua de cocción) y mézclala con el pesto fuera del fuego. Si queda muy espeso, añade un chorrito del agua de cocción."
+      ],
       "enlace": "VER_RECETA.html?id=2"
     },
     {
@@ -53,7 +70,22 @@
       "imagen": "img/ensalada.jpg",
       "tiempo": "15 min",
       "dificultad": "Fácil",
-      "etiquetas": ["Fresco", "Saludable"],
+      "raciones": 2,
+      "descripcion": "Fresca, crujiente y con la salsa original que la hizo famosa en todo el mundo. ¡Cuidado que engancha!",
+      "alergenos": ["gluten", "lacteo", "huevo", "pescado"],
+      "ingredientes": [
+        "1 Lechuga Romana grande",
+        "1 Pechuga de Pollo",
+        "Picatostes de pan (Croutons)",
+        "Queso Parmesano en lascas",
+        "Para la salsa: 1 yema de huevo, 1 diente de ajo, 3 anchoas, zumo de medio limón, aceite y mostaza"
+      ],
+      "instrucciones": [
+        "Haz la pechuga de pollo a la plancha hasta que esté dorada. Déjala enfriar un poco y córtala en tiras.",
+        "Prepara la salsa: machaca el ajo y las anchoas hasta hacer una pasta. Añade la yema de huevo, la mostaza y el zumo de limón. Ve echando aceite poco a poco mientras bates para que emulsione (como una mayonesa).",
+        "Lava y corta la lechuga romana y ponla en una ensaladera grande.",
+        "Añade el pollo, los picatostes y baña todo con la salsa César. Corona con unas buenas lascas de queso parmesano."
+      ],
       "enlace": "VER_RECETA.html?id=3"
     },
     {
@@ -62,7 +94,22 @@
       "imagen": "img/wok.jpg",
       "tiempo": "30 min",
       "dificultad": "Media",
-      "etiquetas": ["Aprovechamiento", "Alto Proteína"],
+      "raciones": 2,
+      "descripcion": "Un salteado rápido, lleno de color y sabor asiático. Ideal para aprovechar las verduras que tienes por la nevera.",
+      "alergenos": ["soja", "sesamo", "gluten"],
+      "ingredientes": [
+        "300g de Ternera en tiras",
+        "3 Cucharadas de Salsa de Soja",
+        "1 Pimiento Rojo y 1 Cebolla",
+        "150g de Fideos de Huevo (Noodles)",
+        "Aceite de Sésamo y Semillas de Sésamo"
+      ],
+      "instrucciones": [
+        "Corta la ternera en tiras finas. Lava y pica el pimiento rojo y la cebolla en juliana fina.",
+        "Calienta aceite en un wok a fuego muy fuerte. Saltea la ternera 2 minutos hasta que se dore. Retírala y reserva.",
+        "En el mismo wok, saltea el pimiento y la cebolla a fuego vivo unos 3 minutos. Mientras, cuece los fideos.",
+        "Vuelve a incorporar la carne al wok con las verduras. Añade los fideos escurridos, la salsa de soja y el aceite de sésamo. Remueve 1 minuto a fuego fuerte y decora con sésamo."
+      ],
       "enlace": "VER_RECETA.html?id=4"
     }
   ],
