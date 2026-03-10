@@ -61,7 +61,7 @@
     gap: 20px; /*espacio entre botones*/
 }
 
-.boton-sesion {
+.boton-sesion, .btn-nav-inicio {
     background-color: var(--marron-boton);
     color: white;
     text-decoration: none;
@@ -75,7 +75,7 @@
 
 }
 
-.boton-sesion:hover {
+.boton-sesion:hover,.btn-nav-inicio:hover {
     background-color: var(--coral-principal);
     transform: translateY(-4px) scale(1.03);
     box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
@@ -94,4 +94,49 @@
 /* Un pequeño efecto para que los iconos de los lados se amplíen al pasar el ratón */
 .img-home:hover, .img-perfil:hover {
     transform: scale(1.1);
+}
+
+/* 2. ESTADO BLOQUEADO */
+.boton-bloqueado {
+    background-color: #d1c7bd !important; /* Un marrón muy clarito/grisáceo */
+    color: #f0f0f0 !important;
+    cursor: not-allowed; /* Icono de prohibido */
+    pointer-events: none; /* No permite hacer clic */
+    box-shadow: 2px 2px 0px rgba(78, 26, 10, 0.1) !important;
+    opacity: 0.7;
+    filter: grayscale(0.5);
+}
+
+/* 3. ESTADO PREMIUM ACTIVO */
+.premium-active {
+    background-color: #FFD700 !important; /* Color Oro */
+    color: var(--marron-boton) !important;
+    border: 3px solid var(--marron-boton);
+    box-shadow: 6px 6px 0px var(--marron-boton);
+}
+
+/* 4. ESTILOS PARA EL AVATAR DE PERFIL */
+.avatar-header {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid var(--marron-boton);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.avatar-header:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.icono-perfil-header {
+    font-size: 24px;
+    background-color: white;
+    border: 3px solid var(--marron-boton);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
