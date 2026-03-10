@@ -1,13 +1,11 @@
 function gestionarSesion() {
     const usuarioJson = localStorage.getItem('usuarioLogueado');
-
-    // 1. Capturamos los elementos por los IDs que pusimos en el header.html
     const btnAuth = document.getElementById('nav-auth');
     const btnFavoritos = document.getElementById('nav-favoritos');
     const btnSubir = document.getElementById('nav-subir');
     const btnPremium = document.getElementById('nav-premium');
 
-    // Limpieza inicial: quitamos bloqueos por defecto para recalcular
+    // 1. Limpieza inicial de bloqueos
     [btnFavoritos, btnSubir].forEach(btn => {
         if(btn) btn.classList.remove('boton-bloqueado');
     });
@@ -16,10 +14,8 @@ function gestionarSesion() {
         const usuario = JSON.parse(usuarioJson);
         document.body.classList.add('rol-' + usuario.rol);
 
-        // A. SUSTITUIR "ENTRAR" POR FOTO O ICONO
         if (btnAuth) {
             btnAuth.href = "PERFIL.html";
-            // Estilizamos el contenedor para que la foto luzca bien
             btnAuth.style.background = "none";
             btnAuth.style.boxShadow = "none";
             btnAuth.style.padding = "0";
@@ -27,30 +23,43 @@ function gestionarSesion() {
             if (usuario.foto && usuario.foto !== "") {
                 btnAuth.innerHTML = `<img src="${usuario.foto}" class="avatar-header" title="${usuario.nombre}">`;
             } else {
-                btnAuth.innerHTML = `<img src="img/Usuario SINFONDO.png" class="avatar-header" title="${usuario.nombre}">`;            }
+                // Tu PNG sin fondo para Juan o si María no tiene foto
+                btnAuth.innerHTML = `<img src="img/Usuario SINFONDO.png" class="avatar-header" title="${usuario.nombre}">`;
+            }
         }
 
-        // B. LÓGICA DE ROLES (Premium vs Básico)
+        // Lógica de botones según ROL
         if (usuario.rol === 'premium') {
-            // María: Todo desbloqueado y botón premium brillante
             if (btnPremium) {
-                btnPremium.innerHTML = "🌟 Eres Premium";
+                btnPremium.innerHTML = "🌟 Premium";
                 btnPremium.classList.add('premium-active');
             }
         } else {
-            // Juan (Básico): Bloqueamos "Subir Receta" con el color suave
             if (btnSubir) btnSubir.classList.add('boton-bloqueado');
         }
 
     } else {
-        // --- SI NO HAY NADIE LOGUEADO ---
-        // Bloqueamos Favoritos y Subir Receta para invitados
+        // Invitado: Bloqueamos funciones
         if (btnFavoritos) btnFavoritos.classList.add('boton-bloqueado');
         if (btnSubir) btnSubir.classList.add('boton-bloqueado');
     }
 }
 
+// 2. FUNCIÓN DE CIERRE DE SESIÓN (Separada para que sea más limpia)
+function configurarLogout() {
+    const btnLogout = document.getElementById('btn-logout');
+    if (btnLogout) {
+        btnLogout.onclick = (e) => { // Usamos .onclick para evitar duplicados
+            e.preventDefault();
+            localStorage.removeItem('usuarioLogueado');
+            window.location.href = "index.html";
+        };
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Mantengo tu margen de 200ms para el xlu-include-file
-    setTimeout(gestionarSesion, 200);
+    setTimeout(() => {
+        gestionarSesion();
+        configurarLogout(); // Activamos el botón de salir si existe en la página
+    }, 200);
 });
