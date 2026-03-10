@@ -61,7 +61,7 @@
     gap: 20px; /*espacio entre botones*/
 }
 
-.btn-dummy {
+.boton-sesion {
     background-color: var(--marron-boton);
     color: white;
     text-decoration: none;
@@ -75,7 +75,7 @@
 
 }
 
-.btn-dummy:hover {
+.boton-sesion:hover {
     background-color: var(--coral-principal);
     transform: translateY(-4px) scale(1.03);
     box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
