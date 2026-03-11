@@ -142,7 +142,6 @@ main {
     display: flex;
     gap: 30px;
     overflow-x: auto;
-    scroll-behavior: smooth; /* Hace que el movimiento sea fluido */
     padding: 20px 10px 40px 10px; /* Hueco abajo para que no se corte la sombra de la tarjeta */
     width: 100%;
 
@@ -279,4 +278,77 @@ main {
 .qr-card {
     background: white !important;
     padding: 15px;
+}
+
+
+/* quitar el subrayado azul los enlaces*/
+.enlace_tarjeta {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* La imagen de la tarjeta vertical del carrusel */
+.img-tarjeta-v {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+/* La imagen de la receta en la página de detalles */
+.img-receta-detalle {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Los iconos de alérgenos */
+.icono-alergeno {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    cursor: help;
+    object-fit: contain;
+}
+
+/* Mensajes de feedback (ej: sin alérgenos) */
+.texto-ok {
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Añade esto a tu MAIN.css para evitar que las fotos verticales rompan el diseño */
+.tarjeta-v {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.tarjeta-v-header {
+    flex-grow: 1;
+    padding-top: 15px;/* Empuja el contenido hacia abajo para que queden alineados */
+}
+.placeholder-v {
+    width: 100%;
+    height: 180px; /* Obligamos a que la caja de la foto mida siempre 180px */
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.nav-perfil-activo {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.avatar-header {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #4a322d;
 }
