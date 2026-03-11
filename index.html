@@ -48,31 +48,56 @@
     </section>
 
     <h2 class="titulo_centrado">Recetas que son tendencia</h2>
-    <section id="tarjetas_trending" class="slider_horizontal">
-    </section>
+
+    <div class="contenedor-slider-bruto">
+        <button id="btn-izq" class="btn-flecha">◄</button>
+
+        <section id="tarjetas_trending" class="slider_horizontal">
+        </section>
+
+        <button id="btn-der" class="btn-flecha">►</button>
+    </div>
 
     <section class="bloque_inferior">
 
         <h3 class="titulo_centrado">Lleva tu cocina al siguiente nivel</h3>
-        <article class="fila_horizontal">
+        <article class="fila_horizontal section-card">
             <div class="foto_rectangular">
-                <img src="img/PREMIUM_PROMO.png" alt="Premium" style="width:100%; height:100%; object-fit:cover; border-radius:16px;">
+                <img src="img/PREMIUM_PROMO.png" alt="Premium" class="img-promo">
+                <div class="sticker-pro">¡TOP!</div>
             </div>
             <div class="textos_columna">
-                <p><strong>¿Quieres cocinar sin límites?</strong></p>
-                <p>Hazte Premium para desbloquear el generador de recetas por IA ilimitado, eliminar todos los anuncios y guardar tus recetas favoritas en la nube para siempre.</p>
-                <p><a href="SUSCRIPCION.html" style="color: #E3412B; font-weight: bold; text-decoration: underline;">Descubre nuestros planes aquí</a></p>
+                <p class="subtitulo-bruto">¿Quieres cocinar sin límites?</p>
+                <ul class="lista-premium">
+                    <li>
+                        <span class="icono-lista">✨</span>
+                        <span><strong>IA Ilimitada:</strong> Genera recetas combinando lo imposible.</span>
+                    </li>
+                    <li>
+                        <span class="icono-lista">🚫</span>
+                        <span><strong>Sin Anuncios:</strong> Cocina sin distracciones ni interrupciones.</span>
+                    </li>
+                    <li>
+                        <span class="icono-lista">💾</span>
+                        <span><strong>Nube Infinita:</strong> Guarda tus creaciones para siempre.</span>
+                    </li>
+                </ul>
+                <a href="SUSCRIPCION.html" class="btn-buscar-dummy btn-cta">Ver Planes Premium</a>
             </div>
         </article>
 
         <h3 class="titulo_centrado">Tu nevera, siempre contigo</h3>
-        <article class="fila_horizontal reverse">
-            <div class="foto_rectangular" style="background-color: white; padding: 10px;">
-                <img src="img/QR_DOWNLOAD.png" alt="Descargar App" style="width:100%; height:100%; object-fit:contain;">
+        <article class="fila_horizontal reverse section-card">
+            <div class="foto_rectangular qr-card">
+                <img src="img/QR_DOWNLOAD.png" alt="Escanear QR" class="img-qr">
             </div>
             <div class="textos_columna">
-                <p><strong>Descarga la App de What's In Your Fridge</strong></p>
-                <p>Escanea el código QR con tu móvil para llevarte tus recetas al supermercado. Disponible para iOS y Android de forma totalmente gratuita.</p>
+                <p class="subtitulo-bruto">Cocina con tu móvil</p>
+                <p>No necesitas instalar nada. Escanea el código QR con la cámara de tu móvil y llévate la web al supermercado o ponla en la encimera mientras cocinas.</p>
+                <div class="app-badges">
+                    <span class="badge-dummy">📸 Abre tu cámara</span>
+                    <span class="badge-dummy">📱 Escanea y cocina</span>
+                </div>
             </div>
         </article>
 
@@ -88,5 +113,6 @@
 
 <script src="main.js"></script>
 <script src="session_manager.js"></script>
+<script src="buscador_manager.js"></script>
 </body>
 </html>

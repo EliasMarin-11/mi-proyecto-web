@@ -125,3 +125,158 @@ main {
 #resultados_lista > * {
     flex: 0 0 300px;
 }
+
+/* --- CARRUSEL DE TENDENCIAS --- */
+.contenedor-slider-bruto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* El slider que contiene las recetas */
+.slider_horizontal {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-behavior: smooth; /* Hace que el movimiento sea fluido */
+    padding: 20px 10px 40px 10px; /* Hueco abajo para que no se corte la sombra de la tarjeta */
+    width: 100%;
+
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+/* Ocultamos la barra de scroll fea del navegador */
+.slider_horizontal::-webkit-scrollbar {
+    display: none;
+}
+
+/* Botones de navegación (Flechas) */
+.btn-flecha {
+    background-color: #4a322d;
+    color: white;
+    border: 3px solid #4a322d;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin: 0 10px;
+}
+
+.btn-flecha:hover {
+    background-color: #E3412B; /* Tu color coral/rojo al pasar el ratón */
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+}
+
+
+/* --- MEJORAS BLOQUE INFERIOR --- */
+
+.section-card {
+    background-color: #fff;
+    border: 4px solid #4a322d;
+    border-radius: 30px;
+    padding: 40px !important; /* Forzamos un poco de aire interno */
+    box-shadow: 12px 12px 0px rgba(78, 26, 10, 0.1);
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.subtitulo-bruto {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #4a322d;
+    margin-bottom: 10px;
+}
+
+.lista-premium {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Más espacio entre los puntos */
+}
+
+.lista-premium li {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-cta {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+/* LA MAGIA: Convertimos un emoji de texto en un bloque gráfico potente */
+.icono-lista {
+    font-size: 28px; /* Lo hacemos gigante */
+    background-color: #FFF5E9; /* Tu crema de fondo */
+    border: 3px solid #4a322d;
+    border-radius: 12px;
+    width: 55px;
+    height: 55px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.15);
+    flex-shrink: 0; /* Para que no se aplaste si el texto es muy largo */
+}
+/* Stickers decorativos muy Neo-brutalistas */
+.sticker-pro {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background: #E3412B;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 900;
+    transform: rotate(-10deg);
+    border: 3px solid #4a322d;
+    box-shadow: 4px 4px 0px #4a322d;
+    font-size: 14px;
+}
+
+.app-badges {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.badge-dummy {
+    background: #FFF5E9;
+    color: #4a322d;
+    border: 3px solid #4a322d;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.1);
+}
+
+.img-promo, .img-qr {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.qr-card {
+    background: white !important;
+    padding: 15px;
+}
