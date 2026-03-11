@@ -185,3 +185,183 @@
     color: #4E1A0A;
     word-break: break-word;
 }
+
+/* ========================================== */
+/* CONTENEDOR PRINCIPAL                       */
+/* ========================================== */
+.zona-reseñas {
+    max-width: 900px; /* Bien ancho, como en tu imagen */
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.titulo-reseñas-bruto {
+    font-size: 28px;
+    color: var(--marron-boton);
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    border-bottom: 4px solid var(--marron-boton);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* ========================================== */
+/* 1. ESTILO BASE DE TODAS LAS TARJETAS       */
+/* ========================================== */
+.reseña-item {
+    background-color: var(--fondo-crema);
+    border: 4px solid var(--marron-boton);
+    border-radius: 16px;
+    padding: 20px 30px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center; /* Todo centrado verticalmente */
+    gap: 20px;
+    /* Sombra dura de color sólido, marca de la casa Neo-brutalista */
+    box-shadow: 6px 6px 0px var(--marron-boton);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reseña-item:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px var(--marron-boton);
+}
+
+/* EL AVATAR */
+.usuario-avatar-reseña {
+    width: 65px;
+    height: 65px;
+    border: 3px solid var(--marron-boton);
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background-color: white;
+}
+
+.usuario-avatar-reseña img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ========================================== */
+/* 2. LA CAJA PARA ESCRIBIR (Franja en 1 línea) */
+/* ========================================== */
+.caja-escribir {
+    background-color: white; /* Fondo blanco para destacar */
+}
+
+/* Alineamos el input, las estrellas y el botón en una fila perfecta */
+.caja-escribir .cuerpo-reseña {
+    display: flex;
+    flex-direction: row; /* En línea */
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+/* El Input estirado */
+.caja-escribir textarea.input-oscuro {
+    flex-grow: 1; /* Ocupa todo el espacio sobrante */
+    height: 55px;
+    padding: 15px 20px;
+    font-size: 16px;
+    font-family: inherit;
+    border: 3px solid var(--marron-boton);
+    border-radius: 8px;
+    resize: none;
+    outline: none;
+    margin: 0;
+    transition: all 0.2s ease;
+}
+
+.caja-escribir textarea.input-oscuro:focus {
+    box-shadow: 4px 4px 0px var(--coral-principal);
+    border-color: var(--coral-principal);
+    transform: translate(-2px, -2px);
+}
+
+/* El footer de la caja (estrellas + botón) */
+.caja-escribir .footer-reseña {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 0;
+}
+
+/* El botón de publicar estilo Neo-brutalista en pequeño */
+#btn-publicar-reseña {
+    background-color: white;
+    color: var(--marron-boton);
+    border: 3px solid var(--marron-boton);
+    padding: 10px 15px;
+    font-weight: 900;
+    text-transform: uppercase;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 3px 3px 0px var(--marron-boton);
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Evita que el texto se parta en dos */
+}
+
+#btn-publicar-reseña:hover {
+    background-color: var(--marron-boton);
+    color: white;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--coral-principal);
+}
+
+/* ========================================== */
+/* 3. LAS RESEÑAS PUBLICADAS (Nombre arriba)  */
+/* ========================================== */
+/* En las publicadas, el texto va en columna (arriba/abajo) */
+#lista-reseñas .cuerpo-reseña {
+    display: flex;
+    flex-direction: column; /* Apilado vertical */
+    align-items: flex-start;
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.nombre-usuario-reseña {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--marron-boton);
+}
+
+.texto-reseña {
+    margin: 0;
+    font-size: 15px;
+    color: #111;
+    line-height: 1.5;
+}
+
+/* ========================================== */
+/* 4. TU RESEÑA Y EL CUBO DE BASURA           */
+/* ========================================== */
+/* Tu tarjeta destaca con el borde Coral */
+.user-post-item {
+    border-color: var(--coral-principal);
+    background-color: white;
+    box-shadow: 6px 6px 0px var(--coral-principal);
+}
+
+.user-post-item:hover {
+    box-shadow: 8px 8px 0px var(--coral-principal);
+}
+
+/* El cubo de basura */
+.btn-trash-icon {
+    background: transparent;
+    border: none;
+    font-size: 26px; /* Grandecito para que sea fácil de clicar */
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 15px;
+    transition: transform 0.2s ease;
+}
+
+.btn-trash-icon:hover {
+    transform: scale(1.2) rotate(-10deg); /* Pequeña animación chula al pasar el ratón */
+}

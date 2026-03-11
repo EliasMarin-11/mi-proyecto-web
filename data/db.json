@@ -42,7 +42,23 @@
         "Salpimienta el pollo. Corta un limón por la mitad y mételo dentro del pollo junto con los ajos. Colócalo sobre las patatas.",
         "Exprime el otro limón por encima, echa un chorro de aceite y hornea 45 minutos."
       ],
-      "enlace": "VER_RECETA.html?id=1"
+      "enlace": "VER_RECETA.html?id=1",
+      "reseñas": [
+        {
+          "id": 101,
+          "usuario": "Carlos Gourmet",
+          "avatar": "img/Usuario SINFONDO.png",
+          "texto": "¡Increíble receta! Me ha salvado la cena de hoy. Muy bien explicada.",
+          "puntuacion": 5
+        },
+        {
+          "id": 102,
+          "usuario": "Lucía Veggie",
+          "avatar": "img/Usuario SINFONDO.png",
+          "texto": "La hice pero le puse un poco de romero y quedó espectacular.",
+          "puntuacion": 4
+        }
+      ]
     },
     {
       "id": 2,
@@ -72,7 +88,16 @@
         "Añade el queso parmesano a la mezcla y remueve hasta crear una salsa espesa.",
         "Escurre la pasta (guardando un poco del agua de cocción) y mézclala con el pesto fuera del fuego. Si queda muy espeso, añade un chorrito del agua de cocción."
       ],
-      "enlace": "VER_RECETA.html?id=2"
+      "enlace": "VER_RECETA.html?id=2",
+      "reseñas": [
+        {
+          "id": 103,
+          "usuario": "Mario PastaLover",
+          "avatar": "img/Usuario SINFONDO.png",
+          "texto": "El truco de guardar el agua de cocción es clave. Buenísimo.",
+          "puntuacion": 5
+        }
+      ]
     },
     {
       "id": 3,
@@ -101,7 +126,8 @@
         "Lava y corta la lechuga romana y ponla en una ensaladera grande.",
         "Añade el pollo, los picatostes y baña todo con la salsa César. Corona con unas buenas lascas de queso parmesano."
       ],
-      "enlace": "VER_RECETA.html?id=3"
+      "enlace": "VER_RECETA.html?id=3",
+      "reseñas": []
     },
     {
       "id": 4,
@@ -130,7 +156,8 @@
         "En el mismo wok, saltea el pimiento y la cebolla a fuego vivo unos 3 minutos. Mientras, cuece los fideos.",
         "Vuelve a incorporar la carne al wok con las verduras. Añade los fideos escurridos, la salsa de soja y el aceite de sésamo. Remueve 1 minuto a fuego fuerte y decora con sésamo."
       ],
-      "enlace": "VER_RECETA.html?id=4"
+      "enlace": "VER_RECETA.html?id=4",
+      "reseñas": []
     }
   ],
   "contenido": {
