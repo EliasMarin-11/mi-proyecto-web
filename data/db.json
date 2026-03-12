@@ -72,7 +72,7 @@
       "tipo_plato": "Primero",
       "dieta": ["vegetariano"],
       "descripcion": "La auténtica receta genovesa. Un plato rápido, aromático y delicioso para cualquier día de la semana.",
-      "alergenos": ["gluten", "lacteo", "frutoseco"],
+      "alergenos": ["gluten", "lacteos", "frutos_secos"],
       "ingredientes_clave": ["pasta", "albahaca", "ajo", "piñones", "queso", "parmesano"],
       "ingredientes": [
         "200g de Pasta (Spaghetti o Macarrones)",
@@ -111,7 +111,7 @@
       "tipo_plato": "primero",
       "dieta": [],
       "descripcion": "Fresca, crujiente y con la salsa original que la hizo famosa en todo el mundo. ¡Cuidado que engancha!",
-      "alergenos": ["gluten", "lacteo", "huevo", "pescado"],
+      "alergenos": ["gluten", "lacteos", "huevo", "pescado"],
       "ingredientes_clave": ["lechuga", "pollo", "pan", "queso", "parmesano", "huevo", "ajo", "anchoa", "limon", "mostaza"],
       "ingredientes": [
         "1 Lechuga Romana grande",
@@ -165,5 +165,77 @@
       "titulo_instrucciones": "¿Cómo funciona What's In Your Fridge?",
       "titulo_trending": "Recetas que son tendencia"
     }
-  }
+  },
+  "alergenos": [
+    {
+      "icono": "gluten",
+      "titulo": "CONTIENE GLUTEN",
+      "texto": "Trigo, centeno, cebada, avena."
+    },
+    {
+      "icono": "lacteos",
+      "titulo": "CONTIENE LÁCTEOS",
+      "texto": "Leche, queso, mantequilla, yogur."
+    },
+    {
+      "icono": "altramuces",
+      "titulo": "CONTIENE ALTRAMUCES",
+      "texto": "Altramuces y productos a base de altramuces."
+    },
+    {
+      "icono": "apio",
+      "titulo": "CONTIENE APIO",
+      "texto": "Tallos, hojas, semillas y raíces (colirrábano)."
+    },
+    {
+      "icono": "cacahuete",
+      "titulo": "CONTIENE CACAHUETES",
+      "texto": "Cacahuetes, manteca y aceite de cacahuete."
+    },
+    {
+      "icono": "crustaceos",
+      "titulo": "CONTIENE CRUSTÁCEOS",
+      "texto": "Gambas, langostinos, cangrejos, cigalas."
+    },
+    {
+      "icono": "sulfitos",
+      "titulo": "CONTIENE DIÓXIDO DE AZUFRE Y SULFITOS",
+      "texto": "Vinos, conservas, frutas desecadas."
+    },
+    {
+      "icono": "frutos_secos",
+      "titulo": "CONTIENE FRUTOS DE CÁSCARA",
+      "texto": "Almendras, avellanas, nueces, anacardos, pistachos."
+    },
+    {
+      "icono": "huevo",
+      "titulo": "CONTIENE HUEVO",
+      "texto": "Huevo y productos derivados."
+    },
+    {
+      "icono": "moluscos",
+      "titulo": "CONTIENE MOLUSCOS",
+      "texto": "Mejillones, almejas, caracoles, calamares."
+    },
+    {
+      "icono": "mostaza",
+      "titulo": "CONTIENE MOSTAZA",
+      "texto": "Mostaza en grano, en polvo o en salsa."
+    },
+    {
+      "icono": "pescado",
+      "titulo": "CONTIENE PESCADO",
+      "texto": "Pescado y productos a base de pescado."
+    },
+    {
+      "icono": "sesamo",
+      "titulo": "CONTIENE SÉSAMO",
+      "texto": "Semillas, pastas (tahini) y aceites de sésamo."
+    },
+    {
+      "icono": "soja",
+      "titulo": "CONTIENE SOJA",
+      "texto": "Salsa de soja, lecitina, brotes y derivados."
+    }
+  ]
 }

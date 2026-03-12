@@ -71,18 +71,43 @@ async function cargarDatosReceta(idReceta) {
         document.getElementById('receta-instrucciones').innerHTML = htmlInstrucciones;
 
         const cajaAlergenos = document.getElementById('receta-alergenos');
+
         if (cajaAlergenos) {
             if (receta.alergenos && receta.alergenos.length > 0) {
-                let htmlAlergenos = '';
-                receta.alergenos.forEach(alergeno => {
-                    htmlAlergenos += `<img src="img/${alergeno}.png" class="icono-alergeno">`;
-                });
-                cajaAlergenos.innerHTML = htmlAlergenos;
+
+                fetch('/templates/alergeno.html')
+                    .then(respuesta => respuesta.text())
+                    .then(templateHtml => {
+
+                        let htmlFinal = '';
+                        const parser = new DOMParser();
+
+                        receta.alergenos.forEach(idAlergeno => {
+
+                            const infoAlergeno = data.alergenos.find(a => a.icono === idAlergeno);
+
+                            if (infoAlergeno) {
+                                const doc = parser.parseFromString(templateHtml, 'text/html');
+                                const itemDoc = doc.querySelector('.alergeno-item');
+
+                                itemDoc.querySelector('.alergeno-icono').innerHTML =
+                                    `<img src="img/${infoAlergeno.icono}.png" class="img-alergeno-fluida" alt="${infoAlergeno.titulo}">`;
+
+                                itemDoc.querySelector('.alergeno-tooltip').innerHTML =
+                                    `<strong>${infoAlergeno.titulo}</strong><span>${infoAlergeno.texto}</span>`;
+
+                                htmlFinal += itemDoc.outerHTML;
+                            }
+                        });
+                        cajaAlergenos.innerHTML = htmlFinal;
+                    })
+                    .catch(error => console.error("Error cargando el template:", error));
+
             } else {
-                cajaAlergenos.innerHTML = `<span class="texto-ok">✅ Sin alérgenos declarados</span>`;
+                cajaAlergenos.innerHTML = `<span class="texto-sin-alergenos">✅ Libre de alérgenos</span>`;
+                cajaAlergenos.closest('.info-linea-iconos').classList.add('sin-alergenos');
             }
         }
-
     } catch (error) {
         console.error("❌ ERROR FATAL en el fetch:", error);
     }

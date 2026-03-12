@@ -1,41 +1,97 @@
 .alergeno-item {
     position: relative;
     display: inline-block;
-    cursor: pointer;
+    cursor: help;
+    margin-top: 5px;
 }
 
 .alergeno-icono {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: #888;
-    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: transform 0.2s ease;
 }
 
-/* La ventanita oculta */
+.alergeno-item:hover .alergeno-icono {
+    transform: scale(1.1);
+}
+
 .alergeno-tooltip {
     visibility: hidden;
-    background-color: #333 !important;
-    color: #fff;
-    text-align: center;
-    padding: 6px 12px;
-    border-radius: 5px;
-    position: absolute;
-    z-index: 100;
-    bottom: 140%;
-    left: 50%;
-    transform: translateX(-50%);
     opacity: 0;
-    transition: opacity 0.3s;
+
+    background-color: #FFFFFF !important;
+    color: #4E1A0A;
+
+    border: 3px solid #4E1A0A;
+    border-radius: 10px;
+    box-shadow: 5px 5px #4E1A0A;
+
+    padding: 3px 8px !important;
+    position: absolute;
+    z-index: 999;
+
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+
     font-size: 13px;
+    line-height: 1 !important;
+    text-align: center;
     white-space: nowrap;
-    width: max-content !important; /* Fuerza a que la caja envuelva todo el texto */
-    height: auto !important; /* Evita que se quede pequeña */
-    line-height: normal;
+    width: max-content !important;
+
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
 }
 
-/* Mostrar al pasar el ratón */
+.alergeno-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #4E1A0A transparent transparent transparent;
+}
+
 .alergeno-item:hover .alergeno-tooltip {
     visibility: visible;
     opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.alergeno-tooltip strong {
+    display: block;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    color: #E3412B;
+    line-height: 1.2;
+}
+
+.alergeno-tooltip span {
+    display: block;
+    margin: 0 !important;
+    line-height: 1.2;
+    font-size: 11px;
+}
+
+.img-alergeno-fluida {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.texto-sin-alergenos {
+    font-size: 14px;
+    color: #4E1A0A;
+    font-weight: bold;
 }
