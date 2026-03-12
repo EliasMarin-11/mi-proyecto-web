@@ -19,6 +19,7 @@
     min-height: 350px;
     border: 4px solid #4E1A0A;
     box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
+    position: relative;
 }
 
 .bloque-foto {
@@ -27,10 +28,17 @@
     background-color: #FFF5E9;
     display: flex;
     align-items: center;
-    justify-content: center;
     font-size: 120px;
     color: #4E1A0A;
     border-right: 4px solid #4E1A0A;
+}
+
+.bloque-foto img.img-receta-detalle {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta la foto perfectamente sin deformarla */
+    display: block;
+    border-radius: 0 !important;
 }
 
 .bloque-info {
@@ -364,4 +372,18 @@
 
 .btn-trash-icon:hover {
     transform: scale(1.2) rotate(-10deg); /* Pequeña animación chula al pasar el ratón */
+}
+
+.etiqueta-estrellas {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    background-color: white;
+    border: 3px solid #4E1A0A;
+    border-radius: 12px;
+    padding: 8px 15px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    box-shadow: 4px 4px 0px #4E1A0A; /* Sombra Neo-brutalista dura */
+    z-index: 10; /* Siempre por encima de la foto */
 }

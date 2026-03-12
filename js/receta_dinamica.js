@@ -45,6 +45,14 @@ async function cargarDatosReceta(idReceta) {
         document.getElementById('receta-dificultad').textContent = receta.dificultad;
         document.getElementById('receta-descripcion').textContent = receta.descripcion;
 
+        const contenedorEstrellas = document.getElementById('receta-estrellas-hero');
+        if (contenedorEstrellas) {
+            // Asumimos que en tu db.json tienes algo como "puntuacion": 4.
+            // Si no lo tiene, por defecto pintará 5 estrellas.
+            const numEstrellas = receta.estrellas || 5;
+            contenedorEstrellas.innerHTML = "⭐".repeat(numEstrellas);
+        }
+
         if (document.getElementById('receta-raciones')) {
             document.getElementById('receta-raciones').textContent = receta.raciones;
         }
