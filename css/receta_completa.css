@@ -108,17 +108,21 @@
 
 .col-ingredientes {
     width: 35%;
-    background-color: #FFF5E9;
+    background-color: #FFFAF3;
     padding: 40px;
     box-sizing: border-box;
     border-right: 4px solid #4E1A0A;
+    background-image: linear-gradient(180deg, #FFFAF3 0%, #F9F1E7 100%);
 }
 
 .col-ingredientes h3 {
-    font-size: 20px;
-    margin: 0 0 20px 0;
-    font-weight: bold;
+    font-size: 22px;
+    margin: 0 0 25px 0;
+    font-weight: 900;
     text-transform: uppercase;
+    color: #4E1A0A;
+    display: inline-block;
+    border-bottom: 3px solid #E3412B;
 }
 
 .lista-ingredientes-alergenos {
@@ -128,13 +132,39 @@
 }
 
 .lista-ingredientes-alergenos li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 18px;
     font-size: 16px;
     color: #4E1A0A;
     font-weight: 500;
+    line-height: 1.4;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.lista-ingredientes-alergenos li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    background-color: #E3412B;
+    border: 2px solid #4E1A0A;
+    border-radius: 3px;
+    box-shadow: 2px 2px 0px #4E1A0A;
+    transition: all 0.2s ease;
+}
+
+.lista-ingredientes-alergenos li:hover {
+    transform: translateX(5px);
+    color: #000;
+}
+
+.lista-ingredientes-alergenos li:hover::before {
+    background-color: #4E1A0A;
+    transform: rotate(45deg);
+    box-shadow: 0px 0px 0px transparent;
 }
 
 .col-instrucciones {
@@ -146,18 +176,42 @@
 }
 
 .col-instrucciones h3 {
-    font-size: 20px;
-    margin: 0 0 20px 0;
-    font-weight: bold;
+    font-size: 22px;
+    margin: 0 0 25px 0;
+    font-weight: 900;
     text-transform: uppercase;
+    color: #4E1A0A;
+    display: inline-block;
+    border-bottom: 3px solid #E3412B;
 }
 
 .parrafos-instrucciones p {
-    margin-bottom: 20px;
+    background-color: #FFFFFF;
+    border: 3px solid #4E1A0A;
+    border-radius: 12px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
     line-height: 1.6;
     font-size: 16px;
     color: #4E1A0A;
+    box-shadow: 5px 5px 0px #4E1A0A;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     word-break: break-word;
+}
+.parrafos-instrucciones p strong {
+    color: #E3412B;
+    font-size: 18px;
+    font-weight: 900;
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.parrafos-instrucciones p:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0px #E3412B;
+    border-color: #E3412B;
 }
 
 .zona-reseñas {
@@ -357,4 +411,51 @@
     display: flex;
     gap: 8px;
     align-items: center;
+}
+
+.contenedor-restringido {
+    position: relative;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.sombra-desvanecimiento {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(to top, #FFFFFF, transparent);
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 2;
+}
+
+.col-ingredientes .sombra-desvanecimiento {
+    background: linear-gradient(to top, #F9F1E7, transparent);
+}
+
+.btn-ver-mas {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    background-color: transparent;
+    color: #E3412B;
+    border: 3px solid #E3412B;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 900;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn-ver-mas:hover {
+    background-color: #E3412B;
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0px #4E1A0A;
 }

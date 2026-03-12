@@ -108,7 +108,50 @@ async function cargarDatosReceta(idReceta) {
                 cajaAlergenos.closest('.info-linea-iconos').classList.add('sin-alergenos');
             }
         }
+        aplicarVerMas('receta-descripcion', 100);
+        aplicarVerMas('receta-ingredientes', 350);
+        aplicarVerMas('receta-instrucciones', 450);
     } catch (error) {
         console.error("❌ ERROR FATAL en el fetch:", error);
     }
+}
+
+
+function aplicarVerMas(idElemento, alturaMaxima) {
+    const elemento = document.getElementById(idElemento);
+    if (!elemento) return;
+
+    setTimeout(() => {
+        if (elemento.scrollHeight > alturaMaxima) {
+
+            const wrapper = document.createElement('div');
+            wrapper.className = 'contenedor-restringido';
+            wrapper.style.maxHeight = alturaMaxima + 'px';
+
+            elemento.parentNode.insertBefore(wrapper, elemento);
+            wrapper.appendChild(elemento);
+
+            const sombra = document.createElement('div');
+            sombra.className = 'sombra-desvanecimiento';
+            wrapper.appendChild(sombra);
+
+            const btn = document.createElement('button');
+            btn.className = 'btn-ver-mas';
+            btn.innerHTML = 'VER MÁS ⬇️';
+
+            wrapper.parentNode.insertBefore(btn, wrapper.nextSibling);
+
+            btn.onclick = () => {
+                if (wrapper.style.maxHeight === alturaMaxima + 'px') {
+                    wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+                    btn.innerHTML = 'VER MENOS ⬆️';
+                    sombra.style.opacity = '0';
+                } else {
+                    wrapper.style.maxHeight = alturaMaxima + 'px';
+                    btn.innerHTML = 'VER MÁS ⬇️';
+                    sombra.style.opacity = '1';
+                }
+            };
+        }
+    }, 100);
 }
