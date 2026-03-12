@@ -16,6 +16,7 @@
     border-radius: 30px;
     overflow: hidden;
     background-color: #FFFFFF;
+    height: auto;
     min-height: 350px;
     border: 4px solid #4E1A0A;
     box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
@@ -26,18 +27,18 @@
     width: 45%;
     flex-shrink: 0;
     background-color: #FFF5E9;
-    display: flex;
-    align-items: center;
-    font-size: 120px;
-    color: #4E1A0A;
     border-right: 4px solid #4E1A0A;
+    cursor: zoom-in;
+    position: relative;
 }
 
 .bloque-foto img.img-receta-detalle {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Recorta la foto perfectamente sin deformarla */
-    display: block;
+    object-fit: cover;
     border-radius: 0 !important;
 }
 
@@ -78,8 +79,9 @@
 
 .info-linea-iconos {
     display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
     font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
@@ -96,7 +98,8 @@
 
 .cuadritos {
     display: flex;
-    gap: 6px;
+    align-items: center;
+    gap: 0px;
 }
 
 .cuadritos span {
@@ -386,4 +389,32 @@
     letter-spacing: 2px;
     box-shadow: 4px 4px 0px #4E1A0A; /* Sombra Neo-brutalista dura */
     z-index: 10; /* Siempre por encima de la foto */
+}
+
+/* 3. Damos un tamaño fijo a los alérgenos que inyecta JS */
+.icono-alergeno {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin: 0;
+}
+
+/* 4. Arreglamos la lista (Tiempo, Dificultad, Raciones) */
+/* (Esta clase no estaba en tu CSS, por eso el navegador le ponía espacios feos) */
+.lista-info-breve {
+    list-style: none; /* Quitamos los puntos negros feos por defecto */
+    padding: 0; /* Quitamos la sangría invisible de la izquierda */
+    margin: 0 0 25px 0; /* 0 por arriba para pegarlo a los alérgenos, 25px por abajo */
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Espacio entre las 3 líneas */
+}
+
+.lista-info-breve li {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Separación entre el emoji y el texto */
+    font-size: 15px;
+    color: #4E1A0A;
+    font-weight: 600;
 }
