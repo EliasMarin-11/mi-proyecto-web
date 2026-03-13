@@ -1,5 +1,5 @@
 // ==========================================
-// RECETA_DINAMICA.JS - VERSION CORREGIDA
+// RECETA_DINAMICA.JS
 // ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // 2. Función "Vigilante" para esperar al template
+    //Función "Vigilante" para esperar al template
     function esperarTemplate() {
         const tituloDOM = document.getElementById('receta-titulo');
 
