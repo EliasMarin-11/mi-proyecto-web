@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     esperarTemplate();
 });
 
-// 3. La función que hace el trabajo sucio
 async function cargarDatosReceta(idReceta) {
     try {
         const respuesta = await fetch('data/db.json');
@@ -39,7 +38,7 @@ async function cargarDatosReceta(idReceta) {
             return;
         }
 
-        // --- INYECCIÓN DE DATOS (Tus líneas de antes) ---
+        // inyección de datos
         document.getElementById('receta-titulo').textContent = receta.titulo;
         document.getElementById('receta-tiempo').textContent = receta.tiempo;
         document.getElementById('receta-dificultad').textContent = receta.dificultad;
@@ -47,8 +46,6 @@ async function cargarDatosReceta(idReceta) {
 
         const contenedorEstrellas = document.getElementById('receta-estrellas-hero');
         if (contenedorEstrellas) {
-            // Asumimos que en tu db.json tienes algo como "puntuacion": 4.
-            // Si no lo tiene, por defecto pintará 5 estrellas.
             const numEstrellas = receta.estrellas || 5;
             contenedorEstrellas.innerHTML = "⭐".repeat(numEstrellas);
         }
@@ -115,7 +112,6 @@ async function cargarDatosReceta(idReceta) {
         console.error("❌ ERROR FATAL en el fetch:", error);
     }
 }
-
 
 function aplicarVerMas(idElemento, alturaMaxima) {
     const elemento = document.getElementById(idElemento);
