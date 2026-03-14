@@ -1,0 +1,65 @@
+<main class="contenedor-crear-receta">
+  <div class="cabecera-formulario">
+    <input type="text" placeholder="Nombre de tu deliciosa receta..." class="input-titulo-principal">
+  </div>
+
+  <form action="#" method="POST" class="formulario-dos-columnas">
+
+    <div class="columna-izquierda">
+
+      <div class="grupo-input">
+        <input type="text" placeholder="Tiempo total (ej. 45 min)" class="input-linea">
+      </div>
+      <div class="grupo-input">
+        <input type="text" placeholder="Raciones (ej. 4 personas)" class="input-linea">
+      </div>
+
+      <div class="grupo-etiquetas">
+        <button type="button" class="etiqueta">Saludable</button>
+        <button type="button" class="etiqueta">Vegano</button>
+        <button type="button" class="etiqueta">Cena Rápida</button>
+      </div>
+
+      <div class="seccion-lista">
+        <h3>Ingredientes</h3>
+
+        <div class="fila-ingrediente">
+          <input type="text" placeholder="Cant. (ej. 200)" class="input-caja">
+          <input type="text" placeholder="Medida (gr, ml...)" class="input-caja">
+          <input type="text" placeholder="Ingrediente (ej. Harina)" class="input-caja">
+        </div>
+
+        <div class="fila-ingrediente">
+          <input type="text" placeholder="Cant. (ej. 2)" class="input-caja">
+          <input type="text" placeholder="Medida (ud, cdas...)" class="input-caja">
+          <input type="text" placeholder="Ingrediente (ej. Huevos)" class="input-caja">
+        </div>
+
+        <button type="button" class="btn-anadir">+ Añadir ingrediente</button>
+      </div>
+
+      <div class="seccion-lista">
+        <h3>Instrucciones paso a paso</h3>
+        <textarea placeholder="Paso 1: Empieza picando la cebolla muy fina..." class="textarea-paso"></textarea>
+        <textarea placeholder="Paso 2: Calienta el aceite en una sartén a fuego medio..." class="textarea-paso"></textarea>
+        <textarea placeholder="Paso 3: Añade los ingredientes y remueve durante 5 minutos..." class="textarea-paso"></textarea>
+        <button type="button" class="btn-anadir">+ Añadir paso</button>
+      </div>
+    </div>
+
+    <div class="columna-derecha">
+
+      <div class="caja-subir-foto">
+        <span class="icono-foto">📷</span>
+        <p>Sube una foto apetitosa de tu plato</p>
+      </div>
+
+      <div class="grupo-descripcion">
+        <h3>Breve descripción</h3>
+        <textarea placeholder="Cuenta la historia de esta receta, por qué te gusta tanto, o si tienes algún truco secreto para que quede perfecta..." class="textarea-desc"></textarea>
+      </div>
+
+      <button type="submit" class="btn-guardar-principal">Publicar Receta</button>
+    </div>
+  </form>
+</main>

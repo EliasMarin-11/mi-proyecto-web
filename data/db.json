@@ -1,0 +1,236 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "email": "maria@ejemplo.com",
+      "password": "123456",
+      "nombre": "María Cocinitas",
+      "rol": "premium"
+    },
+    {
+      "id": 2,
+      "email": "juan@ejemplo.com",
+      "password": "456789",
+      "nombre": "Juan Novato",
+      "rol": "basico"
+    }
+  ],
+  "recetas": [
+    {
+      "id": 1,
+      "titulo": "Pollo al Horno con Limón",
+      "imagen": "img/pollo.jpg",
+      "tiempo": "45 min",
+      "duracion_categoria": "medio",
+      "dificultad": "Fácil",
+      "raciones": 4,
+      "estrellas": 4,
+      "tipo_plato": "segundo",
+      "dieta": ["singluten", "sinlactosa"],
+      "descripcion": "Un clásico que nunca falla. Queda súper jugoso por dentro y con la piel crujiente por fuera.",
+      "alergenos": [],
+      "ingredientes_clave": ["pollo", "limon", "patata", "ajo"],
+      "ingredientes": [
+        "1 Pollo entero",
+        "2 Limones",
+        "4 Patatas medianas",
+        "3 Dientes de ajo",
+        "Aceite de oliva, sal y pimienta"
+      ],
+      "instrucciones": [
+        "Precalienta el horno a 200°C. Lava bien las patatas, córtalas en rodajas gruesas y ponlas en el fondo de una bandeja.",
+        "Salpimienta el pollo. Corta un limón por la mitad y mételo dentro del pollo junto con los ajos. Colócalo sobre las patatas.",
+        "Exprime el otro limón por encima, echa un chorro de aceite y hornea 45 minutos."
+      ],
+      "enlace": "VER_RECETA.html?id=1",
+      "reseñas": [
+        {
+          "id": 101,
+          "usuario": "Carlos Gourmet",
+          "avatar": "img/Usuario SINFONDO.png",
+          "texto": "¡Increíble receta! Me ha salvado la cena de hoy. Muy bien explicada.",
+          "puntuacion": 5
+        },
+        {
+          "id": 102,
+          "usuario": "Lucía Veggie",
+          "avatar": "img/Usuario SINFONDO.png",
+          "texto": "La hice pero le puse un poco de romero y quedó espectacular.",
+          "puntuacion": 4
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "titulo": "Pasta Pesto Italiana",
+      "imagen": "img/pasta.jpg",
+      "tiempo": "20 min",
+      "duracion_categoria": "Rápido",
+      "dificultad": "Media",
+      "raciones": 2,
+      "estrellas": 5,
+      "tipo_plato": "Primero",
+      "dieta": ["vegetariano"],
+      "descripcion": "La auténtica receta genovesa. Un plato rápido, aromático y delicioso para cualquier día de la semana.",
+      "alergenos": ["gluten", "lacteos", "frutos_secos"],
+      "ingredientes_clave": ["pasta", "albahaca", "ajo", "piñones", "queso", "parmesano"],
+      "ingredientes": [
+        "200g de Pasta (Spaghetti o Macarrones)",
+        "50g de Hojas de Albahaca fresca",
+        "1 Diente de Ajo",
+        "30g de Piñones",
+        "50g de Queso Parmesano rallado",
+        "Aceite de Oliva Virgen Extra y Sal"
+      ],
+      "instrucciones": [
+        "Pon a hervir abundante agua con sal en una olla grande y cuece la pasta según las instrucciones del fabricante.",
+        "Mientras se hace la pasta, pon en un mortero o batidora la albahaca, el ajo, los piñones y un chorro generoso de aceite de oliva. Tritura bien.",
+        "Añade el queso parmesano a la mezcla y remueve hasta crear una salsa espesa.",
+        "Escurre la pasta (guardando un poco del agua de cocción) y mézclala con el pesto fuera del fuego. Si queda muy espeso, añade un chorrito del agua de cocción."
+      ],
+      "enlace": "VER_RECETA.html?id=2",
+      "reseñas": [
+        {
+          "id": 103,
+          "usuario": "Mario PastaLover",
+          "avatar": "img/Usuario SINFONDO.png",
+          "texto": "El truco de guardar el agua de cocción es clave. Buenísimo.",
+          "puntuacion": 5
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "titulo": "Ensalada César Original",
+      "imagen": "img/ensalada.jpg",
+      "tiempo": "15 min",
+      "duracion_categoria": "Rápido",
+      "dificultad": "Fácil",
+      "raciones": 2,
+      "estrellas": 4,
+      "tipo_plato": "primero",
+      "dieta": [],
+      "descripcion": "Fresca, crujiente y con la salsa original que la hizo famosa en todo el mundo. ¡Cuidado que engancha!",
+      "alergenos": ["gluten", "lacteos", "huevo", "pescado"],
+      "ingredientes_clave": ["lechuga", "pollo", "pan", "queso", "parmesano", "huevo", "ajo", "anchoa", "limon", "mostaza"],
+      "ingredientes": [
+        "1 Lechuga Romana grande",
+        "1 Pechuga de Pollo",
+        "Picatostes de pan (Croutons)",
+        "Queso Parmesano en lascas",
+        "Para la salsa: 1 yema de huevo, 1 diente de ajo, 3 anchoas, zumo de medio limón, aceite y mostaza"
+      ],
+      "instrucciones": [
+        "Haz la pechuga de pollo a la plancha hasta que esté dorada. Déjala enfriar un poco y córtala en tiras.",
+        "Prepara la salsa: machaca el ajo y las anchoas hasta hacer una pasta. Añade la yema de huevo, la mostaza y el zumo de limón. Ve echando aceite poco a poco mientras bates para que emulsione (como una mayonesa).",
+        "Lava y corta la lechuga romana y ponla en una ensaladera grande.",
+        "Añade el pollo, los picatostes y baña todo con la salsa César. Corona con unas buenas lascas de queso parmesano."
+      ],
+      "enlace": "VER_RECETA.html?id=3",
+      "reseñas": []
+    },
+    {
+      "id": 4,
+      "titulo": "Wok de Ternera y Verduras",
+      "imagen": "img/wok.jpg",
+      "tiempo": "30 min",
+      "duracion_categoria": "Medio",
+      "dificultad": " Media",
+      "raciones": 2,
+      "estrellas": 3,
+      "tipo_plato": "segundo",
+      "dieta": ["sinlactosa"],
+      "descripcion": "Un salteado rápido, lleno de color y sabor asiático. Ideal para aprovechar las verduras que tienes por la nevera.",
+      "alergenos": ["soja", "sesamo", "gluten"],
+      "ingredientes_clave": ["ternera", "soja", "pimiento", "cebolla", "fideo", "sesamo"],
+      "ingredientes": [
+        "300g de Ternera en tiras",
+        "3 Cucharadas de Salsa de Soja",
+        "1 Pimiento Rojo y 1 Cebolla",
+        "150g de Fideos de Huevo (Noodles)",
+        "Aceite de Sésamo y Semillas de Sésamo"
+      ],
+      "instrucciones": [
+        "Corta la ternera en tiras finas. Lava y pica el pimiento rojo y la cebolla en juliana fina.",
+        "Calienta aceite en un wok a fuego muy fuerte. Saltea la ternera 2 minutos hasta que se dore. Retírala y reserva.",
+        "En el mismo wok, saltea el pimiento y la cebolla a fuego vivo unos 3 minutos. Mientras, cuece los fideos.",
+        "Vuelve a incorporar la carne al wok con las verduras. Añade los fideos escurridos, la salsa de soja y el aceite de sésamo. Remueve 1 minuto a fuego fuerte y decora con sésamo."
+      ],
+      "enlace": "VER_RECETA.html?id=4",
+      "reseñas": []
+    }
+  ],
+
+  "alergenos": [
+    {
+      "icono": "gluten",
+      "titulo": "CONTIENE GLUTEN",
+      "texto": "Trigo, centeno, cebada, avena."
+    },
+    {
+      "icono": "lacteos",
+      "titulo": "CONTIENE LÁCTEOS",
+      "texto": "Leche, queso, mantequilla, yogur."
+    },
+    {
+      "icono": "altramuces",
+      "titulo": "CONTIENE ALTRAMUCES",
+      "texto": "Altramuces y productos a base de altramuces."
+    },
+    {
+      "icono": "apio",
+      "titulo": "CONTIENE APIO",
+      "texto": "Tallos, hojas, semillas y raíces (colirrábano)."
+    },
+    {
+      "icono": "cacahuete",
+      "titulo": "CONTIENE CACAHUETES",
+      "texto": "Cacahuetes, manteca y aceite de cacahuete."
+    },
+    {
+      "icono": "crustaceos",
+      "titulo": "CONTIENE CRUSTÁCEOS",
+      "texto": "Gambas, langostinos, cangrejos, cigalas."
+    },
+    {
+      "icono": "sulfitos",
+      "titulo": "CONTIENE DIÓXIDO DE AZUFRE Y SULFITOS",
+      "texto": "Vinos, conservas, frutas desecadas."
+    },
+    {
+      "icono": "frutos_secos",
+      "titulo": "CONTIENE FRUTOS DE CÁSCARA",
+      "texto": "Almendras, avellanas, nueces, anacardos, pistachos."
+    },
+    {
+      "icono": "huevo",
+      "titulo": "CONTIENE HUEVO",
+      "texto": "Huevo y productos derivados."
+    },
+    {
+      "icono": "moluscos",
+      "titulo": "CONTIENE MOLUSCOS",
+      "texto": "Mejillones, almejas, caracoles, calamares."
+    },
+    {
+      "icono": "mostaza",
+      "titulo": "CONTIENE MOSTAZA",
+      "texto": "Mostaza en grano, en polvo o en salsa."
+    },
+    {
+      "icono": "pescado",
+      "titulo": "CONTIENE PESCADO",
+      "texto": "Pescado y productos a base de pescado."
+    },
+    {
+      "icono": "sesamo",
+      "titulo": "CONTIENE SÉSAMO",
+      "texto": "Semillas, pastas (tahini) y aceites de sésamo."
+    },
+    {
+      "icono": "soja",
+      "titulo": "CONTIENE SOJA",
+      "texto": "Salsa de soja, lecitina, brotes y derivados."
+    }
+  ]
+}
