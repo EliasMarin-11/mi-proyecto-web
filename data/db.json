@@ -160,12 +160,7 @@
       "reseñas": []
     }
   ],
-  "contenido": {
-    "home": {
-      "titulo_instrucciones": "¿Cómo funciona What's In Your Fridge?",
-      "titulo_trending": "Recetas que son tendencia"
-    }
-  },
+
   "alergenos": [
     {
       "icono": "gluten",
