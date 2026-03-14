@@ -10,23 +10,20 @@
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/alergeno.css">
   <link rel="stylesheet" href="MAIN.css">
-
-  <script src="js/xlu-include-file.js"></script>
 </head>
-<body style="background-color: #f6f6f6; margin: 0; padding: 0;">
 
-<header id="main_header" xlu-include-file="templates/header.html"></header>
+<body>
 
-<main style="padding: 20px 0;">
-  <div xlu-include-file="templates/receta_completa.html"></div>
+<header id="main_header" data-include="templates/header.html"></header>
+
+<main>
+  <div data-include="templates/receta_completa.html"></div>
 </main>
 
-<footer id="main_footer" xlu-include-file="templates/footer_simple.html"></footer>
+<footer id="main_footer" data-include="templates/footer_simple.html"></footer>
 
-<script>
-  xLuIncludeFile();
-</script>
 
+<script src="js/layout.js"></script>
 <script src="js/receta_vertical.js"></script>
 <script src="js/perfil.js"></script>
 <script src="js/ver_receta.js"></script>

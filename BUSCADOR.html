@@ -11,27 +11,24 @@
     <link rel="stylesheet" href="MAIN.css">
     <link rel="stylesheet" href="css/alergeno.css">
 
-    <script src="js/xlu-include-file.js"></script>
 </head>
 <body>
 
-<header xlu-include-file="templates/header.html"></header>
+<header data-include="templates/header.html"></header>
 
-<section xlu-include-file="templates/buscador.html"></section>
+<section data-include="templates/buscador.html"></section>
 
 <main id="resultados_lista">
-    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
-    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
-    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
-    <div xlu-include-file="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
 </main>
 
-<footer xlu-include-file="templates/footer_simple.html"></footer>
+<footer data-include="templates/footer_simple.html"></footer>
 
-<script>
-    xLuIncludeFile();
-</script>
 
+<script src="js/layout.js"></script>
 <script src="js/perfil.js"></script>
 <script src="js/buscador.js"></script>
 </body>

@@ -15,7 +15,7 @@ El grupo está formado por:
 * **`css/`**: Aquí guardamos los archivos de estilo.
 * **`templates/`**: Contiene las plantillas usadas en las distintas páginas de la web.
 * **`MAIN.css`**: Es el archivo principal de diseño general.
-* **Archivo Javascript (`xlu-include-file.js`)**: El código que se nos proporcionó para poder unir los templates con las páginas principales HTML.
+* **Archivo Javascript (``)**: El código que se nos proporcionó para poder unir los templates con las páginas principales HTML.
 
 ## Diseños y Mockups
 

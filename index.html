@@ -14,14 +14,13 @@
     <link rel="stylesheet" href="css/tarjeta_receta_vertical.css">
     <link rel="stylesheet" href="MAIN.css">
 
-    <script src="js/xlu-include-file.js"></script>
 </head>
 <body>
 
-<header id="main_header" xlu-include-file="templates/header.html"></header>
+<header id="main_header" data-include="templates/header.html"></header>
 
 <main>
-    <section id="buscador_main" xlu-include-file="templates/buscador.html"></section>
+    <section id="buscador_main" data-include="templates/buscador.html"></section>
 
     <h2 class="titulo_centrado">¿Cómo funciona?</h2>
     <section class="instrucciones">
@@ -93,7 +92,8 @@
             </div>
             <div class="textos_columna">
                 <p class="subtitulo-bruto">Cocina con tu móvil</p>
-                <p>No necesitas instalar nada. Escanea el código QR con la cámara de tu móvil y llévate la web al supermercado o ponla en la encimera mientras cocinas.</p>
+                <p>No necesitas instalar nada. Escanea el código QR con la cámara de tu móvil y llévate la web al
+                    supermercado o ponla en la encimera mientras cocinas.</p>
                 <div class="app-badges">
                     <span class="badge-dummy">📸 Abre tu cámara</span>
                     <span class="badge-dummy">📱 Escanea y cocina</span>
@@ -105,12 +105,9 @@
 
 </main>
 
-<footer id="main_footer" xlu-include-file="templates/footer.html"></footer>
+<footer id="main_footer" data-include="templates/footer.html"></footer>
 
-<script>
-    xLuIncludeFile();
-</script>
-
+<script src="js/layout.js"></script>
 <script src="js/main.js"></script>
 <script src="js/perfil.js"></script>
 <script src="js/buscador.js"></script>
