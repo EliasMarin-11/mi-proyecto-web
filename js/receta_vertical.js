@@ -77,23 +77,18 @@ async function cargarDatosReceta(idReceta) {
                     .then(templateHtml => {
 
                         let htmlFinal = '';
-                        const parser = new DOMParser();
 
                         receta.alergenos.forEach(idAlergeno => {
 
                             const infoAlergeno = data.alergenos.find(a => a.icono === idAlergeno);
 
                             if (infoAlergeno) {
-                                const doc = parser.parseFromString(templateHtml, 'text/html');
-                                const itemDoc = doc.querySelector('.alergeno-item');
+                                // Usamos .replace() en lugar de DOMParser para mantener coherencia en todo el proyecto
+                                let itemRelleno = templateHtml
+                                    .replace('', `<img src="img/${infoAlergeno.icono}.png" class="img-alergeno-fluida" alt="${infoAlergeno.titulo}">`)
+                                    .replace('', `<strong>${infoAlergeno.titulo}</strong><span>${infoAlergeno.texto}</span>`);
 
-                                itemDoc.querySelector('.alergeno-icono').innerHTML =
-                                    `<img src="img/${infoAlergeno.icono}.png" class="img-alergeno-fluida" alt="${infoAlergeno.titulo}">`;
-
-                                itemDoc.querySelector('.alergeno-tooltip').innerHTML =
-                                    `<strong>${infoAlergeno.titulo}</strong><span>${infoAlergeno.texto}</span>`;
-
-                                htmlFinal += itemDoc.outerHTML;
+                                htmlFinal += itemRelleno;
                             }
                         });
                         cajaAlergenos.innerHTML = htmlFinal;
