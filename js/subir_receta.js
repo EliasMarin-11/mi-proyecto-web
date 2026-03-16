@@ -112,4 +112,147 @@ document.addEventListener('click', (evento) => {
 
         contenedor.insertBefore(divPaso, btnAddPaso);
     }
+
+    // --- LÓGICA: SELECCIONAR CATEGORÍAS ---
+    const etiquetaClicada = evento.target.closest('.etiqueta');
+    if (etiquetaClicada) {
+        evento.preventDefault();
+        // El toggle hace que si no tiene la clase se la ponga, y si la tiene se la quite
+        etiquetaClicada.classList.toggle('activa');
+    }
+
+    // --- LÓGICA: ABRIR SELECTOR DE FOTOS ---
+    const cajaFoto = evento.target.closest('#caja-foto-visual');
+    if (cajaFoto) {
+        // Al hacer clic en nuestra caja bonita, simulamos un clic en el input feo y oculto
+        document.getElementById('receta-imagen').click();
+    }
+});
+
+// EVENTO CHANGE: Para previsualizar la foto elegida
+document.addEventListener('change', (evento) => {
+    if (evento.target && evento.target.id === 'receta-imagen') {
+        const archivo = evento.target.files[0];
+
+        if (archivo) {
+            // Usamos FileReader para leer la imagen en el navegador
+            const lector = new FileReader();
+
+            lector.onload = function(e) {
+                const cajaVisual = document.getElementById('caja-foto-visual');
+                const icono = document.getElementById('icono-foto');
+                const texto = document.getElementById('texto-foto');
+
+                // Ocultamos el texto y el icono
+                if (icono) icono.style.display = 'none';
+                if (texto) texto.style.display = 'none';
+
+                // Comprobamos si ya había una imagen previa y la borramos
+                const imagenVieja = cajaVisual.querySelector('.img-preview');
+                if (imagenVieja) {
+                    cajaVisual.removeChild(imagenVieja);
+                }
+
+                // Creamos el elemento img con DOM puro
+                const nuevaImagen = document.createElement('img');
+                nuevaImagen.src = e.target.result; // El resultado de leer el archivo
+                nuevaImagen.classList.add('img-preview');
+
+                cajaVisual.appendChild(nuevaImagen);
+            }
+
+            lector.readAsDataURL(archivo);
+        }
+    }
+});
+
+// ==========================================
+// EVENTO SUBMIT: Recopilar y Enviar los datos
+// ==========================================
+document.addEventListener('submit', (evento) => {
+
+    // Nos aseguramos de que el submit viene de nuestro formulario
+    if (evento.target && evento.target.id === 'formulario-nueva-receta') {
+        evento.preventDefault(); // Evitamos que la página se recargue
+
+        // 1. Recolección de datos simples
+        const titulo = document.getElementById('receta-titulo').value;
+        const tiempo = document.getElementById('receta-tiempo').value;
+        const raciones = document.getElementById('receta-raciones').value;
+        const dificultad = document.getElementById('receta-dificultad').value;
+        const descripcion = document.getElementById('receta-desc').value;
+
+        // 2. Recolección de CATEGORÍAS (¡Aquí está el paso C!)
+        const arrayCategorias = [];
+        // Buscamos solo los botones que tengan la clase 'activa' (los que están en rojo)
+        document.querySelectorAll('.etiqueta.activa').forEach(boton => {
+            arrayCategorias.push(boton.textContent);
+        });
+
+        // 3. Recolección de Ingredientes
+        const arrayIngredientes = [];
+        document.querySelectorAll('.fila-ingrediente').forEach(fila => {
+            const cant = fila.querySelector('.ing-cant').value;
+            const medida = fila.querySelector('.ing-medida').value; // Ahora esto lee el <select>
+            const nombre = fila.querySelector('.ing-nombre').value;
+
+            // Solo lo guardamos si al menos han puesto el nombre del ingrediente
+            if (nombre) {
+                // Formateamos: "200 gr de Harina"
+                arrayIngredientes.push(`${cant} ${medida} de ${nombre}`.trim());
+            }
+        });
+
+        // 4. Recolección de Pasos
+        const arrayPasos = [];
+        document.querySelectorAll('.paso-texto').forEach(textarea => {
+            if (textarea.value.trim() !== '') {
+                arrayPasos.push(textarea.value.trim());
+            }
+        });
+
+        // 5. Construir el objeto JSON final
+        const nuevaReceta = {
+            titulo: titulo,
+            tiempo: tiempo,
+            raciones: parseInt(raciones), // Lo guardamos como número
+            dificultad: dificultad,
+            categorias: arrayCategorias, // <- Aquí añadimos el array de etiquetas
+            descripcion: descripcion,
+            ingredientes: arrayIngredientes,
+            instrucciones: arrayPasos,
+            // Nota: La imagen real requiere un servidor que acepte archivos.
+            // Para JSON-server usamos un placeholder o la URL base64 si es muy pequeña.
+            // Por ahora ponemos un string estático para no romper la BD.
+            imagen: "assets/img/receta-placeholder.jpg",
+            estrellas: 0
+        };
+
+        console.log("Datos listos para enviar:", nuevaReceta);
+
+        // 6. Fetch usando Promesas puras (.then y .catch) para el fake server
+        fetch('http://localhost:3000/recetas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nuevaReceta)
+        })
+            .then(res => {
+                if (res.ok) {
+                    alert('¡Receta subida con éxito al servidor! 👨‍🍳');
+                    evento.target.reset(); // Vaciamos el formulario
+
+                    // Limpiamos la previsualización de la foto y las categorías
+                    document.querySelectorAll('.etiqueta.activa').forEach(btn => btn.classList.remove('activa'));
+                    const cajaVisual = document.getElementById('caja-foto-visual');
+                    const imagenVieja = cajaVisual.querySelector('.img-preview');
+                    if (imagenVieja) cajaVisual.removeChild(imagenVieja);
+                    document.getElementById('icono-foto').style.display = 'block';
+                    document.getElementById('texto-foto').style.display = 'block';
+
+                } else {
+                    console.error('Error en el servidor al subir la receta');
+                }
+            })
+            .catch(error => console.error('Error de red enviando receta:', error));
+    }
 });

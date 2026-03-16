@@ -25,9 +25,10 @@
         </div>
 
         <div class="grupo-etiquetas" id="contenedor-etiquetas">
-          <button type="button" class="etiqueta">Saludable</button>
-          <button type="button" class="etiqueta">Vegano</button>
-          <button type="button" class="etiqueta">Cena Rápida</button>
+          <button type="button" class="etiqueta">Segundo Plato</button>
+          <button type="button" class="etiqueta">Entrante</button>
+          <button type="button" class="etiqueta">Primer Plato</button>
+          <button type="button" class="etiqueta">Postre</button>
         </div>
 
         <div class="seccion-lista" id="contenedor-ingredientes">
@@ -95,11 +96,12 @@
 
 
       <div class="columna-derecha">
-        <div class="caja-subir-foto">
-          <span class="icono-foto">📷</span>
-          <p>Sube una foto apetitosa de tu plato</p>
-          <input type="file" id="receta-imagen" accept="image/*" style="display:none;">
+
+        <div class="caja-subir-foto" id="caja-foto-visual">
+          <span class="icono-foto" id="icono-foto">📷</span>
+          <p id="texto-foto">Sube una foto apetitosa de tu plato</p>
         </div>
+        <input type="file" id="receta-imagen" accept="image/*" style="display:none;">
 
         <div class="grupo-descripcion">
           <h3>Breve descripción</h3>
