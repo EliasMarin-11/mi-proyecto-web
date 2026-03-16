@@ -1,15 +1,25 @@
-let arrayFotosUpload = [];
+let imagenSubida = null;
+let ingredientesValidos = new Set();
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('data/db.json')
+        .then(res => res.json())
+        .then(data => {
+            data.recetas.forEach(receta => {
+                receta.ingredientes_clave.forEach(ing => ingredientesValidos.add(ing.toLowerCase()));
+            });
+        })
+        .catch(error => console.error(error));
+});
 
 document.addEventListener('click', (evento) => {
     const btnAddIngrediente = evento.target.closest('#btn-add-ingrediente');
     const btnAddPaso = evento.target.closest('#btn-add-paso');
 
-    // Eliminar fila dinámica
     if (evento.target.classList.contains('btn-eliminar')) {
         evento.preventDefault();
         evento.target.parentElement.remove();
 
-        // Actualización de índices en placeholders
         const textareas = document.querySelectorAll('.paso-texto');
         textareas.forEach((txt, indice) => {
             txt.placeholder = `Paso ${indice + 1}: ...`;
@@ -17,7 +27,18 @@ document.addEventListener('click', (evento) => {
         return;
     }
 
-    // Insertar fila de ingrediente
+    if (evento.target.classList.contains('btn-borrar-foto')) {
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        if (confirm('¿Seguro que quieres quitar la foto?')) {
+            imagenSubida = null;
+            document.getElementById('receta-imagen').value = '';
+            actualizarVistaFoto();
+        }
+        return;
+    }
+
     if (btnAddIngrediente) {
         evento.preventDefault();
         const contenedor = document.getElementById('contenedor-ingredientes');
@@ -27,7 +48,9 @@ document.addEventListener('click', (evento) => {
         nuevaFila.classList.add('fila-ingrediente');
 
         const inputCant = document.createElement('input');
-        inputCant.type = 'text';
+        inputCant.type = 'number';
+        inputCant.step = 'any';
+        inputCant.min = '0';
         inputCant.placeholder = 'Cant.';
         inputCant.classList.add('input-caja', 'ing-cant');
         inputCant.required = true;
@@ -75,7 +98,6 @@ document.addEventListener('click', (evento) => {
         contenedor.insertBefore(nuevaFila, btnAddIngrediente);
     }
 
-    // Insertar fila de paso
     if (btnAddPaso) {
         evento.preventDefault();
         const contenedor = document.getElementById('contenedor-pasos');
@@ -102,76 +124,74 @@ document.addEventListener('click', (evento) => {
         contenedor.insertBefore(divPaso, btnAddPaso);
     }
 
-    // Seleccionar/Deseleccionar categorías
     const etiquetaClicada = evento.target.closest('.etiqueta');
     if (etiquetaClicada) {
         evento.preventDefault();
         etiquetaClicada.classList.toggle('activa');
     }
 
-    // Abrir selector de fotos nativo
     const cajaFoto = evento.target.closest('#caja-foto-visual');
-    if (cajaFoto) {
+    if (cajaFoto && !evento.target.classList.contains('btn-borrar-foto')) {
         document.getElementById('receta-imagen').click();
     }
 });
 
-// Procesamiento de múltiples imágenes
 document.addEventListener('change', (evento) => {
     if (evento.target && evento.target.id === 'receta-imagen') {
-        const archivos = Array.from(evento.target.files);
+        const archivo = evento.target.files[0];
+        if (!archivo) return;
 
-        archivos.forEach(archivo => {
-            const lector = new FileReader();
-            lector.onload = function(e) {
-                arrayFotosUpload.push(e.target.result);
-                renderizarMiniaturas();
-            }
-            lector.readAsDataURL(archivo);
-        });
+        const lector = new FileReader();
+        lector.onload = function(e) {
+            imagenSubida = e.target.result;
+            actualizarVistaFoto();
+        }
+        lector.readAsDataURL(archivo);
 
         evento.target.value = '';
     }
 });
 
-// Renderizado del contenedor de miniaturas
-function renderizarMiniaturas() {
-    const contenedor = document.getElementById('contenedor-miniaturas');
-    if (!contenedor) return;
+function actualizarVistaFoto() {
+    const cajaFoto = document.getElementById('caja-foto-visual');
+    const icono = document.getElementById('icono-foto');
+    const texto = document.getElementById('texto-foto');
 
-    // Limpieza de nodos existentes
-    while (contenedor.firstChild) {
-        contenedor.removeChild(contenedor.firstChild);
-    }
+    if (!cajaFoto) return;
 
-    arrayFotosUpload.forEach((fotoBase64, index) => {
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('miniatura-wrapper');
+    const previewExistente = cajaFoto.querySelector('.img-preview');
+    const btnBorrarExistente = cajaFoto.querySelector('.btn-borrar-foto');
+    if (previewExistente) previewExistente.remove();
+    if (btnBorrarExistente) btnBorrarExistente.remove();
+
+    if (imagenSubida) {
+        if (icono) icono.style.display = 'none';
+        if (texto) texto.style.display = 'none';
 
         const img = document.createElement('img');
-        img.src = fotoBase64;
-        img.classList.add('miniatura-img');
+        img.src = imagenSubida;
+        img.classList.add('img-preview');
 
         const btnBorrar = document.createElement('button');
         btnBorrar.type = 'button';
-        btnBorrar.classList.add('btn-borrar-miniatura');
+        btnBorrar.classList.add('btn-borrar-foto');
         btnBorrar.textContent = 'X';
+        btnBorrar.title = 'Eliminar foto';
 
-        btnBorrar.addEventListener('click', () => {
-            arrayFotosUpload.splice(index, 1);
-            renderizarMiniaturas();
-        });
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(btnBorrar);
-        contenedor.appendChild(wrapper);
-    });
+        cajaFoto.appendChild(img);
+        cajaFoto.appendChild(btnBorrar);
+    } else {
+        if (icono) icono.style.display = 'block';
+        if (texto) texto.style.display = 'block';
+    }
 }
 
-// Envío del formulario
 document.addEventListener('submit', (evento) => {
     if (evento.target && evento.target.id === 'formulario-nueva-receta') {
         evento.preventDefault();
+
+        let validacionFallida = false;
+        let ingredienteErroneo = "";
 
         const titulo = document.getElementById('receta-titulo').value;
         const tiempo = document.getElementById('receta-tiempo').value;
@@ -179,21 +199,40 @@ document.addEventListener('submit', (evento) => {
         const dificultad = document.getElementById('receta-dificultad').value;
         const descripcion = document.getElementById('receta-desc').value;
 
-        const arrayCategorias = [];
-        document.querySelectorAll('.etiqueta.activa').forEach(boton => {
-            arrayCategorias.push(boton.textContent);
+        const arrayDieta = [];
+        document.querySelectorAll('#contenedor-dieta .etiqueta.activa').forEach(boton => {
+            let valor = boton.textContent.toLowerCase().replace(' ', '');
+            arrayDieta.push(valor);
         });
 
+        let tipoPlatoSeleccionado = "";
+        const etiquetaTipo = document.querySelector('#contenedor-tipo .etiqueta.activa');
+        if (etiquetaTipo) {
+            tipoPlatoSeleccionado = etiquetaTipo.textContent.toLowerCase();
+        }
+
         const arrayIngredientes = [];
+        const arrayIngredientesClave = [];
+
         document.querySelectorAll('.fila-ingrediente').forEach(fila => {
             const cant = fila.querySelector('.ing-cant').value;
             const medida = fila.querySelector('.ing-medida').value;
-            const nombre = fila.querySelector('.ing-nombre').value;
+            const nombre = fila.querySelector('.ing-nombre').value.trim();
 
             if (nombre) {
-                arrayIngredientes.push(`${cant} ${medida} de ${nombre}`.trim());
+                if (!ingredientesValidos.has(nombre.toLowerCase())) {
+                    validacionFallida = true;
+                    ingredienteErroneo = nombre;
+                }
+                arrayIngredientes.push(`${cant} ${medida} de ${nombre}`);
+                arrayIngredientesClave.push(nombre.toLowerCase());
             }
         });
+
+        if (validacionFallida) {
+            alert(`El ingrediente "${ingredienteErroneo}" no está en nuestra base de datos. Por favor, usa ingredientes válidos.`);
+            return;
+        }
 
         const arrayPasos = [];
         document.querySelectorAll('.paso-texto').forEach(textarea => {
@@ -204,15 +243,21 @@ document.addEventListener('submit', (evento) => {
 
         const nuevaReceta = {
             titulo: titulo,
+            imagen: imagenSubida ? imagenSubida : "assets/img/receta-placeholder.jpg",
             tiempo: tiempo,
-            raciones: parseInt(raciones),
+            duracion_categoria: tiempo,
             dificultad: dificultad,
-            categorias: arrayCategorias,
+            raciones: parseInt(raciones),
+            estrellas: 0,
+            tipo_plato: tipoPlatoSeleccionado,
+            dieta: arrayDieta,
             descripcion: descripcion,
+            alergenos: [],
+            ingredientes_clave: arrayIngredientesClave,
             ingredientes: arrayIngredientes,
             instrucciones: arrayPasos,
-            imagenes: arrayFotosUpload.length > 0 ? arrayFotosUpload : ["assets/img/receta-placeholder.jpg"],
-            estrellas: 0
+            enlace: "#",
+            reseñas: []
         };
 
         fetch('http://localhost:3000/recetas', {
@@ -227,12 +272,12 @@ document.addEventListener('submit', (evento) => {
 
                     document.querySelectorAll('.etiqueta.activa').forEach(btn => btn.classList.remove('activa'));
 
-                    arrayFotosUpload = [];
-                    renderizarMiniaturas();
+                    imagenSubida = null;
+                    actualizarVistaFoto();
                 } else {
                     console.error('Error en el servidor al subir la receta');
                 }
             })
-            .catch(error => console.error('Error de red enviando receta:', error));
+            .catch(error => console.error(error));
     }
 });
