@@ -355,3 +355,14 @@ main {
     object-fit: cover;
     border: 3px solid #4a322d;
 }
+
+.caja-foto-premium {
+    background-color: #FFF6EC;
+}
+
+.img-promo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
