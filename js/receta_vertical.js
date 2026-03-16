@@ -83,10 +83,15 @@ async function cargarDatosReceta(idReceta) {
                             const infoAlergeno = data.alergenos.find(a => a.icono === idAlergeno);
 
                             if (infoAlergeno) {
-                                // Usamos .replace() en lugar de DOMParser para mantener coherencia en todo el proyecto
                                 let itemRelleno = templateHtml
-                                    .replace('', `<img src="img/${infoAlergeno.icono}.png" class="img-alergeno-fluida" alt="${infoAlergeno.titulo}">`)
-                                    .replace('', `<strong>${infoAlergeno.titulo}</strong><span>${infoAlergeno.texto}</span>`);
+                                    .replace(
+                                        '<div class="alergeno-icono"></div>',
+                                        `<div class="alergeno-icono"><img src="img/${infoAlergeno.icono}.png" class="img-alergeno-fluida" alt="${infoAlergeno.titulo}"></div>`
+                                    )
+                                    .replace(
+                                        '<div class="alergeno-tooltip"></div>',
+                                        `<div class="alergeno-tooltip"><strong>${infoAlergeno.titulo}</strong><span>${infoAlergeno.texto}</span></div>`
+                                    );
 
                                 htmlFinal += itemRelleno;
                             }
