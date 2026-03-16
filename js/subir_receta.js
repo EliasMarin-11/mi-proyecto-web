@@ -1,133 +1,81 @@
-document.addEventListener('DOMContentLoaded', () => {
+// js/subir_receta.js
 
-    // Contenedor principal en SUBIR_RECETA.html donde va el formulario
-    // (Asegúrate de tener un <div id="contenedor-formulario"></div> o similar en tu HTML principal)
-    const contenedorPrincipal = document.querySelector('.contenedor-crear-receta');
+// CHIVATO 1: Verificamos que el archivo JS se ha cargado correctamente en el HTML
+console.log("✅ ARCHIVO subir_receta.js CARGADO CORRECTAMENTE");
 
-    if (!contenedorPrincipal) return;
+document.addEventListener('click', (evento) => {
+    // CHIVATO 2: Verificamos que el documento detecta TODOS los clics
+    // (Abre la consola y haz clic en cualquier parte de la página, deberías ver esto)
+    // console.log("Clic en:", evento.target); // Lo dejo comentado para que no te inunde la consola, pero funciona
 
-    // 1. CARGAMOS EL TEMPLATE CON PROMESAS (Al estilo main.js)
-    fetch('templates/formulario_receta.html')
-        .then(res => res.text())
-        .then(templateHTML => {
-            // Inyectamos el formulario base
-            contenedorPrincipal.innerHTML = templateHTML;
+    const btnAddIngrediente = evento.target.closest('#btn-add-ingrediente');
+    const btnAddPaso = evento.target.closest('#btn-add-paso');
 
-            // ==========================================
-            // AHORA QUE EL HTML EXISTE, CAPTURAMOS LOS ELEMENTOS
-            // ==========================================
-            const btnAddIngrediente = document.getElementById('btn-add-ingrediente');
-            const btnAddPaso = document.getElementById('btn-add-paso');
-            const formulario = document.getElementById('formulario-nueva-receta');
+    // ==========================================
+    // LÓGICA: AÑADIR INGREDIENTE
+    // ==========================================
+    if (btnAddIngrediente) {
+        evento.preventDefault();
+        console.log("🔥 CHIVATO 3: ¡Has hecho clic en el botón de añadir INGREDIENTE!");
 
-            // 2. EVENTO PARA AÑADIR INGREDIENTE (DOM Puro, sin HTML incrustado)
-            if (btnAddIngrediente) {
-                btnAddIngrediente.addEventListener('click', (evento) => {
-                    evento.preventDefault();
-                    const contenedor = document.getElementById('contenedor-ingredientes');
+        const contenedor = document.getElementById('contenedor-ingredientes');
 
-                    const nuevaFila = document.createElement('div');
-                    nuevaFila.classList.add('fila-ingrediente');
+        if (!contenedor) {
+            console.error("❌ ERROR: No encuentro el div con id='contenedor-ingredientes'. Revisa tu HTML.");
+            return;
+        }
 
-                    const inputCant = document.createElement('input');
-                    inputCant.type = 'text';
-                    inputCant.placeholder = 'Cant.';
-                    inputCant.classList.add('input-caja', 'ing-cant');
-                    inputCant.required = true;
+        const nuevaFila = document.createElement('div');
+        nuevaFila.classList.add('fila-ingrediente');
 
-                    const inputMedida = document.createElement('input');
-                    inputMedida.type = 'text';
-                    inputMedida.placeholder = 'Medida';
-                    inputMedida.classList.add('input-caja', 'ing-medida');
-                    inputMedida.required = true;
+        const inputCant = document.createElement('input');
+        inputCant.type = 'text';
+        inputCant.placeholder = 'Cant.';
+        inputCant.classList.add('input-caja', 'ing-cant');
+        inputCant.required = true;
 
-                    const inputNombre = document.createElement('input');
-                    inputNombre.type = 'text';
-                    inputNombre.placeholder = 'Ingrediente';
-                    inputNombre.classList.add('input-caja', 'ing-nombre');
-                    inputNombre.required = true;
+        const inputMedida = document.createElement('input');
+        inputMedida.type = 'text';
+        inputMedida.placeholder = 'Medida';
+        inputMedida.classList.add('input-caja', 'ing-medida');
+        inputMedida.required = true;
 
-                    nuevaFila.appendChild(inputCant);
-                    nuevaFila.appendChild(inputMedida);
-                    nuevaFila.appendChild(inputNombre);
+        const inputNombre = document.createElement('input');
+        inputNombre.type = 'text';
+        inputNombre.placeholder = 'Ingrediente';
+        inputNombre.classList.add('input-caja', 'ing-nombre');
+        inputNombre.required = true;
 
-                    contenedor.insertBefore(nuevaFila, btnAddIngrediente);
-                });
-            }
+        nuevaFila.appendChild(inputCant);
+        nuevaFila.appendChild(inputMedida);
+        nuevaFila.appendChild(inputNombre);
 
-            // 3. EVENTO PARA AÑADIR PASO (DOM Puro)
-            if (btnAddPaso) {
-                btnAddPaso.addEventListener('click', (evento) => {
-                    evento.preventDefault();
-                    const contenedor = document.getElementById('contenedor-pasos');
-                    const numeroDePasos = contenedor.querySelectorAll('.paso-texto').length + 1;
+        contenedor.insertBefore(nuevaFila, btnAddIngrediente);
+        console.log("✅ Fila de ingrediente insertada con éxito.");
+    }
 
-                    const nuevoPaso = document.createElement('textarea');
-                    nuevoPaso.classList.add('textarea-paso', 'paso-texto');
-                    nuevoPaso.placeholder = `Paso ${numeroDePasos}: ...`;
-                    nuevoPaso.required = true;
+    // ==========================================
+    // LÓGICA: AÑADIR PASO
+    // ==========================================
+    if (btnAddPaso) {
+        evento.preventDefault();
+        console.log("🔥 CHIVATO 4: ¡Has hecho clic en el botón de añadir PASO!");
 
-                    contenedor.insertBefore(nuevoPaso, btnAddPaso);
-                });
-            }
+        const contenedor = document.getElementById('contenedor-pasos');
 
-            // 4. EVENTO PARA SUBMIT CON FETCH (.then / .catch)
-            if (formulario) {
-                formulario.addEventListener('submit', (evento) => {
-                    evento.preventDefault();
+        if (!contenedor) {
+            console.error("❌ ERROR: No encuentro el div con id='contenedor-pasos'. Revisa tu HTML.");
+            return;
+        }
 
-                    const titulo = document.getElementById('receta-titulo').value;
-                    const tiempo = document.getElementById('receta-tiempo').value;
-                    const raciones = document.getElementById('receta-raciones').value;
-                    const dificultad = document.getElementById('receta-dificultad').value;
-                    const descripcion = document.getElementById('receta-desc').value;
+        const pasosActuales = contenedor.querySelectorAll('.paso-texto').length;
 
-                    const arrayIngredientes = [];
-                    document.querySelectorAll('.fila-ingrediente').forEach(fila => {
-                        const cant = fila.querySelector('.ing-cant').value;
-                        const medida = fila.querySelector('.ing-medida').value;
-                        const nombre = fila.querySelector('.ing-nombre').value;
-                        if (nombre) {
-                            arrayIngredientes.push(`${cant} ${medida} de ${nombre}`.trim());
-                        }
-                    });
+        const nuevoPaso = document.createElement('textarea');
+        nuevoPaso.classList.add('textarea-paso', 'paso-texto');
+        nuevoPaso.placeholder = `Paso ${pasosActuales + 1}: ...`;
+        nuevoPaso.required = true;
 
-                    const arrayPasos = [];
-                    document.querySelectorAll('.paso-texto').forEach(textarea => {
-                        if (textarea.value.trim() !== '') {
-                            arrayPasos.push(textarea.value.trim());
-                        }
-                    });
-
-                    const nuevaReceta = {
-                        titulo: titulo,
-                        tiempo: tiempo,
-                        raciones: raciones,
-                        dificultad: dificultad,
-                        descripcion: descripcion,
-                        ingredientes: arrayIngredientes,
-                        instrucciones: arrayPasos,
-                        imagen: "assets/img/receta-placeholder.jpg",
-                        estrellas: 0
-                    };
-
-                    // Promesa pura, calcado a tus otros archivos
-                    fetch('http://localhost:3000/recetas', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(nuevaReceta)
-                    })
-                        .then(res => {
-                            if (res.ok) {
-                                alert('¡Receta subida con éxito! 👨‍🍳');
-                                formulario.reset();
-                            } else {
-                                console.error('Error en la respuesta del servidor');
-                            }
-                        })
-                        .catch(error => console.error('Error de red al subir la receta:', error));
-                });
-            }
-        })
-        .catch(error => console.error('Error cargando el template del formulario:', error));
+        contenedor.insertBefore(nuevoPaso, btnAddPaso);
+        console.log("✅ Paso insertado con éxito.");
+    }
 });
