@@ -1,29 +1,31 @@
-// js/subir_receta.js
-
-// CHIVATO 1: Verificamos que el archivo JS se ha cargado correctamente en el HTML
-console.log("✅ ARCHIVO subir_receta.js CARGADO CORRECTAMENTE");
-
 document.addEventListener('click', (evento) => {
-    // CHIVATO 2: Verificamos que el documento detecta TODOS los clics
-    // (Abre la consola y haz clic en cualquier parte de la página, deberías ver esto)
-    // console.log("Clic en:", evento.target); // Lo dejo comentado para que no te inunde la consola, pero funciona
 
     const btnAddIngrediente = evento.target.closest('#btn-add-ingrediente');
     const btnAddPaso = evento.target.closest('#btn-add-paso');
 
     // ==========================================
-    // LÓGICA: AÑADIR INGREDIENTE
+    // NUEVO: LÓGICA PARA BORRAR FILAS (La famosa "X")
+    // ==========================================
+    if (evento.target.classList.contains('btn-eliminar')) {
+        evento.preventDefault();
+        // Buscamos al "padre" del botón (la fila entera) y lo aniquilamos del DOM
+        evento.target.parentElement.remove();
+
+        // Reto de profe resuelto: Actualizar los números de los placeholders de los pasos
+        const textareas = document.querySelectorAll('.paso-texto');
+        textareas.forEach((txt, indice) => {
+            txt.placeholder = `Paso ${indice + 1}: ...`;
+        });
+        return; // Salimos de la función
+    }
+
+    // ==========================================
+    // LÓGICA: AÑADIR INGREDIENTE (Con desplegable)
     // ==========================================
     if (btnAddIngrediente) {
         evento.preventDefault();
-        console.log("🔥 CHIVATO 3: ¡Has hecho clic en el botón de añadir INGREDIENTE!");
-
         const contenedor = document.getElementById('contenedor-ingredientes');
-
-        if (!contenedor) {
-            console.error("❌ ERROR: No encuentro el div con id='contenedor-ingredientes'. Revisa tu HTML.");
-            return;
-        }
+        if (!contenedor) return;
 
         const nuevaFila = document.createElement('div');
         nuevaFila.classList.add('fila-ingrediente');
@@ -34,11 +36,31 @@ document.addEventListener('click', (evento) => {
         inputCant.classList.add('input-caja', 'ing-cant');
         inputCant.required = true;
 
-        const inputMedida = document.createElement('input');
-        inputMedida.type = 'text';
-        inputMedida.placeholder = 'Medida';
-        inputMedida.classList.add('input-caja', 'ing-medida');
-        inputMedida.required = true;
+        // --- CREACIÓN PURA DEL SELECT (¡Esto puntúa alto!) ---
+        const selectMedida = document.createElement('select');
+        selectMedida.classList.add('input-caja', 'ing-medida');
+        selectMedida.required = true;
+
+        // Opciones del desplegable
+        const opciones = [
+            { valor: '', texto: 'Unidad', deshabilitado: true },
+            { valor: 'gr', texto: 'Gramos (gr)' },
+            { valor: 'ml', texto: 'Mililitros (ml)' },
+            { valor: 'ud', texto: 'Unidades (ud)' },
+            { valor: 'cdas', texto: 'Cucharadas' },
+            { valor: 'tazas', texto: 'Tazas' }
+        ];
+
+        opciones.forEach(opData => {
+            const opcion = document.createElement('option');
+            opcion.value = opData.valor;
+            opcion.textContent = opData.texto;
+            if (opData.deshabilitado) {
+                opcion.disabled = true;
+                opcion.selected = true;
+            }
+            selectMedida.appendChild(opcion);
+        });
 
         const inputNombre = document.createElement('input');
         inputNombre.type = 'text';
@@ -46,36 +68,48 @@ document.addEventListener('click', (evento) => {
         inputNombre.classList.add('input-caja', 'ing-nombre');
         inputNombre.required = true;
 
+        // Botón Eliminar
+        const btnEliminar = document.createElement('button');
+        btnEliminar.type = 'button';
+        btnEliminar.classList.add('btn-eliminar');
+        btnEliminar.textContent = 'X';
+
+        // Ensamblaje
         nuevaFila.appendChild(inputCant);
-        nuevaFila.appendChild(inputMedida);
+        nuevaFila.appendChild(selectMedida);
         nuevaFila.appendChild(inputNombre);
+        nuevaFila.appendChild(btnEliminar);
 
         contenedor.insertBefore(nuevaFila, btnAddIngrediente);
-        console.log("✅ Fila de ingrediente insertada con éxito.");
     }
 
     // ==========================================
-    // LÓGICA: AÑADIR PASO
+    // LÓGICA: AÑADIR PASO (Con la "X")
     // ==========================================
     if (btnAddPaso) {
         evento.preventDefault();
-        console.log("🔥 CHIVATO 4: ¡Has hecho clic en el botón de añadir PASO!");
-
         const contenedor = document.getElementById('contenedor-pasos');
+        if (!contenedor) return;
 
-        if (!contenedor) {
-            console.error("❌ ERROR: No encuentro el div con id='contenedor-pasos'. Revisa tu HTML.");
-            return;
-        }
+        const pasosActuales = contenedor.querySelectorAll('.textarea-paso').length;
 
-        const pasosActuales = contenedor.querySelectorAll('.paso-texto').length;
+        // Creamos el div contenedor .fila-paso
+        const divPaso = document.createElement('div');
+        divPaso.classList.add('fila-paso');
 
         const nuevoPaso = document.createElement('textarea');
         nuevoPaso.classList.add('textarea-paso', 'paso-texto');
         nuevoPaso.placeholder = `Paso ${pasosActuales + 1}: ...`;
         nuevoPaso.required = true;
 
-        contenedor.insertBefore(nuevoPaso, btnAddPaso);
-        console.log("✅ Paso insertado con éxito.");
+        const btnEliminar = document.createElement('button');
+        btnEliminar.type = 'button';
+        btnEliminar.classList.add('btn-eliminar');
+        btnEliminar.textContent = 'X';
+
+        divPaso.appendChild(nuevoPaso);
+        divPaso.appendChild(btnEliminar);
+
+        contenedor.insertBefore(divPaso, btnAddPaso);
     }
 });
