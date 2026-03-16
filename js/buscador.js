@@ -1,63 +1,55 @@
-
 let listaIngredientes = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Si estamos en la página del buscador, ejecutamos la búsqueda
-    if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-        ejecutarBusqueda(listaIngredientes);
-    }
-    // leer url y coger ingredientes del home
     const params = new URLSearchParams(window.location.search);
     const queryInicial = params.get('q');
 
+    // Inicializar ingredientes desde la URL si existen
     if (queryInicial) {
         listaIngredientes = queryInicial.split(',').filter(i => i.trim() !== '');
-
-        // Si estamos en la página del buscador, ejecutamos la búsqueda
-        if (window.location.pathname.toUpperCase().includes('BUSCADOR.html')) {
-            ejecutarBusqueda(listaIngredientes);
-        }
-
         setTimeout(actualizarTagsDOM, 500);
     }
 
+    // Ejecutar búsqueda inicial si estamos en la página correcta
+    if (window.location.pathname.toLowerCase().includes('buscador.html')) {
+        ejecutarBusqueda(listaIngredientes);
+    }
 
-    // listeners para los clicks
+    // Delegación de eventos de clic
     document.addEventListener('click', (e) => {
 
-        //botón "Filtros"
+        // Alternar menú de filtros
         if (e.target.closest('#btn-filtros')) {
             const menuFiltros = document.getElementById('menu-filtros');
             if (menuFiltros) menuFiltros.classList.toggle('oculto');
         }
 
-        //botón "Buscar"
+        // Ejecutar búsqueda manual
         if (e.target.closest('#btn-buscar')) {
             e.preventDefault();
             procesarBusqueda();
         }
 
-        //"X" para borrar un ingrediente
+        // Borrar un ingrediente de la lista (clic en la X)
         if (e.target.matches('.tag span')) {
             const index = e.target.getAttribute('data-index');
-            listaIngredientes.splice(index, 1); // Lo borramos de la lista
-            actualizarTagsDOM(); // Volvemos a pintar
+            listaIngredientes.splice(index, 1);
+            actualizarTagsDOM();
         }
 
-        // 4.clic fuera del menú de filtros, lo cerramos
+        // Cerrar menú de filtros al hacer clic fuera
         const menuFiltros = document.getElementById('menu-filtros');
         if (menuFiltros && !e.target.closest('#btn-filtros') && !e.target.closest('#menu-filtros')) {
             menuFiltros.classList.add('oculto');
         }
     });
 
-    // teclado enter
+    // Añadir ingrediente al pulsar Enter en el input
     document.addEventListener('keypress', (e) => {
         if (e.target.id === 'input-ingrediente' && e.key === 'Enter') {
             e.preventDefault();
             const nuevoIngrediente = e.target.value.trim().toLowerCase();
 
-            // Si escribió algo y no está repetido, se añade
             if (nuevoIngrediente !== '' && !listaIngredientes.includes(nuevoIngrediente)) {
                 listaIngredientes.push(nuevoIngrediente);
                 actualizarTagsDOM();
@@ -65,13 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.value = '';
         }
     });
-
 });
 
 function procesarBusqueda() {
     const input = document.getElementById('input-ingrediente');
 
-    // 1. Si escribió algo pero olvidó darle a Enter antes de buscar, lo salvamos
+    // Recuperar texto suelto en el input antes de buscar
     if (input) {
         const textoSuelto = input.value.trim().toLowerCase();
         if (textoSuelto && !listaIngredientes.includes(textoSuelto)) {
@@ -80,16 +71,13 @@ function procesarBusqueda() {
         }
     }
 
-    // 2. Comprobamos que haya ingredientes
     if (listaIngredientes.length === 0) {
         alert("¡Añade algún ingrediente primero!");
         return;
     }
 
-    // 3. PRIMERO declaramos e inicializamos la variable 'query'
     const query = listaIngredientes.join(',');
 
-    // 4. LUEGO la usamos (con el .toLowerCase() que arreglamos antes)
     if (window.location.pathname.toLowerCase().includes('buscador.html')) {
         window.history.pushState({}, '', `buscador.html?q=${query}`);
         ejecutarBusqueda(listaIngredientes);
@@ -100,28 +88,34 @@ function procesarBusqueda() {
 
 function actualizarTagsDOM() {
     const contenedor = document.getElementById('contenedor-tags');
-    if (!contenedor) return; // Si el HTML no ha cargado aún, no hacemos nada
+    if (!contenedor) return;
 
     contenedor.innerHTML = '';
+
     listaIngredientes.forEach((ingrediente, index) => {
         const palabraLimpia = ingrediente.charAt(0).toUpperCase() + ingrediente.slice(1);
-        contenedor.innerHTML += `<div class="tag">${palabraLimpia} <span data-index="${index}" title="Borrar" style="cursor:pointer; margin-left:5px;">✖</span></div>`;
+
+        // Creación pura de nodos DOM (evita inyecciones HTML)
+        const divTag = document.createElement('div');
+        divTag.className = 'tag';
+        divTag.textContent = palabraLimpia + ' ';
+
+        const spanBorrar = document.createElement('span');
+        spanBorrar.textContent = '✖';
+        spanBorrar.setAttribute('data-index', index);
+        spanBorrar.title = 'Borrar';
+        spanBorrar.style.cursor = 'pointer';
+        spanBorrar.style.marginLeft = '5px';
+
+        divTag.appendChild(spanBorrar);
+        contenedor.appendChild(divTag);
     });
 }
 
 function ejecutarBusqueda(ingredientesBuscados) {
-    console.log("🚀 1. Entrando en la función ejecutarBusqueda con:", ingredientesBuscados);
-
     const contenedorResultados = document.getElementById('resultados_lista');
+    if (!contenedorResultados) return;
 
-    if (!contenedorResultados) {
-        console.error("❌ 2. ERROR CRÍTICO: No he encontrado en tu HTML ningún elemento con id='resultados_lista'. ¡Revisa tu BUSCADOR.html!");
-        return; // Aquí se muere la función si no encuentra el ID
-    }
-
-    console.log("✅ 3. Contenedor encontrado perfectamente. Procediendo a pedir el JSON...");
-
-    // Limpiamos el contenedor
     contenedorResultados.innerHTML = '';
 
     Promise.all([
@@ -132,39 +126,26 @@ function ejecutarBusqueda(ingredientesBuscados) {
 
             const checkboxesActivos = Array.from(document.querySelectorAll('.dropdown-bruto input[type="checkbox"]:checked')).map(cb => cb.value);
 
-            // --- INICIO DEL NUEVO BLOQUE DE FILTRADO SEGURO ---
-
-            // Función auxiliar: pasa a minúsculas y arranca las tildes de raíz
             const normalizar = (texto) => {
                 if (!texto) return "";
                 return texto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             };
 
-            console.log("🔍 Buscando ingredientes:", ingredientesBuscados);
-
             const recetasFiltradas = data.recetas.filter(receta => {
 
-                // 1. Búsqueda de Ingredientes (A prueba de tildes y errores de JSON)
-        // 1. Búsqueda de Ingredientes (Lógica AND: la receta debe tener TODOS los ingredientes buscados)
+                // Filtro principal por ingredientes
                 let coincideIngrediente = ingredientesBuscados.length === 0 || ingredientesBuscados.every(ingBuscado => {
                     const termino = normalizar(ingBuscado.trim());
 
                     const enTitulo = receta.titulo && normalizar(receta.titulo).includes(termino);
-
-                    const enClave = Array.isArray(receta.ingredientes_clave) && receta.ingredientes_clave.some(ing =>
-                        normalizar(ing).includes(termino)
-                    );
-
-                    const enNormal = Array.isArray(receta.ingredientes) && receta.ingredientes.some(ing =>
-                        normalizar(ing).includes(termino)
-                    );
+                    const enClave = Array.isArray(receta.ingredientes_clave) && receta.ingredientes_clave.some(ing => normalizar(ing).includes(termino));
+                    const enNormal = Array.isArray(receta.ingredientes) && receta.ingredientes.some(ing => normalizar(ing).includes(termino));
 
                     return enTitulo || enClave || enNormal;
                 });
 
                 if (!coincideIngrediente) return false;
 
-                // 2. Filtros Avanzados (Resolviendo el problema de "Fácil" vs "facil")
                 if (checkboxesActivos.length > 0) {
                     const filtrosDificultad = checkboxesActivos.filter(val => ['facil', 'media', 'dificil'].includes(val));
                     if (filtrosDificultad.length > 0) {
@@ -183,16 +164,12 @@ function ejecutarBusqueda(ingredientesBuscados) {
                 return true;
             });
 
-            console.log("✅ Recetas que sobrevivieron al filtro:", recetasFiltradas);
-
-            // --- FIN DEL NUEVO BLOQUE DE FILTRADO SEGURO ---
-
-            // 2. Usamos DOMParser como en tu main.js
+            // Configuración de la plantilla base
             const parser = new DOMParser();
             const templateDoc = parser.parseFromString(templateString, 'text/html');
             const templateBase = templateDoc.body.firstElementChild;
 
-            // 3. Montamos el DOM puramente
+            // Renderizado de tarjetas o mensaje de feedback
             if (recetasFiltradas.length > 0) {
                 recetasFiltradas.forEach(receta => {
                     const tarjetaDom = templateBase.cloneNode(true);
@@ -220,8 +197,7 @@ function ejecutarBusqueda(ingredientesBuscados) {
 
                     const descEl = tarjetaDom.querySelector('p');
                     if (descEl) {
-                        let descripcionCorta = receta.descripcion.length > 120 ? receta.descripcion.substring(0, 120) + '...' : receta.descripcion;
-                        descEl.textContent = descripcionCorta;
+                        descEl.textContent = receta.descripcion.length > 120 ? receta.descripcion.substring(0, 120) + '...' : receta.descripcion;
                     }
 
                     const detallesList = tarjetaDom.querySelectorAll('li');
@@ -255,5 +231,5 @@ function ejecutarBusqueda(ingredientesBuscados) {
                 contenedorResultados.appendChild(mensajeVacio);
             }
         })
-        .catch(error => console.error("Error al buscar:", error));
+        .catch(error => console.error("Error cargando las recetas:", error));
 }

@@ -306,6 +306,9 @@
     height: 100%;
     object-fit: cover;
     border-radius: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .grid-miniaturas {
@@ -332,27 +335,34 @@
     border: 2px solid #4E1A0A;
 }
 
-.btn-borrar-miniatura {
+.btn-borrar-foto {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: 15px;
+    right: 15px;
     background-color: #E3412B;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     box-shadow: 2px 2px 0px rgba(78, 26, 10, 0.2);
+    z-index: 10;
     transition: transform 0.2s ease;
 }
 
-.btn-borrar-miniatura:hover {
+.btn-borrar-foto:hover {
     transform: scale(1.15);
     background-color: #4E1A0A;
+}
+
+
+#caja-foto-visual {
+    position: relative;
+    overflow: hidden;
 }

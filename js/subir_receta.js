@@ -1,4 +1,4 @@
-let arrayFotosUpload = [];
+let imagenSubida = null;
 
 document.addEventListener('click', (evento) => {
     const btnAddIngrediente = evento.target.closest('#btn-add-ingrediente');
@@ -14,6 +14,19 @@ document.addEventListener('click', (evento) => {
         textareas.forEach((txt, indice) => {
             txt.placeholder = `Paso ${indice + 1}: ...`;
         });
+        return;
+    }
+
+    // Eliminar foto principal con confirmación
+    if (evento.target.classList.contains('btn-borrar-foto')) {
+        evento.preventDefault();
+        evento.stopPropagation();
+
+        if (confirm('¿Seguro que quieres quitar la foto?')) {
+            imagenSubida = null;
+            document.getElementById('receta-imagen').value = '';
+            actualizarVistaFoto();
+        }
         return;
     }
 
@@ -111,61 +124,61 @@ document.addEventListener('click', (evento) => {
 
     // Abrir selector de fotos nativo
     const cajaFoto = evento.target.closest('#caja-foto-visual');
-    if (cajaFoto) {
+    if (cajaFoto && !evento.target.classList.contains('btn-borrar-foto')) {
         document.getElementById('receta-imagen').click();
     }
 });
 
-// Procesamiento de múltiples imágenes
+// Procesamiento de imagen
 document.addEventListener('change', (evento) => {
     if (evento.target && evento.target.id === 'receta-imagen') {
-        const archivos = Array.from(evento.target.files);
+        const archivo = evento.target.files[0];
+        if (!archivo) return;
 
-        archivos.forEach(archivo => {
-            const lector = new FileReader();
-            lector.onload = function(e) {
-                arrayFotosUpload.push(e.target.result);
-                renderizarMiniaturas();
-            }
-            lector.readAsDataURL(archivo);
-        });
+        const lector = new FileReader();
+        lector.onload = function(e) {
+            imagenSubida = e.target.result;
+            actualizarVistaFoto();
+        }
+        lector.readAsDataURL(archivo);
 
         evento.target.value = '';
     }
 });
 
-// Renderizado del contenedor de miniaturas
-function renderizarMiniaturas() {
-    const contenedor = document.getElementById('contenedor-miniaturas');
-    if (!contenedor) return;
+function actualizarVistaFoto() {
+    const cajaFoto = document.getElementById('caja-foto-visual');
+    const icono = document.getElementById('icono-foto');
+    const texto = document.getElementById('texto-foto');
 
-    // Limpieza de nodos existentes
-    while (contenedor.firstChild) {
-        contenedor.removeChild(contenedor.firstChild);
-    }
+    if (!cajaFoto) return;
 
-    arrayFotosUpload.forEach((fotoBase64, index) => {
-        const wrapper = document.createElement('div');
-        wrapper.classList.add('miniatura-wrapper');
+
+    const previewExistente = cajaFoto.querySelector('.img-preview');
+    const btnBorrarExistente = cajaFoto.querySelector('.btn-borrar-foto');
+    if (previewExistente) previewExistente.remove();
+    if (btnBorrarExistente) btnBorrarExistente.remove();
+
+    if (imagenSubida) {
+        if (icono) icono.style.display = 'none';
+        if (texto) texto.style.display = 'none';
 
         const img = document.createElement('img');
-        img.src = fotoBase64;
-        img.classList.add('miniatura-img');
+        img.src = imagenSubida;
+        img.classList.add('img-preview');
 
         const btnBorrar = document.createElement('button');
         btnBorrar.type = 'button';
-        btnBorrar.classList.add('btn-borrar-miniatura');
+        btnBorrar.classList.add('btn-borrar-foto');
         btnBorrar.textContent = 'X';
+        btnBorrar.title = 'Eliminar foto';
 
-        btnBorrar.addEventListener('click', () => {
-            arrayFotosUpload.splice(index, 1);
-            renderizarMiniaturas();
-        });
-
-        wrapper.appendChild(img);
-        wrapper.appendChild(btnBorrar);
-        contenedor.appendChild(wrapper);
-    });
+        cajaFoto.appendChild(img);
+        cajaFoto.appendChild(btnBorrar);
+    } else {
+        if (icono) icono.style.display = 'block';
+        if (texto) texto.style.display = 'block';
+    }
 }
 
 // Envío del formulario
@@ -211,7 +224,7 @@ document.addEventListener('submit', (evento) => {
             descripcion: descripcion,
             ingredientes: arrayIngredientes,
             instrucciones: arrayPasos,
-            imagenes: arrayFotosUpload.length > 0 ? arrayFotosUpload : ["assets/img/receta-placeholder.jpg"],
+            imagen: imagenSubida ? imagenSubida : "assets/img/receta-placeholder.jpg",
             estrellas: 0
         };
 
@@ -227,8 +240,8 @@ document.addEventListener('submit', (evento) => {
 
                     document.querySelectorAll('.etiqueta.activa').forEach(btn => btn.classList.remove('activa'));
 
-                    arrayFotosUpload = [];
-                    renderizarMiniaturas();
+                    imagenSubida = null;
+                    actualizarVistaFoto();
                 } else {
                     console.error('Error en el servidor al subir la receta');
                 }
