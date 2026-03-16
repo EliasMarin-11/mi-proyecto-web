@@ -32,6 +32,6 @@ Este proyecto está construido con lenguajes base, sin usar programas externos c
 * [Descargar Proyecto (WebStorm ZIP)](recursos/PROYECTO_WEBSTORM.zip) 
 *  [Presentación del Proyecto (PDF)](recursos/PresentacionSprint1G43.2.pdf)
 *  [Video del Proyecto (mp4)](recursos/VideoSprint1G43.2.mp4)
-
+* [Link Trello](https://trello.com/invite/b/69b3308adf309bccd394c57a/ATTI43d53a63bc76933b7ec6efad6bd4a49aB841F8C6/tablero-pwm-sprint2)
 ---
 *Proyecto creado para la asignatura de Programación Web y Móvil.*
