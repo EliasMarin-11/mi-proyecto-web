@@ -356,13 +356,24 @@ main {
     border: 3px solid #4a322d;
 }
 
-.caja-foto-premium {
-    background-color: #FFF6EC;
+/* =========================================
+   SECCIÓN PREMIUM (HOME) - LOGO LIBRE
+========================================= */
+
+/* Solo le damos el ancho necesario para que el Flexbox mantenga la columna */
+.contenedor-logo-libre {
+    width: 250px;
+    flex-shrink: 0; /* Evita que el texto aplaste la imagen */
+    position: relative; /* Para que el sticker ¡TOP! no se escape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.img-promo {
-    width: 100%;
-    height: 100%;
+/* La imagen libre de ataduras */
+.img-promo-libre {
+    width: 170%;
+    height: auto;
     object-fit: contain;
     display: block;
 }
