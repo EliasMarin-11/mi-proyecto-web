@@ -1,30 +1,35 @@
 <main class="perfil-contenedor">
     <section class="perfil-tarjeta">
 
-        <div class="perfil-avatar">
+        <div class="perfil-avatar-wrapper">
+            <img id="avatar-img" class="perfil-avatar" src="img/Usuario SINFONDO.png" alt="Avatar del usuario">
+            <input type="file" id="input-avatar" accept="image/*" class="oculto">
         </div>
 
         <div class="perfil-cabecera">
-            <h2 class="perfil-nombre">María Cocinitas</h2>
-            <div class="icon-dummy-pencil">✏️</div>
+            <h2 class="perfil-nombre" id="nombre-display">Cargando...</h2>
+            <div class="icon-dummy-pencil" id="btn-editar-nombre" style="cursor: pointer;" title="Editar nombre">✏️</div>
         </div>
 
-        <form class="perfil-formulario">
+        <form class="perfil-formulario" id="form-perfil">
             <div class="form-grupo">
                 <label>Correo Electrónico</label>
-                <input type="email" class="input-dummy input-oscuro" value="maria.cocina@ejemplo.com" readonly>
+                <input type="email" id="input-email" class="input-dummy input-oscuro" readonly>
             </div>
 
             <div class="form-grupo">
-                <label>Nombre a mostrar</label>
-                <input type="text" class="input-dummy input-claro" value="María Cocinitas">
+                <label>Tu plan actual</label>
+                <div class="contenedor-plan">
+                    <div class="etiqueta-plan" id="texto-plan">...</div>
+                    <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan">Gestionar</button>
+                </div>
             </div>
 
-            <button type="button" class="btn-perfil">Guardar Cambios</button>
+            <button type="submit" class="btn-perfil" id="btn-guardar">Guardar Cambios</button>
 
             <hr class="perfil-separador">
 
-            <button type="button" class="btn-perfil">Cambiar Contraseña</button>
+            <button type="button" class="btn-perfil" id="btn-cambiar-password">Cambiar Contraseña</button>
         </form>
 
         <div class="perfil-enlaces-inferiores">

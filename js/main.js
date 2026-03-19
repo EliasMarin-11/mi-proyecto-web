@@ -69,4 +69,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 10);
         });
     }
+
+    // --- 3. GESTIÓN DEL ESTADO DE SESIÓN EN EL HEADER ---
+    const usuarioJson = localStorage.getItem('usuarioLogueado');
+
+    if (usuarioJson) {
+        const usuario = JSON.parse(usuarioJson);
+
+        // Buscamos todos los enlaces de la navegación principal
+        const enlacesNav = document.querySelectorAll('header nav ul li a');
+        let enlaceLogin = null;
+
+        // Filtramos para encontrar el que dice "Entrar", "Login" o "Perfil"
+        enlacesNav.forEach(enlace => {
+            const texto = enlace.textContent.toUpperCase();
+            if (texto.includes('ENTRAR') || texto.includes('INICIAR') || texto.includes('PERFIL')) {
+                enlaceLogin = enlace;
+            }
+        });
+
+        if (enlaceLogin) {
+            // Vaciamos el texto original
+            enlaceLogin.textContent = '';
+            enlaceLogin.href = 'perfil.html';
+
+            // Aseguramos que el enlace se comporte como contenedor flexible para alinear la imagen
+            enlaceLogin.style.display = 'flex';
+            enlaceLogin.style.alignItems = 'center';
+            enlaceLogin.style.padding = '0'; // Ajuste por si el 'a' tenía padding muy grande
+
+            // Creamos el nodo de la imagen de forma segura
+            const imgAvatarHeader = document.createElement('img');
+            imgAvatarHeader.src = usuario.foto && usuario.foto !== "" ? usuario.foto : 'img/Usuario SINFONDO.png';
+            imgAvatarHeader.alt = 'Ir a mi perfil';
+
+            // Estilos para que encaje como un icono circular en el header
+            imgAvatarHeader.style.width = '35px';
+            imgAvatarHeader.style.height = '35px';
+            imgAvatarHeader.style.borderRadius = '50%';
+            imgAvatarHeader.style.objectFit = 'cover';
+            imgAvatarHeader.style.border = '2px solid #4E1A0A'; // Ajusta al color de tu web
+            imgAvatarHeader.style.cursor = 'pointer';
+
+            // Añadimos la imagen al enlace
+            enlaceLogin.appendChild(imgAvatarHeader);
+        }
+    }
 });

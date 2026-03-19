@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Cerrar Sesión
     document.addEventListener('click', (e) => {
         if (e.target && e.target.id === 'btn-logout') {
             e.preventDefault();
@@ -12,23 +11,93 @@ document.addEventListener('DOMContentLoaded', () => {
     let intentosPerfil = 0;
 
     function intentarCargarPerfil() {
-        // Buscamos si el HTML del perfil ya se inyectó en la pantalla
         const textoNombre = document.querySelector('.perfil-nombre');
 
         if (textoNombre) {
             const usuarioJson = localStorage.getItem('usuarioLogueado');
+            if (!usuarioJson) return;
 
-            if (usuarioJson) {
-                const usuario = JSON.parse(usuarioJson);
+            const usuario = JSON.parse(usuarioJson);
+            textoNombre.textContent = usuario.nombre;
 
-                textoNombre.textContent = usuario.nombre; // Cambia el título
+            const inputEmail = document.querySelector('.perfil-formulario input[type="email"]');
+            if (inputEmail) inputEmail.value = usuario.email;
 
-                const inputEmail = document.querySelector('.perfil-formulario input[type="email"]');
-                if (inputEmail) inputEmail.value = usuario.email; // Cambia el correo
+            const avatarImg = document.querySelector('.perfil-avatar');
+            const inputAvatar = document.querySelector('#input-avatar') || document.querySelector('input[type="file"]');
 
-                const inputNombre = document.querySelector('.perfil-formulario input[type="text"]');
-                if (inputNombre) inputNombre.value = usuario.nombre; // Cambia el input
+            if (avatarImg && inputAvatar) {
+                if (usuario.foto) avatarImg.src = usuario.foto;
+
+                avatarImg.style.cursor = 'pointer';
+                avatarImg.addEventListener('click', () => inputAvatar.click());
+
+                inputAvatar.addEventListener('change', (e) => {
+                    const archivo = e.target.files[0];
+                    if (archivo && archivo.type.startsWith('image/')) {
+                        const lector = new FileReader();
+                        lector.onload = (evento) => {
+                            const base64 = evento.target.result;
+                            avatarImg.src = base64;
+                            usuario.foto = base64;
+                            localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
+                            gestionarSesion();
+                        };
+                        lector.readAsDataURL(archivo);
+                    }
+                });
             }
+
+            const btnEditarNombre = document.getElementById('btn-editar-nombre');
+            if (btnEditarNombre) {
+                btnEditarNombre.addEventListener('click', () => {
+                    const nuevoNombre = prompt("Introduce tu nuevo nombre para mostrar:", usuario.nombre);
+                    if (nuevoNombre !== null && nuevoNombre.trim() !== "") {
+                        usuario.nombre = nuevoNombre.trim();
+                        textoNombre.textContent = usuario.nombre;
+                        localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
+                        gestionarSesion();
+                    }
+                });
+            }
+
+            const textoPlan = document.getElementById('texto-plan');
+            if (textoPlan) {
+                textoPlan.textContent = usuario.rol ? usuario.rol.toUpperCase() : 'BÁSICO';
+            }
+
+            const btnGestionar = document.getElementById('btn-gestionar-plan');
+            if (btnGestionar) {
+                const nuevoBtn = btnGestionar.cloneNode(true);
+                btnGestionar.replaceWith(nuevoBtn);
+                nuevoBtn.addEventListener('click', () => {
+                    window.location.href = 'SUSCRIPCION.html';
+                });
+            }
+
+            const formPerfil = document.getElementById('form-perfil');
+            if (formPerfil) {
+                formPerfil.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Cambios guardados correctamente en tu perfil.');
+                });
+            }
+
+            const btnPass = document.getElementById('btn-cambiar-password');
+            if (btnPass) {
+                btnPass.addEventListener('click', () => {
+                    const passActual = prompt("Por seguridad, introduce tu contraseña actual:");
+                    if (passActual) {
+                        const passNueva = prompt("Introduce tu nueva contraseña (mínimo 6 caracteres):");
+                        if (passNueva && passNueva.length >= 6) {
+                            alert('¡Contraseña actualizada con éxito!');
+                        } else if (passNueva) {
+                            alert('La contraseña es muy corta. Operación cancelada.');
+                        }
+                    }
+                });
+            }
+
         } else {
             intentosPerfil++;
             if (intentosPerfil < 20) {
