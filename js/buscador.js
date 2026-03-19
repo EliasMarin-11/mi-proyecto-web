@@ -242,37 +242,59 @@ function ejecutarBusqueda(ingredientesBuscados) {
                 recetasFiltradas.forEach(receta => {
                     const tarjetaDom = templateBase.cloneNode(true);
 
-                    const tituloEl = tarjetaDom.querySelector('h3') || tarjetaDom.querySelector('.titulo-receta');
-                    if (tituloEl) tituloEl.textContent = receta.titulo;
-
-                    const enlaceEl = tarjetaDom.querySelector('a');
-                    if (enlaceEl) enlaceEl.href = receta.enlace;
-
-                    const contenedorImg = tarjetaDom.querySelector('.receta-dummy-img');
-                    if (contenedorImg) {
-                        const newImg = document.createElement('img');
-                        newImg.src = receta.imagen;
-                        newImg.alt = receta.titulo;
-                        newImg.className = 'img-receta-detalle';
-                        contenedorImg.replaceWith(newImg);
-                    } else {
-                        const imgEl = tarjetaDom.querySelector('img');
-                        if (imgEl) {
-                            imgEl.src = receta.imagen;
-                            imgEl.alt = receta.titulo;
-                        }
+                    // 1. EL ENLACE (Apuntando a VER_RECETA.html con su ID)
+                    const enlaceEl = tarjetaDom.tagName === 'A' ? tarjetaDom : tarjetaDom.querySelector('a');
+                    if (enlaceEl) {
+                        enlaceEl.href = `VER_RECETA.html?id=${receta.id}`;
                     }
 
-                    const descEl = tarjetaDom.querySelector('p');
+                    // 2. EL TÍTULO
+                    const tituloEl = tarjetaDom.querySelector('.receta-titulo');
+                    if (tituloEl) tituloEl.textContent = receta.titulo;
+
+                    // 3. LA FOTO (Sin estilos inyectados, solo le ponemos una clase)
+                    const contenedorImg = tarjetaDom.querySelector('.receta-dummy-img');
+                    if (contenedorImg) {
+                        const img = document.createElement('img');
+                        img.src = receta.imagen;
+                        img.alt = receta.titulo;
+                        img.className = 'img-tarjeta-horizontal'; // Para que le des estilo en tu CSS
+
+                        contenedorImg.innerHTML = ''; // Limpiamos el dummy
+                        contenedorImg.appendChild(img);
+                    }
+
+                    // 4. LA DESCRIPCIÓN
+                    const descEl = tarjetaDom.querySelector('.detalles-desc p');
                     if (descEl) {
                         descEl.textContent = receta.descripcion.length > 120 ? receta.descripcion.substring(0, 120) + '...' : receta.descripcion;
                     }
 
-                    const detallesList = tarjetaDom.querySelectorAll('li');
+                    // 5. LOS DATOS MINI (Tiempo, Dificultad, Estrellas)
+                    const detallesList = tarjetaDom.querySelectorAll('.lista-mini li');
                     if (detallesList.length >= 3) {
                         detallesList[0].textContent = `⏱️ ${receta.tiempo || receta.duracion_categoria}`;
                         detallesList[1].textContent = `👨‍🍳 ${receta.dificultad.charAt(0).toUpperCase() + receta.dificultad.slice(1)}`;
-                        detallesList[2].textContent = `⭐ ${receta.estrellas}`;
+                        detallesList[2].textContent = `⭐ ${receta.estrellas || 5}`;
+                    }
+
+                    // 6. LOS ALÉRGENOS (Ahora con imágenes)
+                    const filaIconos = tarjetaDom.querySelector('.fila-iconos-receta');
+                    if (filaIconos) {
+                        filaIconos.innerHTML = '';
+                        if (receta.alergenos && receta.alergenos.length > 0) {
+                            // Mostramos máximo 4 o 5 para que no se desborde la tarjeta
+                            receta.alergenos.slice(0, 5).forEach(alergeno => {
+                                const imgAlergeno = document.createElement('img');
+                                // IMPORTANTE: Asegúrate de que en tu carpeta 'img' las fotos se llamen igual que en el JSON (ej: gluten.png)
+                                imgAlergeno.src = `img/${alergeno}.png`;
+                                imgAlergeno.alt = alergeno;
+                                imgAlergeno.title = alergeno.charAt(0).toUpperCase() + alergeno.slice(1);
+                                imgAlergeno.className = 'icono-alergeno-mini'; // Nueva clase para controlarlo en CSS
+
+                                filaIconos.appendChild(imgAlergeno);
+                            });
+                        }
                     }
 
                     contenedorResultados.appendChild(tarjetaDom);
