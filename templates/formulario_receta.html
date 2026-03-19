@@ -8,17 +8,17 @@
     <div class="formulario-dos-columnas">
 
       <div class="columna-izquierda">
-        <div class="grupo-input">
-          <select id="receta-tiempo" class="input-linea" required>
-            <option value="" disabled selected>Duración...</option>
-            <option value="- 30 min">- 30 min</option>
-            <option value="30 - 60 min">30 - 60 min</option>
-            <option value="+ 1 hora">+ 1 hora</option>
+
+        <div class="grupo-input grupo-doble">
+          <input type="number" id="receta-tiempo-num" placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
+          <select id="receta-tiempo-unidad" class="input-linea input-mitad" required>
+            <option value="min">Minutos</option>
+            <option value="horas">Horas</option>
           </select>
         </div>
 
         <div class="grupo-input">
-          <input type="number" id="receta-raciones" placeholder="Raciones (ej. 4)" class="input-linea" required min="1">
+          <input type="number" id="receta-raciones" placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
         </div>
 
         <div class="grupo-input">
@@ -30,10 +30,26 @@
           </select>
         </div>
 
-        <h3 style="margin-top: 25px; font-size: 16px; font-weight: bold; color: #4E1A0A;">Alérgenos / Dieta</h3>
+        <h3 class="titulo-seccion-form">Alérgenos presentes</h3>
+        <div class="grupo-etiquetas" id="contenedor-alergenos">
+          <button type="button" class="etiqueta">Gluten</button>
+          <button type="button" class="etiqueta">Crustáceos</button>
+          <button type="button" class="etiqueta">Huevos</button>
+          <button type="button" class="etiqueta">Pescado</button>
+          <button type="button" class="etiqueta">Cacahuetes</button>
+          <button type="button" class="etiqueta">Soja</button>
+          <button type="button" class="etiqueta">Lácteos</button>
+          <button type="button" class="etiqueta">Frutos secos</button>
+          <button type="button" class="etiqueta">Apio</button>
+          <button type="button" class="etiqueta">Mostaza</button>
+          <button type="button" class="etiqueta">Sésamo</button>
+          <button type="button" class="etiqueta">Sulfitos</button>
+          <button type="button" class="etiqueta">Altramuces</button>
+          <button type="button" class="etiqueta">Moluscos</button>
+        </div>
+
+        <h3 class="titulo-seccion-form">Dieta</h3>
         <div class="grupo-etiquetas" id="contenedor-dieta">
-          <button type="button" class="etiqueta">Sin Gluten</button>
-          <button type="button" class="etiqueta">Sin Lácteos</button>
           <button type="button" class="etiqueta">Vegetariano</button>
           <button type="button" class="etiqueta">Vegano</button>
         </div>

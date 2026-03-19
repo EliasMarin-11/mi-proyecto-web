@@ -194,10 +194,21 @@ document.addEventListener('submit', (evento) => {
         let ingredienteErroneo = "";
 
         const titulo = document.getElementById('receta-titulo').value;
-        const tiempo = document.getElementById('receta-tiempo').value;
+
+        // --- CAMBIO 1: Leer el tiempo en dos partes y juntarlo ---
+        const tiempoNum = document.getElementById('receta-tiempo-num').value;
+        const tiempoUnidad = document.getElementById('receta-tiempo-unidad').value;
+        const tiempo = tiempoNum + " " + tiempoUnidad; // Resultado: "45 min" o "2 horas"
+
         const raciones = document.getElementById('receta-raciones').value;
         const dificultad = document.getElementById('receta-dificultad').value;
         const descripcion = document.getElementById('receta-desc').value;
+
+        // --- CAMBIO 2: Crear el array buscando los alérgenos seleccionados ---
+        const arrayAlergenos = [];
+        document.querySelectorAll('#contenedor-alergenos .etiqueta.activa').forEach(boton => {
+            arrayAlergenos.push(boton.textContent.trim());
+        });
 
         const arrayDieta = [];
         document.querySelectorAll('#contenedor-dieta .etiqueta.activa').forEach(boton => {
@@ -252,7 +263,7 @@ document.addEventListener('submit', (evento) => {
             tipo_plato: tipoPlatoSeleccionado,
             dieta: arrayDieta,
             descripcion: descripcion,
-            alergenos: [],
+            alergenos: arrayAlergenos, // --- CAMBIO 3: Mandar el array de alérgenos al objeto ---
             ingredientes_clave: arrayIngredientesClave,
             ingredientes: arrayIngredientes,
             instrucciones: arrayPasos,

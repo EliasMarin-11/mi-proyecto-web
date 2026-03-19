@@ -342,3 +342,42 @@
     position: relative;
     overflow: hidden;
 }
+
+/* =========================================
+   ESTILOS PARA LOS NUEVOS ELEMENTOS (TIEMPO)
+========================================= */
+
+.grupo-doble {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+}
+
+.input-mitad {
+    width: 50%; /* Hace que el número y el selector de minutos ocupen la mitad cada uno */
+}
+
+.titulo-seccion-form {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4E1A0A;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   MEJORA VISUAL Y DE ACCESIBILIDAD AL HACER CLIC
+========================================= */
+
+/* Hace que la sombra y el borde cambien al color de acento cuando escribes dentro */
+.input-titulo-principal:focus-visible,
+.input-linea:focus-visible,
+.input-caja:focus-visible,
+.textarea-paso:focus-visible,
+.textarea-desc:focus-visible {
+    outline: none; /* Quitamos el borde azul por defecto del navegador */
+    border-color: #E3412B;
+    box-shadow: 8px 8px 0px rgba(227, 65, 43, 0.2);
+    transition: all 0.2s ease;
+}
