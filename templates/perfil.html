@@ -1,6 +1,6 @@
-<main class="perfil-contenedor">
-    <section class="perfil-tarjeta">
+<main class="perfil-layout-dual">
 
+    <section class="perfil-tarjeta">
         <div class="perfil-avatar-wrapper">
             <img id="avatar-img" class="perfil-avatar" src="img/Usuario SINFONDO.png" alt="Avatar del usuario">
             <input type="file" id="input-avatar" accept="image/*" class="oculto">
@@ -8,7 +8,7 @@
 
         <div class="perfil-cabecera">
             <h2 class="perfil-nombre" id="nombre-display">Cargando...</h2>
-            <div class="icon-dummy-pencil" id="btn-editar-nombre" style="cursor: pointer;" title="Editar nombre">✏️</div>
+            <div class="icon-dummy-pencil" id="btn-editar-nombre" title="Editar nombre">✏️</div>
         </div>
 
         <form class="perfil-formulario" id="form-perfil">
@@ -37,4 +37,14 @@
             <a href="#" id="btn-logout">Cerrar Sesión</a>
         </div>
     </section>
+
+    <aside class="perfil-aside-recetas">
+        <div class="cabecera-aside">
+            <h3 class="titulo-mis-recetas">Mis Recetas Creadas</h3>
+            <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta">+ Nueva Receta</button>
+        </div>
+
+        <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside"></div>
+    </aside>
+
 </main>

@@ -263,7 +263,7 @@ document.addEventListener('submit', (evento) => {
             tipo_plato: tipoPlatoSeleccionado,
             dieta: arrayDieta,
             descripcion: descripcion,
-            alergenos: arrayAlergenos, // --- CAMBIO 3: Mandar el array de alérgenos al objeto ---
+            alergenos: arrayAlergenos,
             ingredientes_clave: arrayIngredientesClave,
             ingredientes: arrayIngredientes,
             instrucciones: arrayPasos,
@@ -271,24 +271,30 @@ document.addEventListener('submit', (evento) => {
             reseñas: []
         };
 
-        fetch('http://localhost:3000/recetas', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(nuevaReceta)
-        })
-            .then(res => {
-                if (res.ok) {
-                    alert('¡Receta subida con éxito al servidor! 👨‍🍳');
-                    evento.target.reset();
+        // --- MAGIA LOCALSTORAGE (Sustituye al Fetch) ---
 
-                    document.querySelectorAll('.etiqueta.activa').forEach(btn => btn.classList.remove('activa'));
+        // 1. Le generamos un ID numérico único basado en la fecha
+        nuevaReceta.id = parseInt(Date.now().toString().slice(-6));
 
-                    imagenSubida = null;
-                    actualizarVistaFoto();
-                } else {
-                    console.error('Error en el servidor al subir la receta');
-                }
-            })
-            .catch(error => console.error(error));
+        // 2. Leemos lo que ya hay guardado en el navegador
+        const misRecetasStr = localStorage.getItem('misRecetasCreadas');
+        const misRecetasArray = misRecetasStr ? JSON.parse(misRecetasStr) : [];
+
+        // 3. Metemos la nueva receta en la lista
+        misRecetasArray.push(nuevaReceta);
+
+        // 4. Volvemos a guardar la lista entera
+        localStorage.setItem('misRecetasCreadas', JSON.stringify(misRecetasArray));
+
+        alert('¡Receta creada con éxito! 👨‍🍳 Se ha guardado en tu perfil.');
+
+        // 5. Limpiamos el formulario
+        evento.target.reset();
+        document.querySelectorAll('.etiqueta.activa').forEach(btn => btn.classList.remove('activa'));
+        imagenSubida = null;
+        actualizarVistaFoto();
+
+        // 6. Redirigimos al perfil para ver la receta creada
+        window.location.href = 'PERFIL.html';
     }
 });

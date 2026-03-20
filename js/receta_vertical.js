@@ -28,10 +28,20 @@ async function cargarDatosReceta(idReceta) {
         const respuesta = await fetch('data/db.json');
         const data = await respuesta.json();
 
-        const receta = data.recetas.find(r => r.id === idReceta);
+        // --- NUEVO: LEER TUS RECETAS CREADAS DEL NAVEGADOR ---
+        const misRecetasStr = localStorage.getItem('misRecetasCreadas');
+        const misRecetasArray = misRecetasStr ? JSON.parse(misRecetasStr) : [];
+
+        // Juntamos las recetas de la base de datos con las tuyas
+        const todasLasRecetas = [...data.recetas, ...misRecetasArray];
+
+        // Ahora buscamos en la lista combinada
+        const receta = todasLasRecetas.find(r => r.id === idReceta);
 
         if (!receta) {
-            console.error("❌ ERROR: No existe ninguna receta con el ID " + idReceta + " en el JSON.");
+            console.error("❌ ERROR: No existe ninguna receta con el ID " + idReceta);
+            document.getElementById('receta-titulo').textContent = "Receta no encontrada";
+            // Aquí podríamos meter lógica para mostrar una página 404 en el futuro
             return;
         }
 

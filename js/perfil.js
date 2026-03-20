@@ -1,10 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('click', (e) => {
+        // Cerrar sesión
         if (e.target && e.target.id === 'btn-logout') {
             e.preventDefault();
             localStorage.removeItem('usuarioLogueado');
             window.location.href = "index.html";
+        }
+
+        // --- VALIDACIÓN PREMIUM PARA CREAR RECETAS ---
+        if (e.target && e.target.id === 'btn-ir-nueva-receta') {
+            const usuarioJson = localStorage.getItem('usuarioLogueado');
+            if (usuarioJson) {
+                const usuario = JSON.parse(usuarioJson);
+                // Comprobamos si es premium
+                if (usuario.rol === 'premium' || usuario.premium === true) {
+                    window.location.href = 'SUBIR_RECETA.html';
+                } else {
+                    alert('¡Ups! 🔒 Crear recetas es una función exclusiva para usuarios Premium. Mejora tu plan para compartir tus platos con el mundo.');
+                    window.location.href = 'SUSCRIPCION.html';
+                }
+            }
         }
     });
 
@@ -98,6 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
+            // CARGAMOS LAS RECETAS
+            cargarMisRecetasCreadas();
+
         } else {
             intentosPerfil++;
             if (intentosPerfil < 20) {
@@ -155,4 +174,85 @@ function gestionarSesion() {
         if (btnFavoritos) btnFavoritos.classList.add('boton-bloqueado');
         if (btnSubir) btnSubir.classList.add('boton-bloqueado');
     }
+}
+
+function cargarMisRecetasCreadas() {
+    const contenedor = document.getElementById('contenedor-mis-recetas');
+    if (!contenedor) return;
+
+    const misRecetasStr = localStorage.getItem('misRecetasCreadas');
+    const misRecetasArray = misRecetasStr ? JSON.parse(misRecetasStr) : [];
+
+    if (misRecetasArray.length === 0) {
+        contenedor.innerHTML = '';
+        const parrafoVacio = document.createElement('p');
+        parrafoVacio.className = 'mensaje-vacio-recetas';
+        parrafoVacio.textContent = 'Aún no has creado ninguna receta.';
+        contenedor.appendChild(parrafoVacio);
+        return;
+    }
+
+    fetch('templates/tarjeta_receta_horizontal.html')
+        .then(res => res.text())
+        .then(templateString => {
+            contenedor.innerHTML = '';
+
+            const parser = new DOMParser();
+            const templateDoc = parser.parseFromString(templateString, 'text/html');
+            const templateBase = templateDoc.body.firstElementChild;
+
+            misRecetasArray.forEach(receta => {
+                const tarjetaDom = templateBase.cloneNode(true);
+
+                const enlaceEl = tarjetaDom.tagName === 'A' ? tarjetaDom : tarjetaDom.querySelector('a');
+                if (enlaceEl) enlaceEl.href = `VER_RECETA.html?id=${receta.id}`;
+
+                const tituloEl = tarjetaDom.querySelector('.receta-titulo') || tarjetaDom.querySelector('h3');
+                if (tituloEl) tituloEl.textContent = receta.titulo;
+
+                const contenedorImg = tarjetaDom.querySelector('.receta-dummy-img');
+                if (contenedorImg) {
+                    const img = document.createElement('img');
+                    img.src = receta.imagen;
+                    img.alt = receta.titulo;
+                    img.className = 'img-tarjeta-horizontal';
+                    contenedorImg.replaceWith(img);
+                }
+
+                const descEl = tarjetaDom.querySelector('.detalles-desc p');
+                if (descEl) descEl.textContent = receta.descripcion.length > 100 ? receta.descripcion.substring(0, 100) + '...' : receta.descripcion;
+
+                const detallesList = tarjetaDom.querySelectorAll('.lista-mini li');
+                if (detallesList.length >= 3) {
+                    detallesList[0].textContent = `⏱️ ${receta.tiempo || receta.duracion_categoria}`;
+                    detallesList[1].textContent = `👨‍🍳 ${receta.dificultad.charAt(0).toUpperCase() + receta.dificultad.slice(1)}`;
+                    detallesList[2].textContent = `⭐ 5.0 (Nueva)`;
+                }
+
+                const filaIconos = tarjetaDom.querySelector('.fila-iconos-receta');
+                if (filaIconos) {
+                    filaIconos.innerHTML = '';
+                }
+
+                const btnCorazon = tarjetaDom.querySelector('.btn-fav-receta');
+                if (btnCorazon) {
+                    btnCorazon.textContent = '🗑️';
+                    btnCorazon.classList.add('btn-borrar-receta');
+                    btnCorazon.title = 'Borrar mi receta';
+
+                    btnCorazon.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (confirm(`¿Seguro que quieres borrar la receta "${receta.titulo}"?`)) {
+                            const filtradas = misRecetasArray.filter(r => r.id !== receta.id);
+                            localStorage.setItem('misRecetasCreadas', JSON.stringify(filtradas));
+                            cargarMisRecetasCreadas();
+                        }
+                    });
+                }
+
+                contenedor.appendChild(tarjetaDom);
+            });
+        })
+        .catch(error => console.error("Error cargando mis recetas:", error));
 }
