@@ -1,6 +1,3 @@
-// ==========================================
-// RECETA_DINAMICA.JS
-// ==========================================
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -11,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    //Función "Vigilante" para esperar al template
+    // Función "Vigilante" para esperar al template
     function esperarTemplate() {
         const tituloDOM = document.getElementById('receta-titulo');
 
@@ -44,10 +41,25 @@ async function cargarDatosReceta(idReceta) {
         document.getElementById('receta-dificultad').textContent = receta.dificultad;
         document.getElementById('receta-descripcion').textContent = receta.descripcion;
 
+        // --- CÁLCULO DE LA NOTA MEDIA REAL EN LA CABECERA ---
         const contenedorEstrellas = document.getElementById('receta-estrellas-hero');
         if (contenedorEstrellas) {
-            const numEstrellas = receta.estrellas || 5;
-            contenedorEstrellas.innerHTML = "⭐".repeat(numEstrellas);
+            const localesStr = localStorage.getItem('reseñasLocales');
+            const localesObj = localesStr ? JSON.parse(localesStr) : {};
+            const misLocales = localesObj[idReceta] || [];
+
+            const jsonReseñas = Array.isArray(receta.reseñas) ? receta.reseñas : [];
+            const todasLasReseñas = [...jsonReseñas, ...misLocales];
+
+            if (todasLasReseñas.length > 0) {
+                let suma = 0;
+                todasLasReseñas.forEach(r => suma += r.puntuacion);
+                const mediaReal = parseFloat((suma / todasLasReseñas.length).toFixed(1));
+
+                contenedorEstrellas.textContent = `⭐ ${mediaReal} (${todasLasReseñas.length} opiniones)`;
+            } else {
+                contenedorEstrellas.textContent = `⭐ Sin valoraciones`;
+            }
         }
 
         if (document.getElementById('receta-raciones')) {
@@ -72,7 +84,7 @@ async function cargarDatosReceta(idReceta) {
         if (cajaAlergenos) {
             if (receta.alergenos && receta.alergenos.length > 0) {
 
-                fetch('/templates/alergeno.html')
+                fetch('templates/alergeno.html') // Corregido el path para evitar problemas locales
                     .then(respuesta => respuesta.text())
                     .then(templateHtml => {
 

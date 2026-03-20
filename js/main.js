@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Si no estamos en la Home, no ejecutamos esto
     if (!slider) return;
 
-    //Metemos el JSON y el Template a cargar a la vez
+    // Metemos el JSON y el Template a cargar a la vez
     Promise.all([
         fetch('data/db.json').then(res => res.json()),
         fetch('templates/tarjeta_receta_vertical.html').then(res => res.text())
@@ -14,16 +14,34 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(([data, templateHTML]) => {
             let htmlAcumulado = '';
 
+            // --- 1. LEER LAS RESEÑAS LOCALES ---
+            const localesStr = localStorage.getItem('reseñasLocales');
+            const reseñasLocalesTodas = localesStr ? JSON.parse(localesStr) : {};
+
             data.recetas.forEach(receta => {
+                // --- 2. CALCULAR LA NOTA MEDIA REAL DE ESTA RECETA ---
+                const jsonReseñas = Array.isArray(receta.reseñas) ? receta.reseñas : [];
+                const misLocales = reseñasLocalesTodas[receta.id] || [];
+                const todasLasReseñas = [...jsonReseñas, ...misLocales];
+
+                let mediaReal = receta.estrellas || 5;
+                if (todasLasReseñas.length > 0) {
+                    let suma = 0;
+                    todasLasReseñas.forEach(r => suma += r.puntuacion);
+                    mediaReal = parseFloat((suma / todasLasReseñas.length).toFixed(1));
+                }
+
+                // --- 3. INYECTAR LA MEDIA REAL EN EL TEMPLATE ---
                 let tarjetaRellena = templateHTML
                     .replace('<h2>LOREMIPSUM</h2>', `<h2>${receta.titulo}</h2>`)
                     .replace('<div class="placeholder-v"></div>', `<img src="${receta.imagen}" alt="${receta.titulo}" class="img-tarjeta-v">`)
                     .replace('<p>loremipsumloremipsum</p>', `<p>⏱️ ${receta.tiempo}</p>`)
                     .replace('<p>loremipsumloremipsum</p>', `<p>👨‍🍳 ${receta.dificultad.charAt(0).toUpperCase() + receta.dificultad.slice(1)}</p>`)
-                    .replace('<p>loremipsumloremipsum</p>', `<p>⭐ ${receta.estrellas}</p>`);
+                    .replace('<p>loremipsumloremipsum</p>', `<p>⭐ ${mediaReal}</p>`); // <--- Aquí inyectamos la nota calculada
 
+                // (Nota: He actualizado el href para que use tu sistema de IDs)
                 htmlAcumulado += `
-                <a href="${receta.enlace}" class="enlace_tarjeta slider-item">
+                <a href="VER_RECETA.html?id=${receta.id}" class="enlace_tarjeta slider-item">
                     ${tarjetaRellena}
                 </a>
             `;
@@ -38,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDer = document.getElementById('btn-der');
 
     if (btnIzq && btnDer) {
-
         // boton der
         btnDer.addEventListener('click', () => {
             const primeraTarjeta = slider.firstElementChild;
@@ -70,17 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3. GESTIÓN DEL ESTADO DE SESIÓN EN EL HEADER ---
+    // --- GESTIÓN DEL ESTADO DE SESIÓN EN EL HEADER ---
     const usuarioJson = localStorage.getItem('usuarioLogueado');
 
     if (usuarioJson) {
         const usuario = JSON.parse(usuarioJson);
 
-        // Buscamos todos los enlaces de la navegación principal
         const enlacesNav = document.querySelectorAll('header nav ul li a');
         let enlaceLogin = null;
 
-        // Filtramos para encontrar el que dice "Entrar", "Login" o "Perfil"
         enlacesNav.forEach(enlace => {
             const texto = enlace.textContent.toUpperCase();
             if (texto.includes('ENTRAR') || texto.includes('INICIAR') || texto.includes('PERFIL')) {
@@ -89,29 +104,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (enlaceLogin) {
-            // Vaciamos el texto original
             enlaceLogin.textContent = '';
             enlaceLogin.href = 'perfil.html';
 
-            // Aseguramos que el enlace se comporte como contenedor flexible para alinear la imagen
             enlaceLogin.style.display = 'flex';
             enlaceLogin.style.alignItems = 'center';
-            enlaceLogin.style.padding = '0'; // Ajuste por si el 'a' tenía padding muy grande
+            enlaceLogin.style.padding = '0';
 
-            // Creamos el nodo de la imagen de forma segura
             const imgAvatarHeader = document.createElement('img');
             imgAvatarHeader.src = usuario.foto && usuario.foto !== "" ? usuario.foto : 'img/Usuario SINFONDO.png';
             imgAvatarHeader.alt = 'Ir a mi perfil';
 
-            // Estilos para que encaje como un icono circular en el header
             imgAvatarHeader.style.width = '35px';
             imgAvatarHeader.style.height = '35px';
             imgAvatarHeader.style.borderRadius = '50%';
             imgAvatarHeader.style.objectFit = 'cover';
-            imgAvatarHeader.style.border = '2px solid #4E1A0A'; // Ajusta al color de tu web
+            imgAvatarHeader.style.border = '2px solid #4E1A0A';
             imgAvatarHeader.style.cursor = 'pointer';
 
-            // Añadimos la imagen al enlace
             enlaceLogin.appendChild(imgAvatarHeader);
         }
     }

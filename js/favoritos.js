@@ -28,12 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // --- LÓGICA DE BUSCAR Y APLICAR FILTROS ---
         if (e.target.closest('#btn-buscar') || e.target.closest('.btn-aplicar-filtros')) {
             e.preventDefault();
             procesarBusquedaLocal();
 
-            // UX extra: Cerramos el menú al darle a aplicar para ver los resultados
             if (e.target.closest('.btn-aplicar-filtros')) {
                 const menuFiltros = document.getElementById('menu-filtros');
                 if (menuFiltros) menuFiltros.classList.add('oculto');
@@ -66,8 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             e.target.value = '';
         }
     });
-
-    // ¡HEMOS ELIMINADO EL EVENTO 'CHANGE' PARA QUE NO FILTRE AUTOMÁTICAMENTE!
 });
 
 function toggleFavorito(idReceta, botonDom) {
@@ -166,8 +162,11 @@ function ejecutarVistaFavoritos(ingredientesBuscados) {
     ])
         .then(([data, templateString]) => {
 
-            // Solo lee los checkboxes cuando esta función es llamada por el botón "Aplicar"
             const checkboxesActivos = Array.from(document.querySelectorAll('.dropdown-bruto input[type="checkbox"]:checked')).map(cb => cb.value);
+
+            // --- LECTURA DE RESEÑAS LOCALES PARA FAVORITOS ---
+            const localesStr = localStorage.getItem('reseñasLocales');
+            const reseñasLocalesTodas = localesStr ? JSON.parse(localesStr) : {};
 
             const normalizar = (texto) => {
                 if (!texto) return "";
@@ -176,6 +175,19 @@ function ejecutarVistaFavoritos(ingredientesBuscados) {
 
             const recetasFiltradas = data.recetas.filter(receta => {
                 if (!misFavoritos.includes(receta.id)) return false;
+
+                // --- CALCULAR LA MEDIA REAL DE ESTA RECETA ---
+                const jsonReseñas = Array.isArray(receta.reseñas) ? receta.reseñas : [];
+                const misLocales = reseñasLocalesTodas[receta.id] || [];
+                const todasLasReseñas = [...jsonReseñas, ...misLocales];
+
+                let mediaReal = receta.estrellas || 5;
+                if (todasLasReseñas.length > 0) {
+                    let suma = 0;
+                    todasLasReseñas.forEach(r => suma += r.puntuacion);
+                    mediaReal = parseFloat((suma / todasLasReseñas.length).toFixed(1));
+                }
+                receta.mediaRealCalculada = mediaReal; // Guardamos para el filtro y la tarjeta
 
                 let coincideIngrediente = ingredientesBuscados.length === 0 || ingredientesBuscados.every(ingBuscado => {
                     const termino = normalizar(ingBuscado.trim());
@@ -223,6 +235,7 @@ function ejecutarVistaFavoritos(ingredientesBuscados) {
                         }
                     }
 
+                    // FILTRO MATEMÁTICO DE ESTRELLAS
                     const filtrosEstrellas = checkboxesActivos.filter(val => normalizar(val).includes('estrellas-'));
                     if (filtrosEstrellas.length > 0) {
                         let limite = 0;
@@ -230,7 +243,7 @@ function ejecutarVistaFavoritos(ingredientesBuscados) {
                             const num = parseInt(f.replace('estrellas-', ''));
                             if (!isNaN(num) && num > limite) limite = num;
                         });
-                        if ((receta.estrellas || 0) < limite) return false;
+                        if (receta.mediaRealCalculada < limite) return false;
                     }
                 }
                 return true;
@@ -266,7 +279,9 @@ function ejecutarVistaFavoritos(ingredientesBuscados) {
                     if (detallesList.length >= 3) {
                         detallesList[0].textContent = `⏱️ ${receta.tiempo || receta.duracion_categoria}`;
                         detallesList[1].textContent = `👨‍🍳 ${receta.dificultad}`;
-                        detallesList[2].textContent = `⭐ ${receta.estrellas || 5}`;
+
+                        // IMPRIMIMOS LA NOTA MEDIA EXACTA EN LA TARJETA
+                        detallesList[2].textContent = `⭐ ${receta.mediaRealCalculada}`;
                     }
 
                     const btnCorazon = tarjetaDom.querySelector('.btn-fav-receta');

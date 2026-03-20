@@ -14,17 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('click', (e) => {
-        // --- 1. LÓGICA DEL CORAZÓN (Con stopPropagation) ---
         const btnCorazon = e.target.closest('.btn-fav-receta');
         if (btnCorazon) {
             e.preventDefault();
-            e.stopPropagation(); // Evita que el clic abra la receta
+            e.stopPropagation();
             const idReceta = parseInt(btnCorazon.dataset.id);
             toggleFavoritoBuscador(idReceta, btnCorazon);
             return;
         }
 
-        // --- 2. LÓGICA DE FILTROS ---
         if (e.target.closest('#btn-filtros')) {
             const menuFiltros = document.getElementById('menu-filtros');
             if (menuFiltros) menuFiltros.classList.toggle('oculto');
@@ -66,9 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    document.addEventListener('change', (e) => {
+        if (e.target.matches('.dropdown-bruto input[type="checkbox"]')) {
+            if (window.location.pathname.toLowerCase().includes('buscador.html')) {
+                ejecutarBusqueda(listaIngredientes);
+            }
+        }
+    });
 });
 
-// --- FUNCIÓN PARA GUARDAR FAVORITOS ---
 function toggleFavoritoBuscador(idReceta, botonDom) {
     const usuarioJson = localStorage.getItem('usuarioLogueado');
     if (!usuarioJson) {
@@ -83,10 +87,10 @@ function toggleFavoritoBuscador(idReceta, botonDom) {
 
     if (index === -1) {
         usuario.favoritos.push(idReceta);
-        botonDom.textContent = '🤎'; // Relleno
+        botonDom.textContent = '🤎';
     } else {
         usuario.favoritos.splice(index, 1);
-        botonDom.textContent = '🤍'; // Vacío
+        botonDom.textContent = '🤍';
     }
 
     localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
@@ -122,7 +126,6 @@ function actualizarTagsDOM() {
 
     listaIngredientes.forEach((ingrediente, index) => {
         const palabraLimpia = ingrediente.charAt(0).toUpperCase() + ingrediente.slice(1);
-
         const divTag = document.createElement('div');
         divTag.className = 'tag';
         divTag.textContent = palabraLimpia + ' ';
@@ -151,10 +154,13 @@ function ejecutarBusqueda(ingredientesBuscados) {
     ])
         .then(([data, templateString]) => {
 
-            // --- LEER FAVORITOS PARA PINTAR CORAZONES ---
             const usuarioJson = localStorage.getItem('usuarioLogueado');
             const usuario = usuarioJson ? JSON.parse(usuarioJson) : {};
             const misFavoritos = usuario.favoritos || [];
+
+            // --- LEER RESEÑAS LOCALES PARA CALCULAR LA MEDIA ---
+            const localesStr = localStorage.getItem('reseñasLocales');
+            const reseñasLocalesTodas = localesStr ? JSON.parse(localesStr) : {};
 
             const checkboxesActivos = Array.from(document.querySelectorAll('.dropdown-bruto input[type="checkbox"]:checked')).map(cb => cb.value);
 
@@ -164,18 +170,34 @@ function ejecutarBusqueda(ingredientesBuscados) {
             };
 
             const recetasFiltradas = data.recetas.filter(receta => {
+
+                // --- 1. CÁLCULO DE LA NOTA MEDIA REAL DE ESTA RECETA ---
+                const jsonReseñas = Array.isArray(receta.reseñas) ? receta.reseñas : [];
+                const misLocales = reseñasLocalesTodas[receta.id] || [];
+                const todasLasReseñas = [...jsonReseñas, ...misLocales];
+
+                let mediaReal = receta.estrellas || 5;
+                if (todasLasReseñas.length > 0) {
+                    let suma = 0;
+                    todasLasReseñas.forEach(r => suma += r.puntuacion);
+                    mediaReal = parseFloat((suma / todasLasReseñas.length).toFixed(1));
+                }
+
+                // Guardamos la media temporalmente en el objeto receta para usarla luego al pintar
+                receta.mediaRealCalculada = mediaReal;
+
+                // --- 2. FILTRO DE INGREDIENTES ---
                 let coincideIngrediente = ingredientesBuscados.length === 0 || ingredientesBuscados.every(ingBuscado => {
                     const termino = normalizar(ingBuscado.trim());
-
                     const enTitulo = receta.titulo && normalizar(receta.titulo).includes(termino);
                     const enClave = Array.isArray(receta.ingredientes_clave) && receta.ingredientes_clave.some(ing => normalizar(ing).includes(termino));
                     const enNormal = Array.isArray(receta.ingredientes) && receta.ingredientes.some(ing => normalizar(ing).includes(termino));
-
                     return enTitulo || enClave || enNormal;
                 });
 
                 if (!coincideIngrediente) return false;
 
+                // --- 3. FILTROS AVANZADOS ---
                 if (checkboxesActivos.length > 0) {
                     const filtrosDificultad = checkboxesActivos.filter(val => ['facil', 'media', 'dificil'].includes(normalizar(val)));
                     if (filtrosDificultad.length > 0) {
@@ -187,13 +209,10 @@ function ejecutarBusqueda(ingredientesBuscados) {
                     if (filtrosDuracion.length > 0) {
                         let minReceta = 0;
                         const tiempoStr = normalizar(receta.tiempo || receta.duracion_categoria || "");
-
                         const numMatch = tiempoStr.match(/\d+/);
                         if (numMatch) {
                             minReceta = parseInt(numMatch[0]);
-                            if (tiempoStr.includes('hora')) {
-                                minReceta = minReceta * 60;
-                            }
+                            if (tiempoStr.includes('hora')) minReceta = minReceta * 60;
                         }
 
                         let encajaTiempo = false;
@@ -225,6 +244,7 @@ function ejecutarBusqueda(ingredientesBuscados) {
                         }
                     }
 
+                    // AHORA EL FILTRO COMPRUEBA LA MEDIA MATEMÁTICA REAL
                     const filtrosEstrellas = checkboxesActivos.filter(val => normalizar(val).includes('estrellas-'));
                     if (filtrosEstrellas.length > 0) {
                         let limiteEstrellas = 0;
@@ -235,8 +255,7 @@ function ejecutarBusqueda(ingredientesBuscados) {
                             }
                         });
 
-                        const estrellasReceta = receta.estrellas || 0;
-                        if (estrellasReceta < limiteEstrellas) return false;
+                        if (receta.mediaRealCalculada < limiteEstrellas) return false;
                     }
                 }
 
@@ -252,9 +271,7 @@ function ejecutarBusqueda(ingredientesBuscados) {
                     const tarjetaDom = templateBase.cloneNode(true);
 
                     const enlaceEl = tarjetaDom.tagName === 'A' ? tarjetaDom : tarjetaDom.querySelector('a');
-                    if (enlaceEl) {
-                        enlaceEl.href = `VER_RECETA.html?id=${receta.id}`;
-                    }
+                    if (enlaceEl) enlaceEl.href = `VER_RECETA.html?id=${receta.id}`;
 
                     const tituloEl = tarjetaDom.querySelector('.receta-titulo');
                     if (tituloEl) tituloEl.textContent = receta.titulo;
@@ -265,7 +282,6 @@ function ejecutarBusqueda(ingredientesBuscados) {
                         img.src = receta.imagen;
                         img.alt = receta.titulo;
                         img.className = 'img-tarjeta-horizontal';
-
                         contenedorImg.innerHTML = '';
                         contenedorImg.appendChild(img);
                     }
@@ -279,7 +295,9 @@ function ejecutarBusqueda(ingredientesBuscados) {
                     if (detallesList.length >= 3) {
                         detallesList[0].textContent = `⏱️ ${receta.tiempo || receta.duracion_categoria}`;
                         detallesList[1].textContent = `👨‍🍳 ${receta.dificultad.charAt(0).toUpperCase() + receta.dificultad.slice(1)}`;
-                        detallesList[2].textContent = `⭐ ${receta.estrellas || 5}`;
+
+                        // IMPRIMIMOS LA NOTA MEDIA EXACTA EN LA TARJETA
+                        detallesList[2].textContent = `⭐ ${receta.mediaRealCalculada}`;
                     }
 
                     const filaIconos = tarjetaDom.querySelector('.fila-iconos-receta');
@@ -292,20 +310,18 @@ function ejecutarBusqueda(ingredientesBuscados) {
                                 imgAlergeno.alt = alergeno;
                                 imgAlergeno.title = alergeno.charAt(0).toUpperCase() + alergeno.slice(1);
                                 imgAlergeno.className = 'icono-alergeno-mini';
-
                                 filaIconos.appendChild(imgAlergeno);
                             });
                         }
                     }
 
-                    // --- ASIGNAR ESTADO DEL CORAZÓN Y SU ID ---
                     const btnCorazon = tarjetaDom.querySelector('.btn-fav-receta');
                     if (btnCorazon) {
                         btnCorazon.dataset.id = receta.id;
                         if (misFavoritos.includes(receta.id)) {
                             btnCorazon.textContent = '🤎';
                         } else {
-                            btnCorazon.textContent = '🤍'; // Usando el corazón blanco para "no favorito"
+                            btnCorazon.textContent = '🤍';
                         }
                     }
 

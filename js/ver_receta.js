@@ -1,102 +1,207 @@
-//reseñas y comentarios
+let puntuacionActual = 5;
+let reseñasActuales = [];
+let recetaIdGlobal = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+    const parametros = new URLSearchParams(window.location.search);
+    recetaIdGlobal = parseInt(parametros.get('id'));
 
-    //esperamos a que el template de la receta cargue
-    function esperarSeccionReseñas() {
+    function inicializarReseñas() {
         const contenedorReseñas = document.getElementById('lista-reseñas');
-
-        if (contenedorReseñas) {
-            // Cuando exista, cargamos los datos
-            cargarReseñasDeReceta();
-            gestionarCajaReseña();
+        if (contenedorReseñas && recetaIdGlobal) {
+            cargarReseñasDeReceta(contenedorReseñas);
+            configurarEstrellasInteractivas();
+        } else if (!recetaIdGlobal) {
+            // Sin ID, no hacemos nada
         } else {
-            // Si no, esperamos 50ms y volvemos a mirar
-            setTimeout(esperarSeccionReseñas, 50);
+            setTimeout(inicializarReseñas, 50);
         }
     }
 
-    esperarSeccionReseñas();
+    inicializarReseñas();
 
-    //listener botón de "Borrar Reseña"
     document.addEventListener('click', (e) => {
-        // Buscamos si han hecho clic en el botón de la papelera
-        if (e.target && e.target.classList.contains('btn-trash-icon')) {
+        if (e.target.matches('.btn-trash-icon')) {
             const idReseña = e.target.getAttribute('data-id');
             borrarMiReseña(idReseña);
         }
     });
 });
 
+function configurarEstrellasInteractivas() {
+    const estrellas = document.querySelectorAll('.estrella-click');
+    if (estrellas.length === 0) return;
 
-//montar reseña
-async function cargarReseñasDeReceta() {
-    const parametros = new URLSearchParams(window.location.search);
-    const recetaId = parseInt(parametros.get('id'));
+    actualizarPintadoEstrellas(estrellas, puntuacionActual);
 
-    if (!recetaId) return;
-
-    try {
-        const respuesta = await fetch('data/db.json');
-        const datos = await respuesta.json();
-
-        const receta = datos.recetas.find(r => r.id === recetaId);
-        const contenedorReseñas = document.getElementById('lista-reseñas');
-
-        if (!receta || !contenedorReseñas) return;
-
-        //Si NO hay reseñas
-        if (!receta.reseñas || receta.reseñas.length === 0) {
-            contenedorReseñas.innerHTML = `
-                <div class="caja-sin-resenas">
-                    <p>Todavía no hay reseñas. ¡Sé el primero en opinar! 🍳</p>
-                </div>
-            `;
-            return;
-        }
-
-        //si hay reseñas
-        let htmlAcumulado = '';
-
-        receta.reseñas.forEach(res => {
-            const estrellasHTML = "⭐".repeat(res.puntuacion);
-
-            htmlAcumulado += `
-                <div class="reseña-item">
-                    <div class="usuario-avatar-reseña">
-                        <img src="${res.avatar}" alt="${res.usuario}">
-                    </div>
-                    <div class="cuerpo-reseña">
-                        <h4 class="nombre-usuario-reseña">${res.usuario}</h4>
-                        <p class="texto-reseña">${res.texto}</p>
-                        <div class="footer-reseña">
-                            <div class="selector-estrellas">${estrellasHTML}</div>
-                        </div>
-                    </div>
-                </div>
-            `;
+    estrellas.forEach(estrella => {
+        estrella.addEventListener('click', (e) => {
+            puntuacionActual = parseInt(e.target.getAttribute('data-valor'));
+            actualizarPintadoEstrellas(estrellas, puntuacionActual);
         });
+    });
+}
 
-        contenedorReseñas.innerHTML = htmlAcumulado;
+function actualizarPintadoEstrellas(estrellas, valorLimite) {
+    estrellas.forEach((est, index) => {
+        if (index < valorLimite) {
+            est.classList.add('activa');
+        } else {
+            est.classList.remove('activa');
+        }
+    });
+}
 
-    } catch (error) {
-        console.error("Error al cargar las reseñas:", error);
+function cargarReseñasDeReceta(contenedorReseñas) {
+    fetch('data/db.json')
+        .then(respuesta => respuesta.json())
+        .then(datos => {
+            const receta = datos.recetas.find(r => r.id === recetaIdGlobal);
+            contenedorReseñas.innerHTML = '';
+
+            const localesStr = localStorage.getItem('reseñasLocales');
+            const localesObj = localesStr ? JSON.parse(localesStr) : {};
+            const misLocales = localesObj[recetaIdGlobal] || [];
+
+            const jsonReseñas = (receta && receta.reseñas) ? receta.reseñas : [];
+
+            reseñasActuales = [...jsonReseñas, ...misLocales];
+
+            if (reseñasActuales.length === 0) {
+                mostrarMensajeSinReseñas(contenedorReseñas);
+            } else {
+                reseñasActuales.forEach(res => {
+                    const esMia = misLocales.some(m => m.id === res.id);
+                    construirNodoReseña(res, contenedorReseñas, esMia);
+                });
+            }
+
+            actualizarMediaDOM();
+            gestionarCajaReseña(contenedorReseñas); // Llamamos aquí para saber si ya comentó
+        })
+        .catch(error => console.error("Error al cargar las reseñas:", error));
+}
+
+function actualizarMediaDOM() {
+    // Añadimos el ID de la cabecera (#receta-estrellas-hero) para que se actualice en vivo
+    const itemsListaDetalle = document.querySelectorAll('.lista-mini li, .lista-info-breve li, #receta-estrellas-hero');
+
+    if (reseñasActuales.length === 0) {
+        itemsListaDetalle.forEach(li => {
+            if (li.textContent.includes('⭐') || li.id === 'receta-estrellas-hero') {
+                li.textContent = `⭐ Sin valoraciones`;
+            }
+        });
+        return;
+    }
+
+    let sumaTotal = 0;
+    reseñasActuales.forEach(res => {
+        sumaTotal += res.puntuacion;
+    });
+
+    const media = parseFloat((sumaTotal / reseñasActuales.length).toFixed(1));
+
+    itemsListaDetalle.forEach(li => {
+        if (li.textContent.includes('⭐') || li.id === 'receta-estrellas-hero') {
+            li.textContent = `⭐ ${media} (${reseñasActuales.length} opiniones)`;
+        }
+    });
+}
+
+function construirNodoReseña(datosReseña, contenedor, esNueva = false) {
+    const divItem = document.createElement('div');
+    divItem.className = 'reseña-item';
+    if (esNueva) {
+        divItem.classList.add('user-post-item');
+        divItem.id = datosReseña.id;
+    }
+
+    const divAvatar = document.createElement('div');
+    divAvatar.className = 'usuario-avatar-reseña';
+    const imgAvatar = document.createElement('img');
+    imgAvatar.src = datosReseña.avatar || "img/Usuario SINFONDO.png";
+    imgAvatar.alt = datosReseña.usuario;
+    divAvatar.appendChild(imgAvatar);
+
+    const divCuerpo = document.createElement('div');
+    divCuerpo.className = 'cuerpo-reseña';
+
+    const h4Nombre = document.createElement('h4');
+    h4Nombre.className = 'nombre-usuario-reseña';
+    h4Nombre.textContent = datosReseña.usuario;
+
+    const pTexto = document.createElement('p');
+    if (datosReseña.texto !== "") {
+        const pTexto = document.createElement('p');
+        pTexto.className = 'texto-reseña';
+        pTexto.textContent = datosReseña.texto;
+        divCuerpo.appendChild(pTexto);
+    }
+
+    const divFooter = document.createElement('div');
+    divFooter.className = 'footer-reseña';
+
+    const puntos = datosReseña.puntuacion || 5;
+    const divEstrellas = document.createElement('div');
+    divEstrellas.className = 'selector-estrellas';
+    divEstrellas.textContent = "⭐".repeat(puntos);
+    divFooter.appendChild(divEstrellas);
+
+    divCuerpo.appendChild(h4Nombre);
+    divCuerpo.appendChild(pTexto);
+    divCuerpo.appendChild(divFooter);
+
+    divItem.appendChild(divAvatar);
+    divItem.appendChild(divCuerpo);
+
+    if (esNueva) {
+        const btnBorrar = document.createElement('button');
+        btnBorrar.className = 'btn-trash-icon';
+        btnBorrar.setAttribute('data-id', datosReseña.id);
+        btnBorrar.textContent = '🗑️';
+        divItem.appendChild(btnBorrar);
+    }
+
+    if (esNueva) {
+        contenedor.prepend(divItem);
+    } else {
+        contenedor.appendChild(divItem);
     }
 }
 
-function gestionarCajaReseña() {
+function mostrarMensajeSinReseñas(contenedor) {
+    const divVacio = document.createElement('div');
+    divVacio.className = 'caja-sin-resenas';
+
+    const pVacio = document.createElement('p');
+    pVacio.textContent = 'Todavía no hay reseñas. ¡Sé el primero en opinar! 🍳';
+
+    divVacio.appendChild(pVacio);
+    contenedor.appendChild(divVacio);
+}
+
+function gestionarCajaReseña(contenedorReseñas) {
     const usuarioJson = localStorage.getItem('usuarioLogueado');
     const cajaEscribir = document.getElementById('caja-mi-reseña');
     const avatarEscribir = document.getElementById('avatar-escribir');
     const textarea = document.getElementById('texto-nueva-reseña');
     const btnPublicar = document.getElementById('btn-publicar-reseña');
-    const contenedorReseñas = document.getElementById('lista-reseñas');
+    const contenedorEstrellas = document.getElementById('selector-puntuacion');
 
     if (!cajaEscribir) return;
 
     if (usuarioJson) {
-        //logueado
         const usuario = JSON.parse(usuarioJson);
+
+        const yaComento = reseñasActuales.some(r => r.usuario === usuario.nombre);
+
+        if (yaComento) {
+            cajaEscribir.style.display = 'none';
+            return;
+        } else {
+            cajaEscribir.style.display = '';
+        }
 
         if (avatarEscribir) {
             avatarEscribir.src = usuario.foto || "img/Usuario SINFONDO.png";
@@ -104,53 +209,61 @@ function gestionarCajaReseña() {
         }
 
         cajaEscribir.classList.remove('boton-bloqueado');
+        if (contenedorEstrellas) contenedorEstrellas.style.display = 'flex';
 
         if (textarea) {
             textarea.disabled = false;
-            textarea.placeholder = `Opina, ${usuario.nombre}...`;
+            // Cambiamos el placeholder para que quede claro que es opcional
+            textarea.placeholder = `Añade un comentario (opcional), ${usuario.nombre}...`;
         }
 
         if (btnPublicar) {
-            btnPublicar.innerText = "Publicar";
-            btnPublicar.onclick = null;
+            btnPublicar.textContent = "Publicar Valoración";
 
-            btnPublicar.onclick = () => {
+            const manejadorPublicar = (e) => {
+                e.preventDefault();
                 const texto = textarea.value.trim();
 
-                if (texto === "") {
-                    alert(`¡Escribe algo antes de publicar, ${usuario.nombre}!`);
-                    return;
+                // ¡HEMOS QUITADO LA ALERTA DE TEXTO OBLIGATORIO!
+
+                const mensajeVacio = document.querySelector('.caja-sin-resenas');
+                if (mensajeVacio) {
+                    mensajeVacio.remove();
                 }
 
-                const idUnico = 'reseña-' + Date.now();
+                const nuevaResenaDatos = {
+                    id: 'reseña-' + Date.now(),
+                    usuario: usuario.nombre,
+                    avatar: usuario.foto,
+                    texto: texto, // Guardará el texto o un string vacío ""
+                    puntuacion: puntuacionActual
+                };
 
-                const nuevaReseñaHTML = `
-                    <div class="reseña-item user-post-item" id="${idUnico}">
-                        <div class="usuario-avatar-reseña">
-                            <img src="${usuario.foto || 'img/Usuario SINFONDO.png'}" alt="${usuario.nombre}">
-                        </div>
-                        <div class="cuerpo-reseña">
-                            <h4 class="nombre-usuario-reseña">${usuario.nombre}</h4>
-                            <p class="texto-reseña">${texto}</p>
-                            <div class="footer-reseña"></div>
-                        </div>
-                        <button class="btn-trash-icon" data-id="${idUnico}">🗑️</button>
-                    </div>
-                `;
+                const localesStr = localStorage.getItem('reseñasLocales');
+                const localesObj = localesStr ? JSON.parse(localesStr) : {};
+                if (!localesObj[recetaIdGlobal]) localesObj[recetaIdGlobal] = [];
+                localesObj[recetaIdGlobal].push(nuevaResenaDatos);
+                localStorage.setItem('reseñasLocales', JSON.stringify(localesObj));
 
-                if (document.querySelector('.caja-sin-resenas')) {
-                    contenedorReseñas.innerHTML = '';
-                }
+                reseñasActuales.push(nuevaResenaDatos);
+                construirNodoReseña(nuevaResenaDatos, contenedorReseñas, true);
 
-                // Metemos la nueva reseña al principio
-                contenedorReseñas.insertAdjacentHTML('afterbegin', nuevaReseñaHTML);
+                actualizarMediaDOM();
+                gestionarCajaReseña(contenedorReseñas);
+
                 textarea.value = '';
+                puntuacionActual = 5;
+                actualizarPintadoEstrellas(document.querySelectorAll('.estrella-click'), 5);
             };
+
+            btnPublicar.removeEventListener('click', btnPublicar.manejadorActual);
+            btnPublicar.addEventListener('click', manejadorPublicar);
+            btnPublicar.manejadorActual = manejadorPublicar;
         }
 
     } else {
-        // no logueado
         cajaEscribir.classList.add('boton-bloqueado');
+        if (contenedorEstrellas) contenedorEstrellas.style.display = 'none';
 
         if (textarea) {
             textarea.disabled = true;
@@ -158,22 +271,43 @@ function gestionarCajaReseña() {
         }
 
         if (btnPublicar) {
-            btnPublicar.innerText = "Iniciar Sesión";
-            btnPublicar.onclick = () => { window.location.href = "LOGIN.html"; };
+            btnPublicar.textContent = "Iniciar Sesión";
+            btnPublicar.onclick = () => { window.location.href = "index.html"; };
         }
 
         if (avatarEscribir) {
-            avatarEscribir.classList.add('avatar-inactivo'); //CSS
+            avatarEscribir.classList.add('avatar-inactivo');
         }
     }
 }
 
-//borrar reseña
 function borrarMiReseña(idReseña) {
     const reseñaABorrar = document.getElementById(idReseña);
     if (reseñaABorrar) {
         if (confirm("¿Seguro que quieres borrar tu opinión?")) {
+
             reseñaABorrar.remove();
+
+            const localesStr = localStorage.getItem('reseñasLocales');
+            if (localesStr) {
+                const localesObj = JSON.parse(localesStr);
+                if (localesObj[recetaIdGlobal]) {
+                    localesObj[recetaIdGlobal] = localesObj[recetaIdGlobal].filter(r => r.id !== idReseña);
+                    localStorage.setItem('reseñasLocales', JSON.stringify(localesObj));
+                }
+            }
+
+            reseñasActuales = reseñasActuales.filter(r => r.id !== idReseña);
+
+            actualizarMediaDOM();
+
+            // ¡Al borrar, volvemos a llamar a gestionarCajaReseña para que reaparezca el formulario!
+            const contenedorReseñas = document.getElementById('lista-reseñas');
+            gestionarCajaReseña(contenedorReseñas);
+
+            if (contenedorReseñas && contenedorReseñas.children.length === 0) {
+                mostrarMensajeSinReseñas(contenedorReseñas);
+            }
         }
     }
 }
