@@ -1,30 +1,27 @@
 let listaIngredientes = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const queryInicial = params.get('q');
 
-    if (queryInicial) {
-        listaIngredientes = queryInicial.split(',').filter(i => i.trim() !== '');
-        setTimeout(actualizarTagsDOM, 500);
-    }
-
-    if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-        ejecutarBusqueda(listaIngredientes);
+    if (window.location.pathname.toLowerCase().includes('favoritos.html')) {
+        const usuarioJson = localStorage.getItem('usuarioLogueado');
+        if (!usuarioJson) {
+            window.location.href = 'index.html';
+            return;
+        }
+        ejecutarVistaFavoritos(listaIngredientes);
     }
 
     document.addEventListener('click', (e) => {
-        // --- 1. LÓGICA DEL CORAZÓN (Con stopPropagation) ---
+        // --- 1. LÓGICA DEL CORAZÓN (CLASE CORREGIDA Y STOP PROPAGATION) ---
         const btnCorazon = e.target.closest('.btn-fav-receta');
         if (btnCorazon) {
             e.preventDefault();
-            e.stopPropagation(); // Evita que el clic abra la receta
+            e.stopPropagation(); // Evitamos que abra la receta
             const idReceta = parseInt(btnCorazon.dataset.id);
-            toggleFavoritoBuscador(idReceta, btnCorazon);
+            toggleFavorito(idReceta, btnCorazon);
             return;
         }
 
-        // --- 2. LÓGICA DE FILTROS ---
         if (e.target.closest('#btn-filtros')) {
             const menuFiltros = document.getElementById('menu-filtros');
             if (menuFiltros) menuFiltros.classList.toggle('oculto');
@@ -32,16 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (e.target.closest('#btn-buscar') || e.target.closest('.btn-aplicar-filtros')) {
             e.preventDefault();
-            procesarBusqueda();
+            procesarBusquedaLocal();
         }
 
         if (e.target.matches('.tag span')) {
             const index = e.target.getAttribute('data-index');
             listaIngredientes.splice(index, 1);
             actualizarTagsDOM();
-            if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-                ejecutarBusqueda(listaIngredientes);
-            }
+            ejecutarVistaFavoritos(listaIngredientes);
         }
 
         const menuFiltros = document.getElementById('menu-filtros');
@@ -54,13 +49,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.id === 'input-ingrediente' && e.key === 'Enter') {
             e.preventDefault();
             const nuevoIngrediente = e.target.value.trim().toLowerCase();
-
             if (nuevoIngrediente !== '' && !listaIngredientes.includes(nuevoIngrediente)) {
                 listaIngredientes.push(nuevoIngrediente);
                 actualizarTagsDOM();
-                if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-                    ejecutarBusqueda(listaIngredientes);
-                }
+                ejecutarVistaFavoritos(listaIngredientes);
             }
             e.target.value = '';
         }
@@ -68,15 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('change', (e) => {
         if (e.target.matches('.dropdown-bruto input[type="checkbox"]')) {
-            if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-                ejecutarBusqueda(listaIngredientes);
-            }
+            ejecutarVistaFavoritos(listaIngredientes);
         }
     });
 });
 
-// --- FUNCIÓN PARA GUARDAR FAVORITOS ---
-function toggleFavoritoBuscador(idReceta, botonDom) {
+function toggleFavorito(idReceta, botonDom) {
     const usuarioJson = localStorage.getItem('usuarioLogueado');
     if (!usuarioJson) {
         alert("Debes iniciar sesión para guardar favoritos.");
@@ -89,19 +78,42 @@ function toggleFavoritoBuscador(idReceta, botonDom) {
     const index = usuario.favoritos.indexOf(idReceta);
 
     if (index === -1) {
+        // Añadir a favoritos
         usuario.favoritos.push(idReceta);
-        botonDom.textContent = '🤎'; // Relleno
+        botonDom.textContent = '🤎';
     } else {
+        // Quitar de favoritos
         usuario.favoritos.splice(index, 1);
-        botonDom.textContent = '🤍'; // Vacío
+        botonDom.textContent = '🤍';
+
+        // --- LA MAGIA DEL DOM: BORRAR AL INSTANTE ---
+        if (window.location.pathname.toLowerCase().includes('favoritos')) {
+
+            // 1. Buscamos la tarjeta entera que contiene este corazón
+            const tarjetaEntera = botonDom.closest('.enlace-tarjeta');
+
+            // 2. Si la encontramos, la destruimos del HTML visualmente
+            if (tarjetaEntera) {
+                tarjetaEntera.remove();
+            }
+
+            // 3. Comprobamos si al borrar esta tarjeta, nos hemos quedado sin favoritos
+            if (usuario.favoritos.length === 0) {
+                const contenedorResultados = document.getElementById('resultados_lista');
+                if (contenedorResultados) {
+                    contenedorResultados.innerHTML = ''; // Limpiamos cualquier resto
+                    mostrarMensajeVacio(contenedorResultados, 'Aún no tienes recetas favoritas. ¡Ve al buscador y añade algunas!');
+                }
+            }
+        }
     }
 
+    // Guardamos los cambios en la "base de datos" local
     localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
 }
 
-function procesarBusqueda() {
+function procesarBusquedaLocal() {
     const input = document.getElementById('input-ingrediente');
-
     if (input) {
         const textoSuelto = input.value.trim().toLowerCase();
         if (textoSuelto && !listaIngredientes.includes(textoSuelto)) {
@@ -110,15 +122,7 @@ function procesarBusqueda() {
             actualizarTagsDOM();
         }
     }
-
-    const query = listaIngredientes.join(',');
-
-    if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-        window.history.pushState({}, '', `buscador.html?q=${query}`);
-        ejecutarBusqueda(listaIngredientes);
-    } else {
-        window.location.href = `buscador.html?q=${query}`;
-    }
+    ejecutarVistaFavoritos(listaIngredientes);
 }
 
 function actualizarTagsDOM() {
@@ -129,7 +133,6 @@ function actualizarTagsDOM() {
 
     listaIngredientes.forEach((ingrediente, index) => {
         const palabraLimpia = ingrediente.charAt(0).toUpperCase() + ingrediente.slice(1);
-
         const divTag = document.createElement('div');
         divTag.className = 'tag';
         divTag.textContent = palabraLimpia + ' ';
@@ -146,23 +149,25 @@ function actualizarTagsDOM() {
     });
 }
 
-function ejecutarBusqueda(ingredientesBuscados) {
+function ejecutarVistaFavoritos(ingredientesBuscados) {
     const contenedorResultados = document.getElementById('resultados_lista');
     if (!contenedorResultados) return;
 
     contenedorResultados.innerHTML = '';
+
+    const usuario = JSON.parse(localStorage.getItem('usuarioLogueado'));
+    const misFavoritos = usuario.favoritos || [];
+
+    if (misFavoritos.length === 0) {
+        mostrarMensajeVacio(contenedorResultados, 'Aún no tienes recetas favoritas. ¡Ve al buscador y añade algunas!');
+        return;
+    }
 
     Promise.all([
         fetch('data/db.json').then(res => res.json()),
         fetch('templates/tarjeta_receta_horizontal.html').then(res => res.text())
     ])
         .then(([data, templateString]) => {
-
-            // --- LEER FAVORITOS PARA PINTAR CORAZONES ---
-            const usuarioJson = localStorage.getItem('usuarioLogueado');
-            const usuario = usuarioJson ? JSON.parse(usuarioJson) : {};
-            const misFavoritos = usuario.favoritos || [];
-
             const checkboxesActivos = Array.from(document.querySelectorAll('.dropdown-bruto input[type="checkbox"]:checked')).map(cb => cb.value);
 
             const normalizar = (texto) => {
@@ -171,13 +176,13 @@ function ejecutarBusqueda(ingredientesBuscados) {
             };
 
             const recetasFiltradas = data.recetas.filter(receta => {
+                if (!misFavoritos.includes(receta.id)) return false;
+
                 let coincideIngrediente = ingredientesBuscados.length === 0 || ingredientesBuscados.every(ingBuscado => {
                     const termino = normalizar(ingBuscado.trim());
-
                     const enTitulo = receta.titulo && normalizar(receta.titulo).includes(termino);
                     const enClave = Array.isArray(receta.ingredientes_clave) && receta.ingredientes_clave.some(ing => normalizar(ing).includes(termino));
                     const enNormal = Array.isArray(receta.ingredientes) && receta.ingredientes.some(ing => normalizar(ing).includes(termino));
-
                     return enTitulo || enClave || enNormal;
                 });
 
@@ -186,67 +191,49 @@ function ejecutarBusqueda(ingredientesBuscados) {
                 if (checkboxesActivos.length > 0) {
                     const filtrosDificultad = checkboxesActivos.filter(val => ['facil', 'media', 'dificil'].includes(normalizar(val)));
                     if (filtrosDificultad.length > 0) {
-                        const difReceta = normalizar(receta.dificultad);
-                        if (!filtrosDificultad.includes(difReceta)) return false;
+                        if (!filtrosDificultad.includes(normalizar(receta.dificultad))) return false;
                     }
 
                     const filtrosDuracion = checkboxesActivos.filter(val => ['rapido', 'medio', 'lento'].includes(normalizar(val)));
                     if (filtrosDuracion.length > 0) {
                         let minReceta = 0;
                         const tiempoStr = normalizar(receta.tiempo || receta.duracion_categoria || "");
-
                         const numMatch = tiempoStr.match(/\d+/);
                         if (numMatch) {
                             minReceta = parseInt(numMatch[0]);
-                            if (tiempoStr.includes('hora')) {
-                                minReceta = minReceta * 60;
-                            }
+                            if (tiempoStr.includes('hora')) minReceta *= 60;
                         }
-
-                        let encajaTiempo = false;
-                        if (filtrosDuracion.includes('rapido') && minReceta > 0 && minReceta <= 30) encajaTiempo = true;
-                        if (filtrosDuracion.includes('medio') && minReceta > 30 && minReceta <= 60) encajaTiempo = true;
-                        if (filtrosDuracion.includes('lento') && minReceta > 60) encajaTiempo = true;
-
-                        if (!encajaTiempo) return false;
+                        let encaja = false;
+                        if (filtrosDuracion.includes('rapido') && minReceta <= 30) encaja = true;
+                        if (filtrosDuracion.includes('medio') && minReceta > 30 && minReceta <= 60) encaja = true;
+                        if (filtrosDuracion.includes('lento') && minReceta > 60) encaja = true;
+                        if (!encaja) return false;
                     }
 
                     const filtrosPlato = checkboxesActivos.filter(val => ['primero', 'segundo', 'cuchara', 'postre'].includes(normalizar(val)));
                     if (filtrosPlato.length > 0) {
-                        const platoReceta = normalizar(receta.tipo_plato || "");
-                        if (!filtrosPlato.includes(platoReceta)) return false;
+                        if (!filtrosPlato.includes(normalizar(receta.tipo_plato || ""))) return false;
                     }
 
                     const filtrosDieta = checkboxesActivos.filter(val => ['vegetariano', 'vegano', 'singluten', 'sinlactosa'].includes(normalizar(val)));
                     if (filtrosDieta.length > 0) {
                         for (let dietaReq of filtrosDieta) {
-                            if (dietaReq === 'vegetariano' || dietaReq === 'vegano') {
-                                if (!Array.isArray(receta.dieta) || !receta.dieta.some(d => normalizar(d) === dietaReq)) return false;
-                            }
-                            if (dietaReq === 'singluten') {
-                                if (Array.isArray(receta.alergenos) && receta.alergenos.some(a => normalizar(a).includes('gluten'))) return false;
-                            }
-                            if (dietaReq === 'sinlactosa') {
-                                if (Array.isArray(receta.alergenos) && receta.alergenos.some(a => normalizar(a).includes('lacteo'))) return false;
-                            }
+                            if ((dietaReq === 'vegetariano' || dietaReq === 'vegano') && (!Array.isArray(receta.dieta) || !receta.dieta.some(d => normalizar(d) === dietaReq))) return false;
+                            if (dietaReq === 'singluten' && Array.isArray(receta.alergenos) && receta.alergenos.some(a => normalizar(a).includes('gluten'))) return false;
+                            if (dietaReq === 'sinlactosa' && Array.isArray(receta.alergenos) && receta.alergenos.some(a => normalizar(a).includes('lacteo'))) return false;
                         }
                     }
 
                     const filtrosEstrellas = checkboxesActivos.filter(val => normalizar(val).includes('estrellas-'));
                     if (filtrosEstrellas.length > 0) {
-                        let limiteEstrellas = 0;
+                        let limite = 0;
                         filtrosEstrellas.forEach(f => {
-                            const numero = parseInt(f.replace('estrellas-', ''));
-                            if (!isNaN(numero) && numero > limiteEstrellas) {
-                                limiteEstrellas = numero;
-                            }
+                            const num = parseInt(f.replace('estrellas-', ''));
+                            if (!isNaN(num) && num > limite) limite = num;
                         });
-
-                        const estrellasReceta = receta.estrellas || 0;
-                        if (estrellasReceta < limiteEstrellas) return false;
+                        if ((receta.estrellas || 0) < limite) return false;
                     }
                 }
-
                 return true;
             });
 
@@ -259,11 +246,9 @@ function ejecutarBusqueda(ingredientesBuscados) {
                     const tarjetaDom = templateBase.cloneNode(true);
 
                     const enlaceEl = tarjetaDom.tagName === 'A' ? tarjetaDom : tarjetaDom.querySelector('a');
-                    if (enlaceEl) {
-                        enlaceEl.href = `VER_RECETA.html?id=${receta.id}`;
-                    }
+                    if (enlaceEl) enlaceEl.href = `VER_RECETA.html?id=${receta.id}`;
 
-                    const tituloEl = tarjetaDom.querySelector('.receta-titulo');
+                    const tituloEl = tarjetaDom.querySelector('.receta-titulo') || tarjetaDom.querySelector('h3');
                     if (tituloEl) tituloEl.textContent = receta.titulo;
 
                     const contenedorImg = tarjetaDom.querySelector('.receta-dummy-img');
@@ -272,21 +257,23 @@ function ejecutarBusqueda(ingredientesBuscados) {
                         img.src = receta.imagen;
                         img.alt = receta.titulo;
                         img.className = 'img-tarjeta-horizontal';
-
-                        contenedorImg.innerHTML = '';
-                        contenedorImg.appendChild(img);
+                        contenedorImg.replaceWith(img);
                     }
 
                     const descEl = tarjetaDom.querySelector('.detalles-desc p');
-                    if (descEl) {
-                        descEl.textContent = receta.descripcion.length > 120 ? receta.descripcion.substring(0, 120) + '...' : receta.descripcion;
-                    }
+                    if (descEl) descEl.textContent = receta.descripcion.length > 120 ? receta.descripcion.substring(0, 120) + '...' : receta.descripcion;
 
                     const detallesList = tarjetaDom.querySelectorAll('.lista-mini li');
                     if (detallesList.length >= 3) {
                         detallesList[0].textContent = `⏱️ ${receta.tiempo || receta.duracion_categoria}`;
-                        detallesList[1].textContent = `👨‍🍳 ${receta.dificultad.charAt(0).toUpperCase() + receta.dificultad.slice(1)}`;
+                        detallesList[1].textContent = `👨‍🍳 ${receta.dificultad}`;
                         detallesList[2].textContent = `⭐ ${receta.estrellas || 5}`;
+                    }
+
+                    const btnCorazon = tarjetaDom.querySelector('.btn-fav-receta');
+                    if (btnCorazon) {
+                        btnCorazon.dataset.id = receta.id;
+                        btnCorazon.textContent = '🤎';
                     }
 
                     const filaIconos = tarjetaDom.querySelector('.fila-iconos-receta');
@@ -299,46 +286,36 @@ function ejecutarBusqueda(ingredientesBuscados) {
                                 imgAlergeno.alt = alergeno;
                                 imgAlergeno.title = alergeno.charAt(0).toUpperCase() + alergeno.slice(1);
                                 imgAlergeno.className = 'icono-alergeno-mini';
-
                                 filaIconos.appendChild(imgAlergeno);
                             });
                         }
                     }
 
-                    // --- ASIGNAR ESTADO DEL CORAZÓN Y SU ID ---
-                    const btnCorazon = tarjetaDom.querySelector('.btn-fav-receta');
-                    if (btnCorazon) {
-                        btnCorazon.dataset.id = receta.id;
-                        if (misFavoritos.includes(receta.id)) {
-                            btnCorazon.textContent = '🤎';
-                        } else {
-                            btnCorazon.textContent = '🤍'; // Usando el corazón blanco para "no favorito"
-                        }
-                    }
-
                     contenedorResultados.appendChild(tarjetaDom);
                 });
-
             } else {
-                const mensajeVacio = document.createElement('div');
-                mensajeVacio.className = 'mensaje-sin-resultados';
-
-                const iconoVacio = document.createElement('div');
-                iconoVacio.className = 'icono-vacio';
-                iconoVacio.textContent = '🍽️';
-
-                const tituloVacio = document.createElement('h3');
-                tituloVacio.textContent = '¡Vaya! La nevera está vacía';
-
-                const parrafoVacio = document.createElement('p');
-                parrafoVacio.textContent = 'No hemos encontrado recetas con lo que nos pides. Prueba a quitar algún filtro.';
-
-                mensajeVacio.appendChild(iconoVacio);
-                mensajeVacio.appendChild(tituloVacio);
-                mensajeVacio.appendChild(parrafoVacio);
-
-                contenedorResultados.appendChild(mensajeVacio);
+                mostrarMensajeVacio(contenedorResultados, 'Tus filtros son muy estrictos. No hay ninguna receta favorita que los cumpla.');
             }
         })
-        .catch(error => console.error("Error cargando las recetas:", error));
+        .catch(error => console.error("Error renderizando favoritos:", error));
+}
+
+function mostrarMensajeVacio(contenedor, texto) {
+    const div = document.createElement('div');
+    div.className = 'mensaje-sin-resultados';
+
+    const icono = document.createElement('div');
+    icono.className = 'icono-vacio';
+    icono.textContent = '🍽️';
+
+    const titulo = document.createElement('h3');
+    titulo.textContent = '¡Vaya! La nevera está vacía';
+
+    const parrafo = document.createElement('p');
+    parrafo.textContent = texto;
+
+    div.appendChild(icono);
+    div.appendChild(titulo);
+    div.appendChild(parrafo);
+    contenedor.appendChild(div);
 }
