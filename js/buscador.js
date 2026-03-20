@@ -66,13 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.addEventListener('change', (e) => {
-        if (e.target.matches('.dropdown-bruto input[type="checkbox"]')) {
-            if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-                ejecutarBusqueda(listaIngredientes);
-            }
-        }
-    });
 });
 
 // --- FUNCIÓN PARA GUARDAR FAVORITOS ---

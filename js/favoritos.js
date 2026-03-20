@@ -12,11 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.addEventListener('click', (e) => {
-        // --- 1. LÓGICA DEL CORAZÓN (CLASE CORREGIDA Y STOP PROPAGATION) ---
+
         const btnCorazon = e.target.closest('.btn-fav-receta');
         if (btnCorazon) {
             e.preventDefault();
-            e.stopPropagation(); // Evitamos que abra la receta
+            e.stopPropagation();
             const idReceta = parseInt(btnCorazon.dataset.id);
             toggleFavorito(idReceta, btnCorazon);
             return;
@@ -25,11 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.closest('#btn-filtros')) {
             const menuFiltros = document.getElementById('menu-filtros');
             if (menuFiltros) menuFiltros.classList.toggle('oculto');
+            return;
         }
 
+        // --- LÓGICA DE BUSCAR Y APLICAR FILTROS ---
         if (e.target.closest('#btn-buscar') || e.target.closest('.btn-aplicar-filtros')) {
             e.preventDefault();
             procesarBusquedaLocal();
+
+            // UX extra: Cerramos el menú al darle a aplicar para ver los resultados
+            if (e.target.closest('.btn-aplicar-filtros')) {
+                const menuFiltros = document.getElementById('menu-filtros');
+                if (menuFiltros) menuFiltros.classList.add('oculto');
+            }
+            return;
         }
 
         if (e.target.matches('.tag span')) {
@@ -58,11 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.addEventListener('change', (e) => {
-        if (e.target.matches('.dropdown-bruto input[type="checkbox"]')) {
-            ejecutarVistaFavoritos(listaIngredientes);
-        }
-    });
+    // ¡HEMOS ELIMINADO EL EVENTO 'CHANGE' PARA QUE NO FILTRE AUTOMÁTICAMENTE!
 });
 
 function toggleFavorito(idReceta, botonDom) {
@@ -78,37 +83,29 @@ function toggleFavorito(idReceta, botonDom) {
     const index = usuario.favoritos.indexOf(idReceta);
 
     if (index === -1) {
-        // Añadir a favoritos
         usuario.favoritos.push(idReceta);
         botonDom.textContent = '🤎';
     } else {
-        // Quitar de favoritos
         usuario.favoritos.splice(index, 1);
         botonDom.textContent = '🤍';
 
-        // --- LA MAGIA DEL DOM: BORRAR AL INSTANTE ---
         if (window.location.pathname.toLowerCase().includes('favoritos')) {
-
-            // 1. Buscamos la tarjeta entera que contiene este corazón
             const tarjetaEntera = botonDom.closest('.enlace-tarjeta');
 
-            // 2. Si la encontramos, la destruimos del HTML visualmente
             if (tarjetaEntera) {
                 tarjetaEntera.remove();
             }
 
-            // 3. Comprobamos si al borrar esta tarjeta, nos hemos quedado sin favoritos
             if (usuario.favoritos.length === 0) {
                 const contenedorResultados = document.getElementById('resultados_lista');
                 if (contenedorResultados) {
-                    contenedorResultados.innerHTML = ''; // Limpiamos cualquier resto
+                    contenedorResultados.innerHTML = '';
                     mostrarMensajeVacio(contenedorResultados, 'Aún no tienes recetas favoritas. ¡Ve al buscador y añade algunas!');
                 }
             }
         }
     }
 
-    // Guardamos los cambios en la "base de datos" local
     localStorage.setItem('usuarioLogueado', JSON.stringify(usuario));
 }
 
@@ -168,6 +165,8 @@ function ejecutarVistaFavoritos(ingredientesBuscados) {
         fetch('templates/tarjeta_receta_horizontal.html').then(res => res.text())
     ])
         .then(([data, templateString]) => {
+
+            // Solo lee los checkboxes cuando esta función es llamada por el botón "Aplicar"
             const checkboxesActivos = Array.from(document.querySelectorAll('.dropdown-bruto input[type="checkbox"]:checked')).map(cb => cb.value);
 
             const normalizar = (texto) => {
