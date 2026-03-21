@@ -24,3 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+/* =======================================================
+  MENÚ HAMBURGUESA (MÓVIL)
+   ======================================================= */
+document.addEventListener('click', function(e) {
+    if (e.target.closest('#burgerBtn')) {
+        const menu = document.getElementById('mobileMenu');
+        if(menu) {
+            //cerrar
+            menu.classList.toggle('active');
+        }
+    }
+
+    // si clic fuera del menu, cerrar
+    if (!e.target.closest('#mobileMenu') && !e.target.closest('#burgerBtn')) {
+        const menu = document.getElementById('mobileMenu');
+        if(menu && menu.classList.contains('active')) {
+            menu.classList.remove('active');
+        }
+    }
+});
