@@ -141,6 +141,24 @@
 }
 
 /* =========================================
+   ESTADO ACTIVO (PÁGINA ACTUAL)
+========================================= */
+.boton-sesion.active-nav,
+.btn-nav-inicio.active-nav {
+    background-color: var(--coral-principal);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+    pointer-events: none; /* Evita que hagan clic en la página en la que ya están */
+}
+
+.mobile-link.active-nav {
+    color: var(--coral-principal);
+    font-weight: 900;
+    font-size: 22px;
+    border-bottom: 3px solid var(--coral-principal);
+    pointer-events: none;
+}
+/* =========================================
    RESPONSIVE
 ========================================= */
 

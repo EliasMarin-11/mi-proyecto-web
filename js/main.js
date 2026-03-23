@@ -107,21 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
             enlaceLogin.textContent = '';
             enlaceLogin.href = 'perfil.html';
 
-            enlaceLogin.style.display = 'flex';
-            enlaceLogin.style.alignItems = 'center';
-            enlaceLogin.style.padding = '0';
-
             const imgAvatarHeader = document.createElement('img');
             imgAvatarHeader.src = usuario.foto && usuario.foto !== "" ? usuario.foto : 'img/Usuario SINFONDO.png';
             imgAvatarHeader.alt = 'Ir a mi perfil';
-
-            imgAvatarHeader.style.width = '35px';
-            imgAvatarHeader.style.height = '35px';
-            imgAvatarHeader.style.borderRadius = '50%';
-            imgAvatarHeader.style.objectFit = 'cover';
-            imgAvatarHeader.style.border = '2px solid #4E1A0A';
-            imgAvatarHeader.style.cursor = 'pointer';
-
             enlaceLogin.appendChild(imgAvatarHeader);
         }
     }
