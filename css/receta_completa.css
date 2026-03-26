@@ -519,3 +519,100 @@
 .estrella-click.activa {
     filter: grayscale(0%) opacity(1); /* Encendidas */
 }
+
+@media (max-width: 768px) {
+
+    /* Contenedor principal */
+    .receta-detalle-pro {
+        margin: 20px 15px;
+        gap: 25px;
+    }
+
+    /* Stack vertical: Foto e Info */
+    .bloque-superior {
+        flex-direction: column;
+    }
+
+    .bloque-foto {
+        width: 100%;
+        height: 250px;
+        border-right: none;
+        border-bottom: 4px;
+        border-radius: 26px 26px 0 0;
+    }
+
+    .bloque-info {
+        padding: 25px 20px;
+    }
+
+    .bloque-info h2 {
+        font-size: 24px;
+        padding-right: 0;
+        margin-bottom: 15px;
+    }
+
+    /* Ajuste iconos flotantes */
+    .btn-fav-detalle {
+        top: 20px;
+        right: 20px;
+        font-size: 28px;
+    }
+
+    .etiqueta-estrellas {
+        top: 15px;
+        left: 15px;
+        padding: 5px 10px;
+        font-size: 15px;
+    }
+
+    /* Stack vertical: Ingredientes y Pasos */
+    .bloque-inferior {
+        flex-direction: column;
+    }
+
+    .col-ingredientes {
+        width: 100%;
+        border-right: none;
+        border-bottom: 4px solid;
+        padding: 30px 20px;
+    }
+
+    .col-instrucciones {
+        width: 100%;
+        padding: 30px 20px;
+    }
+
+    /* Adaptación de Reseñas */
+    .zona-reseñas {
+        margin: 30px auto;
+        padding: 0 10px;
+    }
+
+    .titulo-reseñas-bruto {
+        font-size: 22px;
+    }
+
+    .reseña-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+    }
+
+    /* Caja para escribir */
+    .caja-escribir .cuerpo-reseña {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    .caja-escribir textarea.input-oscuro {
+        height: 80px;
+    }
+
+    .caja-escribir .footer-reseña {
+        justify-content: space-between;
+        margin-top: 10px;
+        flex-wrap: wrap;
+    }
+}

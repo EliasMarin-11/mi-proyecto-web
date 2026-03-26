@@ -103,3 +103,32 @@ a:hover {
 .link-subrayado:hover {
     color: #E3412B;
 }
+
+@media (max-width: 768px) {
+    .main-login, .main-registro {
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+
+    .titulo-login, .titulo-registro {
+        font-size: 28px;
+    }
+
+    .contenedor-formulario {
+        width: 90%; /* para que no se salga de la pantalla */
+        padding: 30px 20px;
+    }
+
+    /* apilar opciones de recordar y olvido */
+    .opciones-login, .opciones-registro {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .btn-entrar, .btn-registro {
+        width: 100%;
+        padding: 15px;
+    }
+}

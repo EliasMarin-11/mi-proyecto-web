@@ -149,3 +149,58 @@
     color: #4E1A0A;
     text-align: left;
 }
+
+@media (max-width: 768px) {
+    .tarjeta-receta {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        border-radius: 20px;
+        margin: 15px;
+    }
+
+    .receta-dummy-img,
+    .img-tarjeta-horizontal {
+        width: 100%;
+        height: 220px;
+        box-sizing: border-box;
+    }
+
+    .receta-header {
+        margin-bottom: 10px;
+    }
+
+    .receta-titulo {
+        font-size: 22px;
+    }
+
+    .btn-fav-receta {
+        font-size: 30px;
+    }
+
+    .receta-detalles {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .detalles-datos {
+        min-width: auto;
+        gap: 15px;
+    }
+
+    /* lista en horizontal */
+    .lista-mini {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .lista-mini li {
+        margin-bottom: 0;
+        font-size: 16px;
+    }
+
+    .detalles-desc p {
+        font-size: 16px;
+    }
+}

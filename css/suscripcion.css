@@ -113,3 +113,32 @@
     background-color: #4E1A0A;
     box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
 }
+
+@media (max-width: 768px) {
+    .main-suscripcion { padding: 30px 10px; }
+
+    .contenedor-planes {
+        flex-direction: column-reverse; /* para que premium salga arriba */
+        gap: 25px;
+    }
+
+    .tarjeta-plan {
+        width: 100%;
+        max-width: 310px;
+        padding: 30px 20px;
+        margin: 0 auto;
+    }
+
+    /* quitar escala de pc */
+    .tarjeta-plan.destacado { transform: scale(1); }
+
+    /* ajustar tamaños para que quepa mejor */
+    .titulo-plan { font-size: 24px; }
+    .precio-plan { font-size: 38px; }
+    .subtitulo-plan, .lista-beneficios li { font-size: 14px; }
+
+    .btn-plan {
+        padding: 15px;
+        font-size: 16px;
+    }
+}
