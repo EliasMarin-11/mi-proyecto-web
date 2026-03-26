@@ -111,10 +111,10 @@ function procesarBusqueda() {
     const query = listaIngredientes.join(',');
 
     if (window.location.pathname.toLowerCase().includes('buscador.html')) {
-        window.history.pushState({}, '', `buscador.html?q=${query}`);
+        window.history.pushState({}, '', `BUSCADOR.html?q=${query}`);
         ejecutarBusqueda(listaIngredientes);
     } else {
-        window.location.href = `buscador.html?q=${query}`;
+        window.location.href = `BUSCADOR.html?q=${query}`;
     }
 }
 

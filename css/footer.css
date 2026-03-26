@@ -11,14 +11,14 @@ footer {
 
 
 /* =======================================================
-   2. FOOTER PRINCIPAL (El de las columnas y logos grandes)
+   2. FOOTER PRINCIPAL
 ======================================================== */
 /* Contenedor general */
 .footer-principal {
     display: flex;
     flex-direction: column;
     gap: 60px; /* Separación entre la parte de arriba y las columnas */
-    border: none !important; /* Cortafuegos contra líneas duplicadas */
+    border: none ; /* Cortafuegos contra líneas duplicadas */
 }
 
 /* ZONA SUPERIOR: Logo y Redes */
@@ -29,14 +29,14 @@ footer {
 }
 
 .img-footer {
-    height: 150px !important; /* Tamaño gigante del logo */
+    height: 150px; /* Tamaño gigante del logo */
     width: auto;
     object-fit: contain;
 }
 
 .footer-social p {
-    font-size: 26px !important; /* Letra grande para "SÍGUENOS..." */
-    margin-bottom: 35px !important;
+    font-size: 26px ; /* Letra grande para "SÍGUENOS..." */
+    margin-bottom: 35px;
     font-weight: 800;
 }
 
@@ -47,10 +47,10 @@ footer {
 
 /* Botones circulares gigantes */
 .icon {
-    width: 60px !important;
-    height: 60px !important;
+    width: 60px ;
+    height: 60px ;
     background-color: #FFFFFF;
-    border: 5px solid #4E1A0A !important;
+    border: 5px solid #4E1A0A ;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -112,9 +112,7 @@ footer {
 }
 
 
-/* =======================================================
-   3. FOOTER MINIMALISTA (Para Login, Checkout, etc.)
-======================================================== */
+/*  FOOTER MINIMALISTA */
 .footer-minimalista {
     display: flex;
     justify-content: space-between; /* Distribuye el logo, texto y redes */
@@ -173,4 +171,104 @@ footer {
     width: 24px;
     height: 24px;
     object-fit: contain;
+}
+
+/* --- INTERVALO TABLET (Hasta 1024px) --- */
+@media (max-width: 1024px) {
+    footer {
+        padding: 30px 40px;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+
+    .footer-minimalista {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+/* --- INTERVALO MÓVIL (Hasta 768px) --- */
+@media (max-width: 768px) {
+    footer {
+        padding: 30px 20px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .img-footer {
+        height: 100px;
+    }
+
+    .footer-social p {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .social-icons {
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .icon img {
+        width: 25px;
+        height: 25px;
+    }
+
+    .footer-links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 15px;
+    }
+
+    .columna h4 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .columna a {
+        font-size: 16px;
+    }
+
+    .footer-minimalista {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+        padding: 30px 20px;
+    }
+
+    .footer-mini-links {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .footer-mini-links a {
+        display: inline-block;
+        padding: 5px;
+    }
+
+    /* Ocultamos los puntitos "•" */
+    .footer-mini-links {
+        color: transparent;
+    }
+
+    .footer-mini-social {
+        justify-content: center;
+        width: 100%;
+        margin-top: 10px;
+    }
 }

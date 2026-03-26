@@ -301,3 +301,103 @@
     margin-right: 10px;
     cursor: pointer;
 }
+
+/* --- INTERVALO TABLET (Hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .contenedor-busqueda {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    /* El menú de filtros era de 600px, lo achicamos un poco para tablet */
+    .dropdown-bruto {
+        width: 500px;
+    }
+}
+
+/* --- INTERVALO MÓVIL (Hasta 768px) --- */
+@media (max-width: 768px) {
+    .contenedor-busqueda {
+        display: flex;
+        flex-direction: column;
+        width: calc(100vw - 55px);
+        max-width: calc(100vw - 50px);
+        margin: 20px 15px;
+        padding: 15px;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .busqueda-label {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .barra-busqueda {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .columna-input {
+        width: 100%;
+        order: -1;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    .columna-input input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 14px 15px;
+    }
+
+    .contenedor-filtros {
+        position: static;
+        flex: 1;
+        min-width: 0;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    #btn-buscar {
+        flex: 1;
+        min-width: 0;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    #btn-filtros, #btn-buscar {
+        width: 100%;
+        padding: 12px 5px;
+        font-size: 14px;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .dropdown-bruto {
+        width: 100%;
+        left: 0;
+        top: 100%;
+        box-sizing: border-box;
+        margin-top: 15px;
+        padding: 25px 20px;
+    }
+
+    .filtros-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px 40px;
+    }
+
+    .btn-aplicar-filtros {
+        width: 100%;
+        margin-top: 25px;
+        padding: 16px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+}
