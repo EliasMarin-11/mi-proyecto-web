@@ -392,3 +392,136 @@ main {
     display: block;
 }
 
+.foto_rectangular.qr-card {
+    border: none;
+    box-shadow: none;
+    background: none;
+    width: auto;
+    height: auto;
+}
+
+.foto_rectangular.qr-card .img-qr {
+    width: 220px;
+    height: auto;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+
+    body { overflow-x: hidden; }
+    main { padding: 12px; }
+
+    .titulo_centrado {
+        font-size: 22px;
+        margin-top: 24px;
+        margin-bottom: 14px;
+    }
+
+    .titulo-instrucciones,
+    .instrucciones { display: none; }
+
+    .contenedor-slider-bruto {
+        padding: 0;
+        position: relative;
+    }
+    .slider_horizontal {
+        overflow: hidden;
+        justify-content: center;
+        padding: 10px 0 30px 0;
+        mask-image: none;
+        -webkit-mask-image: none;
+    }
+
+    #tarjetas_trending .enlace_tarjeta {
+        display: none;
+    }
+
+    #tarjetas_trending .enlace_tarjeta.activa {
+        display: block;
+        width: 85vw;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    #tarjetas_trending .enlace_tarjeta.activa .tarjeta-v {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .fila_horizontal {
+        flex-direction: column !important;
+        gap: 20px;
+        padding: 20px !important;
+        margin-bottom: 30px;
+    }
+
+    .contenedor-logo-libre {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .img-promo-libre {
+        width: 50%;
+        max-width: 160px;
+        margin: 0 auto;
+    }
+
+    .foto_rectangular {
+        width: 100%;
+        max-width: 260px;
+        height: 160px;
+        margin: 0 auto;
+    }
+
+    .section-card {
+        overflow: hidden;
+        padding: 20px !important;
+    }
+    .btn-flecha {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-100%);
+        z-index: 10;
+        margin: 0;
+    }
+
+    .btn-flecha:hover {
+        background-color: #4a322d;
+        transform: translateY(-100%);
+        box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.2);
+    }
+
+    .btn-flecha:active {
+        background-color: #E3412B;
+        transform: translateY(calc(-75% - 2px));
+        box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    }
+    #btn-izq {
+        left: -6px;
+    }
+
+    #btn-der {
+        right: -6px;
+    }
+    .section-card {
+        overflow: visible;
+        padding: 20px !important;
+        margin-top: 20px;
+    }
+
+    .fila_horizontal.section-card {
+        text-align: center;
+        align-items: center;
+    }
+
+    .subtitulo-bruto {
+        text-align: center;
+    }
+
+    .lista-premium {
+        text-align: left;
+    }
+    .sticker-pro {
+        left: -7px;
+    }
+}

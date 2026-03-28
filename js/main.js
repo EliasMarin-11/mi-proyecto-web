@@ -48,39 +48,32 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             slider.innerHTML = htmlAcumulado;
+            iniciarCarruselMovil();
         })
         .catch(error => console.error('Error cargando la base de datos o templates:', error));
 
-    // carrusel
+// carrusel desktop — solo si NO es móvil
     const btnIzq = document.getElementById('btn-izq');
     const btnDer = document.getElementById('btn-der');
 
-    if (btnIzq && btnDer) {
-        // boton der
+    if (btnIzq && btnDer && window.innerWidth > 768) {  // ← añade esta condición
         btnDer.addEventListener('click', () => {
             const primeraTarjeta = slider.firstElementChild;
             if (!primeraTarjeta) return;
-
             const anchoDesplazamiento = primeraTarjeta.offsetWidth + 30;
-
             slider.scrollBy({ left: anchoDesplazamiento, behavior: 'smooth' });
-
             setTimeout(() => {
                 slider.appendChild(primeraTarjeta);
                 slider.scrollBy({ left: -anchoDesplazamiento, behavior: 'instant' });
             }, 300);
         });
 
-        // boton izq
         btnIzq.addEventListener('click', () => {
             const ultimaTarjeta = slider.lastElementChild;
             if (!ultimaTarjeta) return;
-
             const anchoDesplazamiento = ultimaTarjeta.offsetWidth + 30;
-
             slider.prepend(ultimaTarjeta);
             slider.scrollBy({ left: anchoDesplazamiento, behavior: 'instant' });
-
             setTimeout(() => {
                 slider.scrollBy({ left: -anchoDesplazamiento, behavior: 'smooth' });
             }, 10);
@@ -114,3 +107,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
+function iniciarCarruselMovil() {
+    if (window.innerWidth > 768) return;
+
+    const slider = document.getElementById('tarjetas_trending');
+    const btnIzq = document.getElementById('btn-izq');
+    const btnDer = document.getElementById('btn-der');
+    if (!slider || !btnIzq || !btnDer) return;
+
+    const items = Array.from(slider.querySelectorAll('.enlace_tarjeta'));
+    if (items.length === 0) return;
+
+    let indiceActual = 0;
+    items[indiceActual].classList.add('activa');
+
+    btnDer.addEventListener('click', () => {
+        items[indiceActual].classList.remove('activa');
+        indiceActual = (indiceActual + 1) % items.length;
+        items[indiceActual].classList.add('activa');
+    });
+
+    btnIzq.addEventListener('click', () => {
+        items[indiceActual].classList.remove('activa');
+        indiceActual = (indiceActual - 1 + items.length) % items.length;
+        items[indiceActual].classList.add('activa');
+    });
+}
