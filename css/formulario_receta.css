@@ -381,3 +381,117 @@
     box-shadow: 8px 8px 0px rgba(227, 65, 43, 0.2);
     transition: all 0.2s ease;
 }
+
+.etiqueta {
+    background-color: #FFFFFF;
+    color: #4E1A0A;
+    border: 2px solid #4E1A0A;
+    transition: all 0.2s ease;
+}
+
+@media (hover: hover) {
+    .etiqueta:hover {
+        background-color: #E3412B;
+        color: #FFFFFF;
+        border-color: #4E1A0A;
+    }
+}
+
+
+.etiqueta.activa {
+    background-color: #4E1A0A !important;
+    color: #FFFFFF !important;
+    border-color: #4E1A0A !important;
+    transform: scale(0.96);
+    box-shadow: inset 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+
+@media (max-width: 768px) {
+
+    body { overflow-x: hidden; }
+
+    .contenedor-crear-receta {
+        margin: 20px auto;
+        padding: 12px !important;
+    }
+
+    .cabecera-formulario {
+        flex-direction: column;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .input-titulo-principal {
+        max-width: 100% !important;
+        font-size: 20px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+    }
+
+    .formulario-dos-columnas {
+        grid-template-columns: 1fr !important;
+        gap: 30px;
+    }
+
+    .columna-izquierda,
+    .columna-derecha {
+        padding: 20px !important;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .fila-ingrediente {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 10px;
+    }
+
+    .ing-nombre {
+        grid-column: span 2;
+    }
+
+    .caja-subir-foto {
+        height: 250px !important;
+        margin-bottom: 10px;
+    }
+
+    .icono-foto {
+        font-size: 50px;
+    }
+
+    .grupo-descripcion {
+        padding: 20px !important;
+    }
+
+    .textarea-desc {
+        min-height: 120px;
+    }
+
+    .btn-guardar-principal {
+        width: 100%;
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .grupo-etiquetas {
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .etiqueta {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+
+    .fila-paso {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btn-eliminar {
+        align-self: flex-end;
+        margin-top: -10px;
+    }
+}
+

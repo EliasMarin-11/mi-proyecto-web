@@ -271,3 +271,74 @@
 .btn-borrar-receta {
     font-size: 25px;
 }
+
+@media (max-width: 768px) {
+
+    body { overflow-x: hidden; }
+
+    .perfil-layout-dual {
+        flex-direction: column !important;
+        padding: 12px !important;
+        gap: 20px;
+    }
+
+    .perfil-tarjeta,
+    .perfil-aside-recetas {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 20px !important;
+        min-height: auto;
+    }
+
+    .perfil-avatar {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .perfil-nombre {
+        font-size: 24px;
+    }
+
+    .perfil-cabecera {
+        margin-bottom: 25px;
+    }
+
+    .contenedor-plan {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+        border-radius: 20px;
+        text-align: center;
+    }
+
+    .btn-pequeno {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    .cabecera-aside {
+        flex-direction: column !important;
+        gap: 15px;
+        text-align: center;
+        padding-bottom: 15px;
+    }
+
+    .titulo-mis-recetas {
+        font-size: 22px;
+        margin: 0;
+    }
+
+    .btn-nueva-receta-aside {
+        width: 100%;
+    }
+
+    .contenedor-lista-recetas-aside {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        overflow-y: visible;
+        max-height: none;
+        padding-right: 0;
+    }
+}

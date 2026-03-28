@@ -128,6 +128,8 @@ document.addEventListener('click', (evento) => {
     if (etiquetaClicada) {
         evento.preventDefault();
         etiquetaClicada.classList.toggle('activa');
+
+        etiquetaClicada.blur();
     }
 
     const cajaFoto = evento.target.closest('#caja-foto-visual');
