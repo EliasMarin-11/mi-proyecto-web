@@ -21,9 +21,7 @@ main, #main_section {
 
 /* Limitamos el main para que no se estire al infinito en tu pantalla */
 main {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 20px 80px;
     background-color: #fff;
 }
 
@@ -409,8 +407,7 @@ main {
 @media (max-width: 768px) {
 
     body { overflow-x: hidden; }
-    main { padding: 12px; }
-
+    main { padding: 12px 15px; }
     .titulo_centrado {
         font-size: 22px;
         margin-top: 24px;
@@ -524,5 +521,64 @@ main {
     .sticker-pro {
         left: -7px;
     }
+    #buscador_main {
+        margin: 0 -27px;
+    }
+    .tarjeta-v {
+        width: 100%;
+        height: 250px;
+        box-sizing: border-box;
+    }
+    .titulo-qr,
+    .reverse {
+        display: none;
+    }
 }
+@media (max-width: 1024px) {
 
+    main { padding: 16px 40px; }
+    /* --- INSTRUCCIONES --- */
+    .instrucciones {
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .foto_cuadrada {
+        width: 160px;
+        height: 160px;
+    }
+
+    /* --- CARRUSEL --- */
+    .contenedor-slider-bruto {
+        padding: 0 16px;
+    }
+
+    /* --- BLOQUE INFERIOR --- */
+    .fila_horizontal {
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .contenedor-logo-libre {
+        width: 180px;
+        flex-shrink: 0;
+    }
+
+    .img-promo-libre {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .foto_rectangular {
+        width: 240px;
+        flex-shrink: 0;
+    }
+
+    .section-card {
+        padding: 30px !important;
+    }
+
+    .sticker-pro {
+        left: -10px;
+    }
+}
