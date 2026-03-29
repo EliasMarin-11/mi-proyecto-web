@@ -74,12 +74,10 @@
     padding-bottom: 10px;
 }
 
-.icono-lista {
-    width: 20px;
-    height: 20px;
-    background-color: #E3412B;
-    border-radius: 50%;
-    border: 2px solid #4E1A0A;
+.icono-check {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
 .btn-plan {
