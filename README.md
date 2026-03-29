@@ -1,37 +1,46 @@
-# Mi_Proyecto_Web
+# Mi_Proyecto_Web - Sprint 2
 
-## What's in your fridge 
+## What's in your fridge
 
 Este proyecto en grupo trata de una página web de recetas donde los usuarios pueden buscar ideas sobre qué cocinar, subir sus propios platos y guardar sus recetas favoritas.
 
-El grupo está formado por:
-* **Elías Marín Otero**
-* **Pablo Campos Rico**
-* **Alejandro Mentado García**
+**El grupo está formado por:**
+* Elías Marín Otero
+* Pablo Campos Rico
+* Alejandro Mentado García
 
-# Estructura del Proyecto
+### Estructura del Proyecto
 
-* **`mockups/`**: Esta carpeta contiene las imágenes en formato PNG con los diseños de cada página de nuestro sitio web.
-* **`css/`**: Aquí guardamos los archivos de estilo.
-* **`templates/`**: Contiene las plantillas usadas en las distintas páginas de la web.
-* **`MAIN.css`**: Es el archivo principal de diseño general.
-* **Archivo Javascript (``)**: El código que se nos proporcionó para poder unir los templates con las páginas principales HTML.
+Para este Sprint 2, hemos evolucionado la arquitectura del proyecto hacia un modelo modular, separando responsabilidades para que el código sea mucho más limpio y escalable. En la raíz del proyecto se encuentran las páginas principales HTML (Inicio, Buscador, Favoritos, Login, Perfil, etc.), apoyadas por las siguientes carpetas:
 
-## Diseños y Mockups
+* **`data/`**: Contiene nuestro archivo `db.json`, que actúa como nuestra base de datos centralizada simulando un entorno backend (almacenando recetas, usuarios con sus roles y alérgenos).
+* **`js/`**: Hemos dividido la lógica en scripts modulares. Además de un `main.js` y `layout.js` para la funcionalidad global, tenemos archivos dedicados para cada sección (`auth.js` para sesiones, `buscador.js`, `favoritos.js`, etc.).
+* **`css/`**: Hemos pasado de tener solo un `MAIN.css` a una estructura de estilos modulares. Cada componente (header, footer, tarjetas) y cada página tiene su propio archivo CSS independiente.
+* **`templates/`**: Contiene todas las plantillas HTML (componentes como el header, el footer, los formularios y las tarjetas de recetas) que ahora se inyectan dinámicamente en las páginas mediante JavaScript.
+* **`mockups/`**: Contiene los diseños iniciales en formato PNG. Para este sprint, hemos añadido las subcarpetas `responsive_movil` y `responsive_tablet` para planificar la adaptación a todos los dispositivos.
+* **`img/`**: Almacena todos los recursos gráficos clasificados (iconos de la app, avatares, fotos de recetas e iconografía de alérgenos).
+* **`recursos/`**: Carpeta destinada a guardar los entregables de la asignatura (presentaciones, vídeos y el empaquetado del proyecto).
 
-En la carpeta `mockups/` se encuentran los bocetos iniciales modo dummy en formato PNG que muestran cómo se planeó el diseño visual de cada página antes de escribir el código.
+### Novedades del Desarrollo (Sprint 2)
 
-## Tecnologías utilizadas
+En este segundo sprint hemos pasado de un diseño estático a una aplicación web completamente interactiva del lado del cliente. 
 
-Este proyecto está construido con lenguajes base, sin usar programas externos complejos:
-* **HTML**: Para crear la estructura de todas las páginas y formularios.
-* **CSS**: Para los colores, los tamaños y organizar el diseño en columnas.
-* **JavaScript**: Para las funciones interactivas (aún no implementadas) y para unir los moldes (templates) a las páginas.
+* **Base de Datos y DOM:** Consumo de datos en tiempo real desde nuestro `db.json` utilizando la API `fetch` y `Promise.all` para combinar los datos con las plantillas de la carpeta `templates/` e inyectarlos en el DOM.
+* **Gestión de Sesiones:** Implementación de `localStorage` para diferenciar entre usuarios invitados, básicos y premium, permitiendo o bloqueando el acceso a funcionalidades como "Subir Receta".
+* **Diseño Responsive:** Adaptación total de la web a dispositivos móviles y tablets mediante Media Queries, incluyendo menús de navegación tipo hamburguesa y carruseles táctiles.
 
-##  Recursos Adjuntos
-* [Descargar Proyecto (WebStorm ZIP)](recursos/PROYECTO_WEBSTORM.zip) 
-*  [Presentación del Proyecto (PDF)](recursos/PresentacionSprint1G43.2.pdf)
-*  [Video del Proyecto (mp4)](recursos/VideoSprint1G43.2.mp4)
-* [Link Trello](https://trello.com/invite/b/69b3308adf309bccd394c57a/ATTI43d53a63bc76933b7ec6efad6bd4a49aB841F8C6/tablero-pwm-sprint2)
----
-*Proyecto creado para la asignatura de Programación Web y Móvil.*
+### Tecnologías utilizadas
+
+Este proyecto sigue construido con lenguajes base (Vanilla), demostrando que se pueden lograr resultados profesionales sin depender de frameworks externos complejos:
+
+* **HTML5:** Para crear la estructura semántica de las páginas y aprovechar la **validación nativa** en todos los formularios (uso de atributos como `required`, `type="email"`, `minlength`).
+* **CSS3:** Para la maquetación (Flexbox), variables de color, estados interactivos y el diseño **Responsive**.
+* **Vanilla JavaScript (ES6):** Para toda la lógica de negocio, manejo de asincronía (Promesas), manipulación del DOM y persistencia de datos en el navegador.
+
+### Recursos Adjuntos
+
+* [Descargar Proyecto (WebStorm ZIP)](#)
+* [Presentación del Proyecto (PDF)](#)
+* [Video del Proyecto (mp4)](#)
+
+> *Proyecto creado para la asignatura de Programación Web y Móvil.*
