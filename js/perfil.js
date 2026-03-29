@@ -153,14 +153,31 @@ function gestionarSesion() {
         const usuario = JSON.parse(usuarioJson);
         document.body.classList.add('rol-' + usuario.rol);
 
+        // 1. Transformamos el botón del Header en PC
         if (btnAuth) {
             btnAuth.href = "PERFIL.html";
             btnAuth.classList.add('nav-perfil-activo');
-
             const avatarFoto = (usuario.foto && usuario.foto !== "") ? usuario.foto : "img/Usuario SINFONDO.png";
             btnAuth.innerHTML = `<img src="${avatarFoto}" class="avatar-header" title="${usuario.nombre}" alt="Avatar">`;
         }
 
+        // 2. MODO INFALIBLE PARA MÓVIL (Menú hamburguesa)
+        // Buscamos todos los enlaces del móvil y atacamos directamente al que va al Login
+        const enlacesMovil = document.querySelectorAll('.mobile-link');
+        enlacesMovil.forEach(enlace => {
+            const destino = enlace.getAttribute('href');
+            const texto = enlace.textContent.trim().toLowerCase();
+
+            // Si el enlace apunta a LOGIN.html o su texto dice "entrar"
+            if (destino === 'LOGIN.html' || texto === 'entrar') {
+                enlace.textContent = 'Mi Perfil'; // Cambiamos el texto
+                enlace.href = 'PERFIL.html';      // Cambiamos el destino
+                enlace.style.color = '#E3412B';   // Lo ponemos en color coral para que destaque
+                enlace.style.fontWeight = '900';
+            }
+        });
+
+        // 3. Validaciones Premium
         if (usuario.rol === 'premium' || usuario.premium === true) {
             if (btnPremium) {
                 btnPremium.innerHTML = "🌟 Premium";
@@ -171,6 +188,7 @@ function gestionarSesion() {
         }
 
     } else {
+        // --- Si NO hay sesión iniciada ---
         if (btnFavoritos) btnFavoritos.classList.add('boton-bloqueado');
         if (btnSubir) btnSubir.classList.add('boton-bloqueado');
     }

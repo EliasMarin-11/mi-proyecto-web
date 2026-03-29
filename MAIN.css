@@ -398,7 +398,7 @@ main-home, #main_section {
 @media (max-width: 768px) {
 
     body { overflow-x: hidden; }
-    main { padding: 12px 15px; }
+    .main-home { padding: 12px 15px; }
     .titulo_centrado {
         font-size: 22px;
         margin-top: 24px;
@@ -527,7 +527,7 @@ main-home, #main_section {
 }
 @media (max-width: 1024px) {
 
-    main { padding: 16px 40px; }
+    .main-home{ padding: 16px 40px; }
     /* --- INSTRUCCIONES --- */
     .instrucciones {
         gap: 12px;
@@ -542,6 +542,7 @@ main-home, #main_section {
     /* --- CARRUSEL --- */
     .contenedor-slider-bruto {
         padding: 0 16px;
+        margin-bottom: -40px !important;
     }
 
     /* --- BLOQUE INFERIOR --- */

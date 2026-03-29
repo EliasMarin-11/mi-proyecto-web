@@ -105,18 +105,20 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-    .main-login, .main-registro {
-        margin-top: 40px;
-        margin-bottom: 60px;
-    }
 
     .titulo-login, .titulo-registro {
         font-size: 28px;
     }
 
+    .main-login, .main-registro {
+        padding: 0; /* Anula el padding del main de MAIN.css */
+    }
+
     .contenedor-formulario {
-        width: 90%; /* para que no se salga de la pantalla */
+        width: calc(100% - 30px); /* Ancho total menos margen lateral */
+        margin: 0 auto;
         padding: 30px 20px;
+        box-sizing: border-box;
     }
 
     /* apilar opciones de recordar y olvido */
