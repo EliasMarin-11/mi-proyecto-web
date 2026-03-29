@@ -15,16 +15,15 @@ body, input, button, textarea, select, h1, h2, h3, h4, h5, h6, p, a {
     color: #4a322d;
 }
 
-main, #main_section {
+main-home, #main_section {
     flex-grow: 1;
 }
 
 /* Limitamos el main para que no se estire al infinito en tu pantalla */
-main {
+.main-home {
     padding: 20px 80px;
     background-color: #fff;
 }
-
 /* Títulos generales */
 .titulo_centrado {
     text-align: center;

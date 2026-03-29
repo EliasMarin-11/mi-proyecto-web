@@ -1,8 +1,12 @@
-/* --- LAYOUT PRINCIPAL A DOS COLUMNAS --- */
+.main-perfil {
+    background-color: #FFF5E9;
+    min-height: 100%;
+}
+
 .perfil-layout-dual {
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Para que las cajas se alineen arriba */
+    align-items: flex-start;
     padding: 80px 20px;
     background-color: #FFF5E9;
     font-family: 'Momo Trust Display', sans-serif;
