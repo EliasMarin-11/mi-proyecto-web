@@ -40,7 +40,7 @@ Este proyecto sigue construido con lenguajes base (Vanilla), demostrando que se 
 ### Recursos Adjuntos
 
 * [Descargar Proyecto (WebStorm ZIP)](recursos/proyecto_sprint2.zip)
-* [Presentación del Proyecto (PDF)](#)
-* [Video del Proyecto (mp4)](#)
+* [Presentación del Proyecto (PDF)](recursos/presentacion.pdf)
+* [Video del Proyecto (mp4)](recursos/video.mp4)
 
 > *Proyecto creado para la asignatura de Programación Web y Móvil.*
