@@ -359,14 +359,6 @@ main-home, #main_section {
     padding: 0 !important;
 }
 
-.avatar-header {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #4a322d;
-}
-
 /* =========================================
    SECCIÓN PREMIUM (HOME) - LOGO LIBRE
 ========================================= */

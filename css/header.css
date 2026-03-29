@@ -105,16 +105,24 @@
     box-shadow: 6px 6px 0px var(--marron-boton);
 }
 
+/* EL BOTÓN DE PERFIL (Igualado al de la casa) */
 .icono-perfil-header {
-    font-size: 24px;
+    width: 70px;  /* Antes estaba en 50px */
+    height: 70px; /* Antes estaba en 50px */
+    border: 4px solid var(--marron-boton); /* Antes era 3px */
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2); /* Sombra igual a la casa */
     background-color: white;
-    border: 3px solid var(--marron-boton);
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 32px; /* Hacemos el muñequito un poco más grande para rellenar */
+    transition: transform 0.3s ease;
+}
+
+/* Y le añadimos el mismo efecto de zoom al pasar el ratón */
+.icono-perfil-header:hover {
+    transform: scale(1.1);
 }
 
 /* Ajustamos el tamaño de los iconos laterales para que tengan presencia */
