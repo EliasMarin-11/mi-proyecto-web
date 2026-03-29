@@ -146,14 +146,31 @@ function gestionarSesion() {
     const btnSubir = document.getElementById('nav-subir');
     const btnPremium = document.getElementById('nav-premium');
 
-    if (btnFavoritos) btnFavoritos.classList.remove('boton-bloqueado');
-    if (btnSubir) btnSubir.classList.remove('boton-bloqueado');
+    // Analizamos los enlaces del móvil
+    const enlacesMovil = document.querySelectorAll('.mobile-link');
 
     if (usuarioJson) {
         const usuario = JSON.parse(usuarioJson);
-        document.body.classList.add('rol-' + usuario.rol);
+        const esPremium = (usuario.rol === 'premium' || usuario.premium === true);
 
-        // 1. Transformamos el botón del Header en PC
+        // 1. Lógica para el móvil
+        enlacesMovil.forEach(enlace => {
+            const texto = enlace.textContent.trim().toLowerCase();
+
+            // CASO ENTRAR -> PERFIL
+            if (texto.includes('entrar')) {
+                enlace.textContent = 'Mi Perfil';
+                enlace.href = 'PERFIL.html';
+                enlace.classList.add('mobile-perfil-activo'); // <--- ESTO FALTA: para el CSS coral
+            }
+
+            // CASO SUBIR RECETA (Bloqueo en móvil)
+            if (texto.includes('subir') && !esPremium) {
+                enlace.classList.add('boton-bloqueado'); // <--- ESTO FALTA: para que el móvil se bloquee
+            }
+        });
+
+        // 2. Lógica para PC (Lo que ya tenías)
         if (btnAuth) {
             btnAuth.href = "PERFIL.html";
             btnAuth.classList.add('nav-perfil-activo');
@@ -161,24 +178,8 @@ function gestionarSesion() {
             btnAuth.innerHTML = `<img src="${avatarFoto}" class="avatar-header" title="${usuario.nombre}" alt="Avatar">`;
         }
 
-        // 2. MODO INFALIBLE PARA MÓVIL (Menú hamburguesa)
-        // Buscamos todos los enlaces del móvil y atacamos directamente al que va al Login
-        const enlacesMovil = document.querySelectorAll('.mobile-link');
-        enlacesMovil.forEach(enlace => {
-            const destino = enlace.getAttribute('href');
-            const texto = enlace.textContent.trim().toLowerCase();
-
-            // Si el enlace apunta a LOGIN.html o su texto dice "entrar"
-            if (destino === 'LOGIN.html' || texto === 'entrar') {
-                enlace.textContent = 'Mi Perfil'; // Cambiamos el texto
-                enlace.href = 'PERFIL.html';      // Cambiamos el destino
-                enlace.style.color = '#E3412B';   // Lo ponemos en color coral para que destaque
-                enlace.style.fontWeight = '900';
-            }
-        });
-
-        // 3. Validaciones Premium
-        if (usuario.rol === 'premium' || usuario.premium === true) {
+        if (esPremium) {
+            if (btnSubir) btnSubir.classList.remove('boton-bloqueado');
             if (btnPremium) {
                 btnPremium.innerHTML = "🌟 Premium";
                 btnPremium.classList.add('premium-active');
@@ -188,9 +189,14 @@ function gestionarSesion() {
         }
 
     } else {
-        // --- Si NO hay sesión iniciada ---
-        if (btnFavoritos) btnFavoritos.classList.add('boton-bloqueado');
-        if (btnSubir) btnSubir.classList.add('boton-bloqueado');
+        // SI NO HAY SESIÓN: Bloqueamos ambos mundos
+        if (btnSubir) btnSubir.classList.add('boton-bloqueado'); // PC
+
+        enlacesMovil.forEach(enlace => { // MÓVIL
+            if (enlace.textContent.toLowerCase().includes('subir')) {
+                enlace.classList.add('boton-bloqueado');
+            }
+        });
     }
 }
 

@@ -260,4 +260,17 @@
     .logo-horizontal-simple {
         display: block !important;
     }
+
+    .mobile-link.mobile-perfil-activo {
+        color: var(--coral-principal) !important;
+        font-weight: 900;
+    }
+
+    .mobile-link.boton-bloqueado {
+        background-color: transparent !important; /* Fuerza a que desaparezca la caja gris */
+        color: #b5ada5 !important; /* Deja solo el texto en gris clarito */
+        pointer-events: none !important; /* Sigue sin poder clicarse */
+        opacity: 0.6;
+        display: block; /* Quitamos el flex porque ya no hay que alinear un icono */
+    }
 }
