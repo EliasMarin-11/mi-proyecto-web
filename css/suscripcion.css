@@ -142,3 +142,21 @@
         font-size: 16px;
     }
 }
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .contenedor-planes {
+        flex-direction: row;
+        gap: 20px;
+        padding: 0 15px;
+        max-width: 100%;
+    }
+
+    .tarjeta-plan {
+        width: 45%;
+        padding: 40px 25px;
+    }
+
+    .tarjeta-plan.destacado {
+        transform: scale(1.03);
+    }
+}
