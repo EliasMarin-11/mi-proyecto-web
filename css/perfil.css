@@ -56,21 +56,15 @@
 }
 
 .icon-dummy-pencil {
-    width: 35px;
-    height: 35px;
-    background-color: #FFFFFF;
-    border: 3px solid #4E1A0A;
-    border-radius: 50%;
-    box-shadow: 3px 3px 0px rgba(78, 26, 10, 0.1);
-    transition: all 0.3s ease;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: none;
+    border: none;
+    box-shadow: none;
+    width: auto;
+    height: auto;
 }
 
 .icon-dummy-pencil:hover {
-    background-color: #E3412B;
+    background: none;
     transform: translateY(-2px);
 }
 
@@ -365,4 +359,10 @@
         width: 110px;
         height: 110px;
     }
+}
+
+.icono-lapiz {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }
