@@ -39,7 +39,7 @@ Este proyecto sigue construido con lenguajes base (Vanilla), demostrando que se 
 
 ### Recursos Adjuntos
 
-* [Descargar Proyecto (WebStorm ZIP)](#)
+* [Descargar Proyecto (WebStorm ZIP)](recursos/proyecto_sprint2.zip)
 * [Presentación del Proyecto (PDF)](#)
 * [Video del Proyecto (mp4)](#)
 
