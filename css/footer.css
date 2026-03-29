@@ -3,10 +3,11 @@
 ======================================================== */
 footer {
     background-color: #FFF5E9; /* Fondo crema */
-    padding: 30px 70px; /* Margen interior generoso */
+    padding: 30px 80px; /* Margen interior generoso */
     color: #4E1A0A; /* Marrón oscuro para los textos */
     border-top: 5px solid #E3412B; /* La línea roja superior */
     font-family: 'Momo Trust Display', sans-serif;
+    box-sizing: border-box;
 }
 
 
@@ -119,7 +120,7 @@ footer {
     align-items: center;
     width: 100%;
     border-top: none;
-    padding: 15px 80px
+    padding: 15px 0px
 }
 .footer-mini-copy p {
     margin: 0;
