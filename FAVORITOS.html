@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mis Favoritos</title>
+
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/buscador.css">
+    <link rel="stylesheet" href="css/tarjeta_receta_horizontal.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="MAIN.css">
+    <link rel="stylesheet" href="css/alergeno.css">
+
+</head>
+<body>
+
+<header id="main_header" data-include="templates/header.html"></header>
+
+<section id="main_section" data-include="templates/buscador.html"></section>
+
+<main id="resultados_lista">
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+    <div data-include="templates/tarjeta_receta_horizontal.html"></div>
+</main>
+
+<footer id="main_footer" data-include="templates/footer_simple.html"></footer>
+
+<script src="js/layout.js"></script>
+<script src="js/perfil.js"></script>
+<script src="js/favoritos.js"></script>
+
+</body>
+</html>

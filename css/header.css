@@ -1,0 +1,276 @@
+:root { /*COLORES PRINCIPALES*/
+    --fondo-crema: #FFF5E9;
+    --coral-principal: #E3412B;
+    --marron-boton: #4E1A0A;
+}
+
+.header-principal {
+    display: flex; /*poner todos en una linea */
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 80px;
+    height: 120px;
+    background-color: var(--fondo-crema);
+    border-bottom: 5px solid var(--coral-principal);
+    position: relative;
+}
+
+.header-izquierda {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.img-logo {
+    width: auto;
+    height: 80px;
+    background-color: transparent;
+    display: block;
+}
+
+.header-logo-centro {
+    position: absolute; /*para que no actue como un objeto normal con el space between*/
+    left: 50%;
+    transform: translateX(-50%); /* centrar sobre su eje */
+    background-color: var(--fondo-crema);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--marron-boton);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.1);
+    transition: transform 0.4s ease;
+    z-index: 10;
+}
+
+.header-logo-centro:hover { /*EFECTO DE MOVIMIENTO PARA EL LOGO*/
+    transform: translateX(-50%) rotate(10deg) scale(1.1);
+}
+
+.img-logo-centro {
+    width: 90px;
+    height: 90px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-centro, .header-derecha {
+    display: flex;
+    gap: 20px; /*espacio entre botones*/
+    align-items: center;
+}
+
+.boton-sesion, .btn-nav-inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--marron-boton);
+    color: white;
+    text-decoration: none;
+    padding: 16px 36px; /* tamaño botón */
+    border-radius: 60px; /* redondear bordes */
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+}
+
+.boton-sesion:hover,.btn-nav-inicio:hover {
+    background-color: var(--coral-principal);
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+}
+
+/* 2. ESTADO BLOQUEADO */
+.boton-bloqueado {
+    background-color: #d1c7bd !important;
+    color: #f0f0f0 !important;
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: 2px 2px 0px rgba(78, 26, 10, 0.1) !important;
+    opacity: 0.9;
+    filter: grayscale(0.8);
+}
+
+/* 3. ESTADO PREMIUM ACTIVO */
+.premium-active {
+    background-color: #FFD700 !important;
+    color: var(--marron-boton) !important;
+    border: 3px solid var(--marron-boton);
+    box-shadow: 6px 6px 0px var(--marron-boton);
+}
+
+/* EL BOTÓN DE PERFIL (Igualado al de la casa) */
+.icono-perfil-header {
+    width: 70px;  /* Antes estaba en 50px */
+    height: 70px; /* Antes estaba en 50px */
+    border: 4px solid var(--marron-boton); /* Antes era 3px */
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2); /* Sombra igual a la casa */
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px; /* Hacemos el muñequito un poco más grande para rellenar */
+    transition: transform 0.3s ease;
+}
+
+/* Y le añadimos el mismo efecto de zoom al pasar el ratón */
+.icono-perfil-header:hover {
+    transform: scale(1.1);
+}
+
+/* Ajustamos el tamaño de los iconos laterales para que tengan presencia */
+.img-home, .img-perfil, .avatar-header {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 4px solid var(--marron-boton);
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    object-fit: cover;
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.img-home:hover, .img-perfil:hover, .avatar-header:hover {
+    transform: scale(1.1);
+}
+
+/* Elementos móviles ocultos en PC */
+.hamburger-btn,
+.mobile-menu-drawer,
+.logo-horizontal-simple {
+    display: none;
+}
+
+/* =========================================
+   ESTADO ACTIVO (PÁGINA ACTUAL)
+========================================= */
+.boton-sesion.active-nav,
+.btn-nav-inicio.active-nav {
+    background-color: var(--coral-principal);
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+    pointer-events: none; /* Evita que hagan clic en la página en la que ya están */
+}
+
+.mobile-link.active-nav {
+    color: var(--coral-principal);
+    font-weight: 900;
+    font-size: 22px;
+    border-bottom: 3px solid var(--coral-principal);
+    pointer-events: none;
+}
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+    .header-principal {
+        padding: 0px 40px;
+        height: 100px;
+    }
+    .img-logo { height: 60px; }
+    .header-logo-centro { width: 80px; height: 80px; }
+    .img-logo-centro { width: 70px; height: 70px; }
+    .img-home, .img-perfil, .avatar-header { width: 55px; height: 55px; }
+    .boton-sesion, .btn-nav-inicio {
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-principal {
+        padding: 0px 15px;
+        height: 80px;
+        border-bottom-width: 3px;
+    }
+    .header-centro { display: none; }
+    .header-derecha .boton-sesion {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+    .img-logo { height: 40px; }
+
+    .hamburger-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 35px;
+        color: var(--marron-boton);
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+    }
+
+    .mobile-menu-drawer {
+        display: block;
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 250px;
+        height: calc(100vh - 80px);
+        background-color: var(--fondo-crema);
+        border-right: 4px solid var(--marron-boton);
+        z-index: 100;
+        transition: left 0.3s ease;
+        padding: 30px 20px;
+        box-shadow: 10px 0px 0px rgba(78, 26, 10, 0.1);
+    }
+    .mobile-menu-drawer.active { left: 0; }
+
+    .mobile-nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .mobile-link {
+        text-decoration: none;
+        color: var(--marron-boton);
+        font-size: 20px;
+        font-weight: 700;
+        border-bottom: 2px dashed rgba(78, 26, 10, 0.2);
+        padding-bottom: 10px;
+    }
+    .mobile-link:hover { color: var(--coral-principal); }
+
+    .header-logo-centro {
+        width: 55px;
+        height: 55px;
+        border-width: 3px;
+    }
+    .img-logo-centro { width: 45px; height: 45px; }
+    .img-home, .img-perfil, .avatar-header {
+        width: 40px;
+        height: 40px;
+        border-width: 3px;
+    }
+
+    /* Unificar header simple en móvil */
+    .icono-casita,
+    .header-logo-centro {
+        display: none !important;
+    }
+    .logo-horizontal-simple {
+        display: block !important;
+    }
+
+    .mobile-link.mobile-perfil-activo {
+        color: var(--coral-principal) !important;
+        font-weight: 900;
+    }
+
+    .mobile-link.boton-bloqueado {
+        background-color: transparent !important; /* Fuerza a que desaparezca la caja gris */
+        color: #b5ada5 !important; /* Deja solo el texto en gris clarito */
+        pointer-events: none !important; /* Sigue sin poder clicarse */
+        opacity: 0.6;
+        display: block; /* Quitamos el flex porque ya no hay que alinear un icono */
+    }
+}

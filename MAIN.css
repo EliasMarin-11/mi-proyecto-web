@@ -1,0 +1,576 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body, input, button, textarea, select, h1, h2, h3, h4, h5, h6, p, a {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #4a322d;
+}
+
+main-home, #main_section {
+    flex-grow: 1;
+}
+
+/* Limitamos el main para que no se estire al infinito en tu pantalla */
+.main-home {
+    padding: 20px 80px;
+    background-color: #fff;
+}
+/* Títulos generales */
+.titulo_centrado {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #4a322d;
+}
+
+.titulo_izq {
+    text-align: left;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #4a322d
+}
+
+/*---------------------------------------------
+            INDEX
+ --------------------------------------------- */
+
+/* Bloque 3 cuadrados */
+.instrucciones {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: center;
+}
+
+.foto_cuadrada {
+    width: 250px;
+    height: 250px;
+    background-color: #fffaf0;
+    border: 3px solid #4a322d;
+    border-radius: 20px;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #4a322d;
+    box-shadow: 6px 6px 0px #4a322d;
+    overflow: hidden;
+}
+
+/* Tarjetas Trending */
+#tarjetas_trending {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0 50px 50px;
+    flex-wrap: nowrap;
+}
+
+.enlace_tarjeta {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Bloque Inferior Horizontales */
+.fila_horizontal {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 50px;
+    padding: 20px;
+}
+
+.fila_horizontal:nth-of-type(even) { /*Invierte el orden para el zigzag (segunda fila) */
+    flex-direction: row-reverse;
+}
+
+
+.foto_rectangular {
+    width: 320px;
+    height: 200px;
+    background-color: #fffaf0;
+    border: 3px solid #4a322d;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: #4a322d;
+    box-shadow: 8px 8px 0px #4a322d;
+    flex-shrink: 0;
+}
+
+.textos_columna {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+/*---------------------------------------------
+            FAVORITOS Y BUSCADOR
+ --------------------------------------------- */
+
+#resultados_lista {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+#resultados_lista > * {
+    flex: 0 0 300px;
+}
+
+/* --- CARRUSEL DE TENDENCIAS --- */
+.contenedor-slider-bruto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* El slider que contiene las recetas */
+.slider_horizontal {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 20px 10px 40px 10px; /* Hueco abajo para que no se corte la sombra de la tarjeta */
+    width: 100%;
+
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+/* Ocultamos la barra de scroll fea del navegador */
+.slider_horizontal::-webkit-scrollbar {
+    display: none;
+}
+
+/* Botones de navegación (Flechas) */
+.btn-flecha {
+    background-color: #4a322d;
+    color: white;
+    border: 3px solid #4a322d;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin: 0 10px;
+}
+
+.btn-flecha:hover {
+    background-color: #E3412B; /* Tu color coral/rojo al pasar el ratón */
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+}
+
+
+/* --- MEJORAS BLOQUE INFERIOR --- */
+
+.section-card {
+    background-color: #fff;
+    border: 4px solid #4a322d;
+    border-radius: 30px;
+    padding: 40px !important; /* Forzamos un poco de aire interno */
+    box-shadow: 12px 12px 0px rgba(78, 26, 10, 0.1);
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.subtitulo-bruto {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #4a322d;
+    margin-bottom: 10px;
+}
+
+.lista-premium {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Más espacio entre los puntos */
+}
+
+.lista-premium li {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-cta {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+/* LA MAGIA: Convertimos un emoji de texto en un bloque gráfico potente */
+.icono-lista {
+    font-size: 28px; /* Lo hacemos gigante */
+    background-color: #FFF5E9; /* Tu crema de fondo */
+    border: 3px solid #4a322d;
+    border-radius: 12px;
+    width: 55px;
+    height: 55px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.15);
+    flex-shrink: 0; /* Para que no se aplaste si el texto es muy largo */
+}
+/* Stickers decorativos muy Neo-brutalistas */
+.sticker-pro {
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    background: #E3412B;
+    color: white;
+    padding: 10px 15px;
+    font-weight: 900;
+    transform: rotate(-10deg);
+    border: 3px solid #4a322d;
+    box-shadow: 4px 4px 0px #4a322d;
+    font-size: 14px;
+}
+
+.app-badges {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+.badge-dummy {
+    background: #FFF5E9;
+    color: #4a322d;
+    border: 3px solid #4a322d;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.1);
+}
+
+.img-promo, .img-qr {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.qr-card {
+    background: white !important;
+    padding: 15px;
+}
+
+
+/* quitar el subrayado azul los enlaces*/
+.enlace_tarjeta {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* La imagen de la tarjeta vertical del carrusel */
+.img-tarjeta-v {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+}
+
+/* La imagen de la receta en la página de detalles */
+.img-receta-detalle {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Los iconos de alérgenos */
+.icono-alergeno {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    cursor: help;
+    object-fit: contain;
+}
+
+/* Mensajes de feedback (ej: sin alérgenos) */
+.texto-ok {
+    color: #2e7d32;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Añade esto a tu MAIN.css para evitar que las fotos verticales rompan el diseño */
+.tarjeta-v {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.tarjeta-v-header {
+    flex-grow: 1;
+    padding-top: 15px;/* Empuja el contenido hacia abajo para que queden alineados */
+}
+.placeholder-v {
+    width: 100%;
+    height: 140px;
+    border: 3px solid #4E1A0A;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.15);
+}
+
+.nav-perfil-activo {
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+/* =========================================
+   SECCIÓN PREMIUM (HOME) - LOGO LIBRE
+========================================= */
+
+/* Solo le damos el ancho necesario para que el Flexbox mantenga la columna */
+.contenedor-logo-libre {
+    width: 250px;
+    flex-shrink: 0; /* Evita que el texto aplaste la imagen */
+    position: relative; /* Para que el sticker ¡TOP! no se escape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* La imagen libre de ataduras */
+.img-promo-libre {
+    width: 170%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.foto_rectangular.qr-card {
+    border: none;
+    box-shadow: none;
+    background: none;
+    width: auto;
+    height: auto;
+}
+
+.foto_rectangular.qr-card .img-qr {
+    width: 220px;
+    height: auto;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+
+    body { overflow-x: hidden; }
+    .main-home { padding: 12px 15px; }
+    .titulo_centrado {
+        font-size: 22px;
+        margin-top: 24px;
+        margin-bottom: 14px;
+    }
+
+    .titulo-instrucciones,
+    .instrucciones { display: none; }
+
+    .contenedor-slider-bruto {
+        padding: 0;
+        position: relative;
+    }
+    .slider_horizontal {
+        overflow: hidden;
+        justify-content: center;
+        padding: 10px 0 30px 0;
+        mask-image: none;
+        -webkit-mask-image: none;
+    }
+
+    #tarjetas_trending .enlace_tarjeta {
+        display: none;
+    }
+
+    #tarjetas_trending .enlace_tarjeta.activa {
+        display: block;
+        width: 85vw;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    #tarjetas_trending .enlace_tarjeta.activa .tarjeta-v {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .fila_horizontal {
+        flex-direction: column !important;
+        gap: 20px;
+        padding: 20px !important;
+        margin-bottom: 30px;
+    }
+
+    .contenedor-logo-libre {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .img-promo-libre {
+        width: 50%;
+        max-width: 160px;
+        margin: 0 auto;
+    }
+
+    .foto_rectangular {
+        width: 100%;
+        max-width: 260px;
+        height: 160px;
+        margin: 0 auto;
+    }
+
+    .section-card {
+        overflow: hidden;
+        padding: 20px !important;
+    }
+    .btn-flecha {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-100%);
+        z-index: 10;
+        margin: 0;
+    }
+
+    .btn-flecha:hover {
+        background-color: #4a322d;
+        transform: translateY(-100%);
+        box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.2);
+    }
+
+    .btn-flecha:active {
+        background-color: #E3412B;
+        transform: translateY(calc(-75% - 2px));
+        box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+    }
+    #btn-izq {
+        left: -6px;
+    }
+
+    #btn-der {
+        right: -6px;
+    }
+    .section-card {
+        overflow: visible;
+        padding: 20px !important;
+        margin-top: 20px;
+    }
+
+    .fila_horizontal.section-card {
+        text-align: center;
+        align-items: center;
+    }
+
+    .subtitulo-bruto {
+        text-align: center;
+    }
+
+    .lista-premium {
+        text-align: left;
+    }
+    .sticker-pro {
+        left: -7px;
+    }
+    #buscador_main {
+        margin: 0 -27px;
+    }
+    .tarjeta-v {
+        width: 100%;
+        height: 250px;
+        box-sizing: border-box;
+    }
+    .titulo-qr,
+    .reverse {
+        display: none;
+    }
+}
+@media (max-width: 1024px) {
+
+    .main-home{ padding: 16px 40px; }
+    /* --- INSTRUCCIONES --- */
+    .instrucciones {
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .foto_cuadrada {
+        width: 160px;
+        height: 160px;
+    }
+
+    /* --- CARRUSEL --- */
+    .contenedor-slider-bruto {
+        padding: 0 16px;
+        margin-bottom: -40px !important;
+    }
+
+    /* --- BLOQUE INFERIOR --- */
+    .fila_horizontal {
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .contenedor-logo-libre {
+        width: 180px;
+        flex-shrink: 0;
+    }
+
+    .img-promo-libre {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    .foto_rectangular {
+        width: 240px;
+        flex-shrink: 0;
+    }
+
+    .section-card {
+        padding: 30px !important;
+    }
+
+    .sticker-pro {
+        left: -10px;
+    }
+}

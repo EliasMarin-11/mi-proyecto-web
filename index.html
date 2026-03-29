@@ -1,10 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HomePage - High Fidelity</title>
+
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/buscador.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/tarjeta_receta_vertical.css">
+    <link rel="stylesheet" href="MAIN.css">
+
 </head>
 <body>
 
+<header id="main_header" data-include="templates/header.html"></header>
+
+<main class="main-home">
+    <section id="buscador_main" data-include="templates/buscador.html"></section>
+
+    <h2 class="titulo_centrado titulo-instrucciones">¿Cómo funciona?</h2>
+    <section class="instrucciones">
+        <article>
+            <div class="foto_cuadrada">
+                <img src="img/BUSCARPWM.png" alt="Paso 1: Buscar ingredientes">
+            </div>
+            <p><strong>1. BUSCAR</strong><br>Dinos qué ingredientes tienes en tu nevera.</p>
+        </article>
+
+        <article>
+            <div class="foto_cuadrada">
+                <img src="img/ELEGIRPWM.png" alt="Paso 2: Elegir receta">
+            </div>
+            <p><strong>2. ELEGIR</strong><br>Encuentra la receta perfecta para ti en segundos.</p>
+        </article>
+
+        <article>
+            <div class="foto_cuadrada">
+                <img src="img/COCINARPWM.png" alt="Paso 3: Cocinar y disfrutar">
+            </div>
+            <p><strong>3. COCINAR</strong><br>Sigue los pasos y disfruta de tu plato.</p>
+        </article>
+    </section>
+
+    <h2 class="titulo_centrado">Recetas que son tendencia</h2>
+
+    <div class="contenedor-slider-bruto">
+        <button id="btn-izq" class="btn-flecha">◄</button>
+
+        <section id="tarjetas_trending" class="slider_horizontal">
+        </section>
+
+        <button id="btn-der" class="btn-flecha">►</button>
+    </div>
+
+    <section class="bloque_inferior">
+
+        <h3 class="titulo_centrado">Lleva tu cocina al siguiente nivel</h3>
+
+        <article class="fila_horizontal section-card">
+
+            <div class="sticker-pro">¡TOP!</div>
+
+            <div class="contenedor-logo-libre">
+                <img src="img/logo_premium.png" alt="Premium" class="img-promo-libre">
+            </div>
+
+            <div class="textos_columna">
+                <p class="subtitulo-bruto">¿Quieres cocinar sin límites?</p>
+                <ul class="lista-premium">
+                    <li>
+                        <span class="icono-lista">✨</span>
+                        <span><strong>IA Ilimitada:</strong> Genera recetas combinando lo imposible.</span>
+                    </li>
+                    <li>
+                        <span class="icono-lista">🚫</span>
+                        <span><strong>Sin Anuncios:</strong> Cocina sin distracciones ni interrupciones.</span>
+                    </li>
+                    <li>
+                        <span class="icono-lista">💾</span>
+                        <span><strong>Nube Infinita:</strong> Guarda tus creaciones para siempre.</span>
+                    </li>
+                </ul>
+                <a href="SUSCRIPCION.html" class="btn-buscar-dummy btn-cta">Ver Planes Premium</a>
+            </div>
+        </article>
+
+        <h3 class="titulo_centrado titulo-qr">Tu nevera, siempre contigo</h3>
+        <article class="fila_horizontal reverse section-card">
+            <div class="foto_rectangular qr-card">
+                <img src="img/QR_DOWNLOAD.png" alt="Escanear QR" class="img-qr">
+            </div>
+            <div class="textos_columna">
+                <p class="subtitulo-bruto">Cocina con tu móvil</p>
+                <p>No necesitas instalar nada. Escanea el código QR con la cámara de tu móvil y llévate la web al
+                    supermercado o ponla en la encimera mientras cocinas.</p>
+                <div class="app-badges">
+                    <span class="badge-dummy">📸 Abre tu cámara</span>
+                    <span class="badge-dummy">📱 Escanea y cocina</span>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+</main>
+
+<footer id="main_footer" data-include="templates/footer.html"></footer>
+
+<script src="js/layout.js"></script>
+<script src="js/main.js"></script>
+<script src="js/perfil.js"></script>
+<script src="js/buscador.js"></script>
 </body>
 </html>

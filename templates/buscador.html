@@ -1,0 +1,62 @@
+<div class="contenedor-busqueda">
+  <label class="busqueda-label">¿Qué te apetece comer?</label>
+
+  <div class="barra-busqueda">
+
+    <div class="contenedor-filtros">
+      <button type="button" id="btn-filtros" class="btn-secundario-bruto">Filtros ▾</button>
+
+      <div id="menu-filtros" class="dropdown-bruto oculto">
+
+        <div class="filtros-grid">
+          <div class="grupo-filtro">
+            <h4>Dificultad</h4>
+            <label><input type="checkbox" value="facil"> Fácil</label>
+            <label><input type="checkbox" value="media"> Media</label>
+            <label><input type="checkbox" value="dificil"> Difícil</label>
+          </div>
+
+          <div class="grupo-filtro">
+            <h4>Duración</h4>
+            <label><input type="checkbox" value="rapido"> - 30 min</label>
+            <label><input type="checkbox" value="medio"> 30 - 60 min</label>
+            <label><input type="checkbox" value="lento"> + 1 hora</label>
+          </div>
+
+          <div class="grupo-filtro">
+            <h4>Alérgenos / Dieta</h4>
+            <label><input type="checkbox" value="singluten"> Sin Gluten</label>
+            <label><input type="checkbox" value="sinlactosa"> Sin Lácteos</label>
+            <label><input type="checkbox" value="vegetariano"> Vegetariano</label>
+            <label><input type="checkbox" value="vegano"> Vegano</label>
+          </div>
+
+          <div class="grupo-filtro">
+            <h4>Tipo de Plato</h4>
+            <label><input type="checkbox" value="primero"> Primero</label>
+            <label><input type="checkbox" value="segundo"> Segundo</label>
+            <label><input type="checkbox" value="cuchara"> De Cuchara</label>
+            <label><input type="checkbox" value="postre"> Postre</label>
+          </div>
+
+          <div class="grupo-filtro">
+            <h4>Valoración</h4>
+            <label><input type="checkbox" value="estrellas-3"> ⭐⭐⭐+</label>
+            <label><input type="checkbox" value="estrellas-4"> ⭐⭐⭐⭐+</label>
+            <label><input type="checkbox" value="estrellas-5"> ⭐⭐⭐⭐⭐</label>
+          </div>
+        </div>
+
+        <button type="button" class="btn-buscar-dummy btn-aplicar-filtros" >Aplicar</button>
+
+      </div>
+    </div>
+
+    <div class="columna-input">
+      <input type="text" id="input-ingrediente" placeholder="Añade ingredientes: huevo, patata, tomate...">
+      <div id="contenedor-tags" class="busqueda-tags"></div>
+    </div>
+
+    <button type="button" id="btn-buscar" class="btn-buscar-dummy">Buscar</button>
+  </div>
+</div>
