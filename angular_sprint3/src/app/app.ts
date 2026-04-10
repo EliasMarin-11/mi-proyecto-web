@@ -8,5 +8,6 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('angular_sprint3');
+  protected readonly title = signal('elias_crak');
+  protected readonly descripcion = signal('Mi primera práctica con componentes');
 }
