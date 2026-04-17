@@ -1,0 +1,275 @@
+/* =======================================================
+   1. ESTILOS BASE (Aplica a los dos footers por igual)
+======================================================== */
+footer {
+  background-color: #FFF5E9; /* Fondo crema */
+  padding: 30px 80px; /* Margen interior generoso */
+  color: #4E1A0A; /* Marrón oscuro para los textos */
+  border-top: 5px solid #E3412B; /* La línea roja superior */
+  font-family: 'Momo Trust Display', sans-serif;
+  box-sizing: border-box;
+}
+
+
+/* =======================================================
+   2. FOOTER PRINCIPAL
+======================================================== */
+/* Contenedor general */
+.footer-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 60px; /* Separación entre la parte de arriba y las columnas */
+  border: none ; /* Cortafuegos contra líneas duplicadas */
+}
+
+/* ZONA SUPERIOR: Logo y Redes */
+.footer-top {
+  display: flex;
+  justify-content: space-between; /* Logo a la izq, Redes a la der */
+  align-items: center;
+}
+
+.img-footer {
+  height: 150px; /* Tamaño gigante del logo */
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-social p {
+  font-size: 26px ; /* Letra grande para "SÍGUENOS..." */
+  margin-bottom: 35px;
+  font-weight: 800;
+}
+
+.social-icons {
+  display: flex;
+  gap: 35px; /* Espacio entre los botones circulares */
+}
+
+/* Botones circulares gigantes */
+.icon {
+  width: 60px ;
+  height: 60px ;
+  background-color: #FFFFFF;
+  border: 5px solid #4E1A0A ;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none; /* Quita subrayados de enlaces */
+  box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon:hover {
+  background-color: #E3412B;
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.15);
+}
+
+/* Logos de redes por dentro (IG, TK, FB) */
+.icon img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* ZONA INFERIOR: Columnas de enlaces */
+.footer-links {
+  display: flex;
+  justify-content: space-between; /* Reparte el espacio entre columnas */
+  gap: 40px;
+}
+
+.columna h4 {
+  margin: 0 0 25px 0;
+  font-size: 24px;
+  color: #4E1A0A;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.columna ul {
+  list-style: none; /* Quita los puntitos de la lista */
+  padding: 0;
+}
+
+.columna li {
+  margin-bottom: 15px; /* Separación vertical entre links */
+}
+
+.columna a {
+  text-decoration: none;
+  color: #4E1A0A;
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.columna a:hover {
+  color: #E3412B;
+  transform: translateX(8px); /* El link se mueve a la derecha al pasar el ratón */
+}
+
+
+/*  FOOTER MINIMALISTA */
+.footer-minimalista {
+  display: flex;
+  justify-content: space-between; /* Distribuye el logo, texto y redes */
+  align-items: center;
+  width: 100%;
+  border-top: none;
+  padding: 15px 0px
+}
+.footer-mini-copy p {
+  margin: 0;
+  font-weight: bold;
+  color: #4E1A0A;
+}
+
+.footer-mini-links a {
+  text-decoration: none;
+  color: #4E1A0A;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.footer-mini-links a:hover {
+  color: #E3412B;
+}
+
+/* Redes sociales en miniatura */
+.footer-mini-social {
+  display: flex;
+  gap: 12px; /* Separación entre los iconos pequeños */
+}
+
+/* Los nuevos circulitos pequeños */
+.icon-mini {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: #FFFFFF;
+  border: 3px solid #4E1A0A;
+  border-radius: 50%;
+  box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.icon-mini:hover {
+  background-color: #E3412B;
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.15);
+}
+
+/* Las imágenes de las redes dentro del footer pequeño */
+.icon-mini img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+/* --- INTERVALO TABLET (Hasta 1024px) --- */
+@media (max-width: 1024px) {
+  footer {
+    padding: 30px 40px;
+  }
+
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 40px;
+  }
+
+  .footer-minimalista {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+}
+
+/* --- INTERVALO MÓVIL (Hasta 768px) --- */
+@media (max-width: 768px) {
+  footer {
+    padding: 30px 20px;
+  }
+
+  .footer-top {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .img-footer {
+    height: 100px;
+  }
+
+  .footer-social p {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .social-icons {
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  .icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 15px;
+  }
+
+  .columna h4 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .columna a {
+    font-size: 16px;
+  }
+
+  .footer-minimalista {
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+    padding: 30px 20px;
+  }
+
+  .footer-mini-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .footer-mini-links a {
+    display: inline-block;
+    padding: 5px;
+  }
+
+  /* Ocultamos los puntitos "•" */
+  .footer-mini-links {
+    color: transparent;
+  }
+
+  .footer-mini-social {
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+  }
+}

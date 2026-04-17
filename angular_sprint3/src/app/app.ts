@@ -1,9 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+// 1. IMPORTA EL COMPONENTE FÍSICAMENTE
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  // 2. REGÍSTRALO AQUÍ PARA QUE EL HTML LO ENTIENDA
+  imports: [RouterOutlet, FooterComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
