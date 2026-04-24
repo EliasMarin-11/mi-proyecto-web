@@ -1,17 +1,14 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-// --- 1. IMPORTAMOS LAS PIEZAS ---
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
-  selector: 'app-root',
+  selector: 'homepage',
   // --- 2. DAMOS PERMISO PARA USARLOS ---
-  imports: [RouterOutlet, HeaderComponent, FooterComponent],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  imports: [HeaderComponent, FooterComponent],
+  templateUrl: './homepage.html',
 })
-export class App {
+export class Homepage {
   // Ya puedes borrar esto si quieres limpiar la vista
-  protected readonly title = signal('What\'s in your Fridge');
 }
