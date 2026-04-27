@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-footer',
-    imports: [], // Como es Standalone, aquí pondremos herramientas extra más adelante
+    imports: [],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.css'
 })

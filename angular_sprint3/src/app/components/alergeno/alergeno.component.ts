@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-header',
+    selector: 'app-alergeno',
     imports: [],
-    templateUrl: './header.component.html',
-    styleUrl: './header.component.css'
+    templateUrl: './alergeno.component.html',
+    styleUrl: './alergeno.component.css'
 })
-export class HeaderComponent {
+export class AlergenoComponent {
     // Por ahora esto está vacío.
     // ¡Aquí meteremos la lógica del buscador más adelante!
 }
