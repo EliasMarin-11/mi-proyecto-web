@@ -1,5 +1,25 @@
 <app-header></app-header>
 
-<app-buscador></app-buscador>
+<main class="main-home">
+
+  <app-buscador></app-buscador>
+
+  <h2 class="titulo_izq">Recetas Populares</h2>
+
+  <div class="contenedor-slider-bruto">
+
+    <button class="btn-flecha" id="btn-izq">◄</button>
+
+    <div class="slider_horizontal" id="tarjetas_trending">
+      <app-tarjeta_receta_vertical></app-tarjeta_receta_vertical>
+      <app-tarjeta_receta_vertical></app-tarjeta_receta_vertical>
+      <app-tarjeta_receta_vertical></app-tarjeta_receta_vertical>
+      <app-tarjeta_receta_vertical></app-tarjeta_receta_vertical>
+    </div>
+
+    <button class="btn-flecha" id="btn-der">►</button>
+
+  </div>
+</main>
 
 <app-footer></app-footer>
