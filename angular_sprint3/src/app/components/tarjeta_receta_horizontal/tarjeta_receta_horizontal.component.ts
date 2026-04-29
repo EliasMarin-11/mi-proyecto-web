@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-tarjeta_receta_horizontal',
+    standalone: true,
     imports: [],
     templateUrl: './tarjeta_receta_horizontal.component.html',
     styleUrl: './tarjeta_receta_horizontal.component.css'

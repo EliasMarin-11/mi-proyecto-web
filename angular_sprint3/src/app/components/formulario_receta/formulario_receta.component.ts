@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-formulario_receta',
+    standalone: true,
     imports: [],
     templateUrl: './formulario_receta.component.html',
     styleUrl: './formulario_receta.component.css'
