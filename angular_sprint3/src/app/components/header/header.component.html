@@ -1,9 +1,7 @@
-<!-- header.component.html -->
 <header class="header-principal">
 
   <div class="header-izquierda">
-    <!-- El botón del menú móvil. Su lógica la haremos después -->
-    <button class="hamburger-btn" id="burgerBtn" aria-label="Abrir menú">☰</button>
+    <button class="hamburger-btn" (click)="toggleMenu()" aria-label="Abrir menú">☰</button>
 
     <a routerLink="/" class="logo-link">
       <img src="/img/PrimaryLogo.png" alt="Logo What's In Your Fridge" class="img-logo">
@@ -11,8 +9,6 @@
   </div>
 
   <nav class="header-centro">
-    <!-- routerLinkActive="active-nav" le dice a Angular: "Si la URL coincide con este routerLink, añádele la clase 'active-nav' a este botón" -->
-    <!-- [routerLinkActiveOptions]="{exact: true}" es crucial para el enlace "Inicio", porque la ruta "/" siempre está presente en todas las rutas (ej. /login). Esto asegura que solo se marque "Inicio" cuando estés exactamente en "/" -->
     <a routerLink="/" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact: true}" class="btn-nav-inicio">Inicio</a>
     <a routerLink="/favoritos" routerLinkActive="active-nav" class="boton-sesion" id="nav-favoritos">Mis Favoritos</a>
     <a routerLink="/subir-receta" routerLinkActive="active-nav" class="boton-sesion" id="nav-subir">Subir Receta</a>
@@ -24,12 +20,12 @@
   </nav>
 </header>
 
-<div class="mobile-menu-drawer" id="mobileMenu">
+<div class="mobile-menu-drawer" [class.active]="menuAbierto" id="mobileMenu">
   <nav class="mobile-nav-links">
-    <a routerLink="/" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact: true}" class="mobile-link">Inicio</a>
-    <a routerLink="/favoritos" routerLinkActive="active-nav" class="mobile-link">Mis Favoritos</a>
-    <a routerLink="/subir-receta" routerLinkActive="active-nav" class="mobile-link">Subir Receta</a>
-    <a routerLink="/premium" routerLinkActive="active-nav" class="mobile-link">Premium</a>
-    <a routerLink="/login" routerLinkActive="active-nav" class="mobile-link auth-link">Entrar</a>
+    <a routerLink="/" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact: true}" (click)="cerrarMenu()" class="mobile-link">Inicio</a>
+    <a routerLink="/favoritos" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link">Mis Favoritos</a>
+    <a routerLink="/subir-receta" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link">Subir Receta</a>
+    <a routerLink="/premium" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link">Premium</a>
+    <a routerLink="/login" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link auth-link">Entrar</a>
   </nav>
 </div>

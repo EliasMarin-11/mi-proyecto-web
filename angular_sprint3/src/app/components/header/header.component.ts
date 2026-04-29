@@ -9,6 +9,13 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-    // Por ahora esto está vacío.
-    // ¡Aquí meteremos la lógica del buscador más adelante!
+  menuAbierto: boolean = false;
+
+  toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  cerrarMenu() {
+    this.menuAbierto = false;
+  }
 }
