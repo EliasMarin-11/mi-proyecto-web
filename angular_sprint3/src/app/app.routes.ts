@@ -9,6 +9,7 @@ import { SUSCRIPCION } from './SUSCRIPCION';
 import { SUBIR_RECETA } from './SUBIR_RECETA';
 import { BUSCADOR } from './BUSCADOR';
 import { VER_RECETA } from './VER_RECETA';
+import {INICIO} from './INICIO';
 
 export const routes: Routes = [
   { path: 'login', component: LOGIN },
@@ -19,11 +20,12 @@ export const routes: Routes = [
   { path: 'subir-receta', component: SUBIR_RECETA },
   { path: 'buscar', component: BUSCADOR },
   { path: 'ver-receta', component: VER_RECETA },
+  { path: 'inicio', component: INICIO },
 
   // Página de inicio (si no escriben nada en la URL)
   // Aquí podrías crear una página llamada INICIO o redirigir a BUSCADOR
-  { path: '', redirectTo: 'buscar', pathMatch: 'full' },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
 
   // Comodín para errores de escritura
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'inicio' }
 ];

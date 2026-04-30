@@ -414,11 +414,16 @@ main-home, #main_section {
     position: relative;
   }
   .slider_horizontal {
-    overflow: hidden;
-    justify-content: center;
-    padding: 10px 0 30px 0;
-    mask-image: none;
-    -webkit-mask-image: none;
+    display: flex !important;
+    gap: 30px !important;
+    overflow-x: auto !important;
+    justify-content: flex-start !important;
+    scroll-behavior: smooth;
+    padding: 20px 50px !important;
+  }
+
+  .slider_horizontal::-webkit-scrollbar {
+    display: none;
   }
 
   #tarjetas_trending .enlace_tarjeta {
@@ -472,6 +477,7 @@ main-home, #main_section {
     transform: translateY(-100%);
     z-index: 10;
     margin: 0;
+    cursor: pointer;
   }
 
   .btn-flecha:hover {
