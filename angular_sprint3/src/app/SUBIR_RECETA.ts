@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { Formulario_recetaComponent } from './components/formulario_receta/formulario_receta.component';
 
 @Component({
   selector: 'app-subir_receta-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent],
+  imports: [Formulario_recetaComponent],
   templateUrl: './SUBIR_RECETA.html',
 })
 export class SUBIR_RECETA { }
