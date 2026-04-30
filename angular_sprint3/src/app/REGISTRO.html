@@ -1,21 +1,6 @@
 
+
 <div class="container mt-5 mb-5 d-flex justify-content-center">
-  <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
-    <h3 class="text-center mb-4">Registro de Usuario</h3>
-
-    <form [formGroup]="registroForm" (ngSubmit)="onRegistro()">
-      <div class="mb-3">
-        <label class="form-label">Correo Electrónico</label>
-        <input type="email" formControlName="email" class="form-control" placeholder="ejemplo@correo.com">
-      </div>
-
-      <div class="mb-4">
-        <label class="form-label">Contraseña</label>
-        <input type="password" formControlName="password" class="form-control" placeholder="Mínimo 6 caracteres">
-      </div>
-
-      <button type="submit" class="btn btn-primary w-100" [disabled]="registroForm.invalid">Registrarse</button>
-    </form>
-  </div>
+  <app-registro></app-registro>
 </div>
 
