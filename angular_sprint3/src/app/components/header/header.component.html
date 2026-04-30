@@ -16,8 +16,25 @@
   </nav>
 
   <nav class="header-derecha">
-    <a routerLink="/login" routerLinkActive="active-nav" class="boton-sesion" id="nav-auth">Entrar</a>
+    <ng-container *ngIf="user; else noUser">
+      <div class="user-info" (click)="goToProfile()" title="Ver perfil">
+        <img
+          *ngIf="user.photoURL; else userIcon"
+          [src]="user.photoURL"
+          alt="Foto de perfil"
+          class="user-photo"
+        />
+        <ng-template #userIcon>
+          <img src="/img/Usuario%20SINFONDO.png" alt="Usuario" class="user-photo" />
+        </ng-template>
+      </div>
+    </ng-container>
+
+    <ng-template #noUser>
+      <a routerLink="/login" routerLinkActive="active-nav" class="boton-sesion" id="nav-auth">Entrar</a>
+    </ng-template>
   </nav>
+
 </header>
 
 <div class="mobile-menu-drawer" [class.active]="menuAbierto" id="mobileMenu">
