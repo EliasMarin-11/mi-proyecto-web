@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-buscador',
     standalone: true,
-    imports: [CommonModule,],
+    imports: [CommonModule],
     templateUrl: './buscador.component.html',
     styleUrl: './buscador.component.css'
 })
@@ -12,6 +13,7 @@ export class BuscadorComponent {
   menuAbierto = false;
 
   listaIngredientes: string[] = [];
+  private router = inject(Router);
 
   toggleFiltros() {
     this.menuAbierto = !this.menuAbierto;
@@ -31,7 +33,10 @@ export class BuscadorComponent {
   }
 
   buscar() {
-    console.log("Ingredientes seleccionados:", this.listaIngredientes);
+    console.log("Navegando a resultados con:", this.listaIngredientes);
+
     this.menuAbierto = false;
+
+    this.router.navigate(['/buscar']);
   }
 }
