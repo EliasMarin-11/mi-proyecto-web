@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import {SuscripcionComponent} from './components/suscripcion/suscripcion.component';
 
 @Component({
   selector: 'app-suscripcion-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent],
+  imports: [SuscripcionComponent],
   templateUrl: './SUSCRIPCION.html',
 })
 export class SUSCRIPCION { }

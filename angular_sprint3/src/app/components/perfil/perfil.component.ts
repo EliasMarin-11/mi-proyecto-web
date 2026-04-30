@@ -8,6 +8,8 @@ import { Component } from '@angular/core';
     styleUrl: './perfil.component.css'
 })
 export class PerfilComponent {
-    // Por ahora esto está vacío.
-    // ¡Aquí meteremos la lógica del buscador más adelante!
+  cerrarSesion() {
+    console.log("Cerrando sesión...");
+    // Aquí irá la lógica de Firebase Auth más adelante
+  }
 }

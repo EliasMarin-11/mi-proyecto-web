@@ -7,7 +7,4 @@ import { Component } from '@angular/core';
     templateUrl: './suscripcion.component.html',
     styleUrl: './suscripcion.component.css'
 })
-export class SuscripcionComponent {
-    // Por ahora esto está vacío.
-    // ¡Aquí meteremos la lógica del buscador más adelante!
-}
+export class SuscripcionComponent {}

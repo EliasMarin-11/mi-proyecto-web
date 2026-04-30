@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @Component({
   selector: 'app-perfil-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent],
+  imports: [PerfilComponent],
   templateUrl: './PERFIL.html',
 })
 export class PERFIL { }
