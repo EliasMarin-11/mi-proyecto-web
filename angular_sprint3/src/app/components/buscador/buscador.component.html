@@ -4,9 +4,9 @@
   <div class="barra-busqueda">
 
     <div class="contenedor-filtros">
-      <button type="button" id="btn-filtros" class="btn-secundario-bruto">Filtros ▾</button>
+      <button type="button" id="btn-filtros" class="btn-secundario-bruto" (click)="toggleFiltros()">Filtros ▾</button>
 
-      <div id="menu-filtros" class="dropdown-bruto oculto">
+      <div id="menu-filtros" class="dropdown-bruto" [class.oculto]="!menuAbierto">
 
         <div class="filtros-grid">
           <div class="grupo-filtro">
@@ -47,16 +47,23 @@
           </div>
         </div>
 
-        <button type="button" class="btn-buscar-dummy btn-aplicar-filtros" >Aplicar</button>
+        <button type="button" class="btn-buscar-dummy btn-aplicar-filtros" (click)="buscar()">Aplicar</button>
 
       </div>
     </div>
 
     <div class="columna-input">
-      <input type="text" id="input-ingrediente" placeholder="Añade ingredientes: huevo, patata, tomate...">
-      <div id="contenedor-tags" class="busqueda-tags"></div>
+      <!-- Añadimos el evento para capturar el Enter -->
+      <input type="text" id="input-ingrediente" placeholder="Añade ingredientes: huevo, patata, tomate..." (keyup.enter)="anadirIngrediente($event)">
+
+      <!-- Usamos *ngFor para pintar tus tags dinámicamente -->
+      <div id="contenedor-tags" class="busqueda-tags">
+        <div class="tag" *ngFor="let ing of listaIngredientes; let i = index">
+          {{ ing }} <span (click)="eliminarIngrediente(i)">×</span>
+        </div>
+      </div>
     </div>
 
-    <button type="button" id="btn-buscar" class="btn-buscar-dummy">Buscar</button>
+    <button type="button" id="btn-buscar" class="btn-buscar-dummy" (click)="buscar()">Buscar</button>
   </div>
 </div>

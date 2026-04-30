@@ -28,7 +28,7 @@ export class LoginComponent {
     try {
       await this.authService.login(email!, password!);
       alert('¡Bienvenido de nuevo!');
-      this.router.navigate(['/buscar']);
+      this.router.navigate(['/inicio']);
     } catch (error: any) {
       alert('Credenciales incorrectas');
     }
