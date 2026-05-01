@@ -119,18 +119,15 @@ export class PerfilComponent implements OnInit, OnDestroy {
         }
       }
 
-      // 2. Actualizamos el Perfil en Auth (Identidad)
       if (this.nuevoNombre.trim() !== '' && this.nuevoNombre !== this.usuarioActual.displayName) {
         await this.authService.actualizarPerfilUsuario(this.nuevoNombre, '');
 
-        // Actualizamos el objeto local para que el Header y la UI reaccionen al instante
         this.usuarioActual = {
           ...this.usuarioActual,
           displayName: this.nuevoNombre
         } as User;
       }
 
-      // 3. Limpieza de estado y feedback
       this.editandoNombre = false;
       this.nuevaFotoPreview = null;
       this.cdr.detectChanges();

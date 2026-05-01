@@ -1,6 +1,3 @@
-<!-- src/app/components/perfil/perfil.component.html -->
-
-<!-- Mensaje de carga mientras Firebase decide -->
 <div *ngIf="cargandoAuth" style="text-align: center; padding: 50px;">
   <h2>Verificando sesión...</h2>
 </div>
@@ -9,7 +6,6 @@
   <div class="perfil-layout-dual">
 
     <section class="perfil-tarjeta">
-      <!-- AVATAR -->
       <div class="perfil-avatar-wrapper" (click)="inputAvatar.click()">
         <img class="perfil-avatar"
              [src]="nuevaFotoPreview || fotoGuardada || 'img/Usuario SINFONDO.png'"
@@ -27,7 +23,6 @@
                placeholder="Escribe tu nombre + Enter">
       </div>
 
-      <!-- FORMULARIO -->
       <form class="perfil-formulario" id="form-perfil">
         <div class="form-grupo">
           <label>Correo Electrónico</label>
@@ -56,15 +51,12 @@
       </div>
     </section>
 
-    <!-- Resto de tu código (aside recetas) -->
     <aside class="perfil-aside-recetas">
-      <!-- ... lo que ya tenías ... -->
     </aside>
 
   </div>
 </main>
 
-<!-- Si Firebase resuelve pero el usuario es null (no está logueado), le avisamos -->
 <div *ngIf="!cargandoAuth && !usuarioActual" style="text-align: center; padding: 50px;">
   <h2>No has iniciado sesión.</h2>
   <button (click)="cerrarSesion()">Ir al Login</button>
