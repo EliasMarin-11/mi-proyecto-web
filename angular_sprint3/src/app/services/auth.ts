@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import {Auth, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User} from '@angular/fire/auth';
+import { Auth, user, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, User, updateProfile } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
-import firebase from 'firebase/compat/app';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ import firebase from 'firebase/compat/app';
 export class AuthService {
   private auth: Auth = inject(Auth);
 
-  public user$: Observable<User | null> = authState(this.auth);
+  public user$: Observable<User | null> = user(this.auth);
 
   registro(email: string, pass: string) {
     return createUserWithEmailAndPassword(this.auth, email, pass);
@@ -21,5 +20,15 @@ export class AuthService {
 
   logout() {
     return signOut(this.auth);
+  }
+
+  async actualizarPerfilUsuario(nombre: string, fotoUrl: string) {
+    if (this.auth.currentUser) {
+      await updateProfile(this.auth.currentUser, {
+        displayName: nombre,
+        photoURL: fotoUrl
+      });
+      await this.auth.currentUser.reload();
+    }
   }
 }

@@ -19,8 +19,8 @@
     <ng-container *ngIf="user; else noUser">
       <div class="user-info" (click)="goToProfile()" title="Ver perfil">
         <img
-          *ngIf="user.photoURL; else userIcon"
-          [src]="user.photoURL"
+          *ngIf="fotoPerfil; else userIcon"
+          [src]="fotoPerfil"
           alt="Foto de perfil"
           class="user-photo"
         />

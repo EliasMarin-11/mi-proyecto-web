@@ -1,59 +1,64 @@
-<main class="main-perfil">
-    <div class="perfil-layout-dual">
+<!-- src/app/components/perfil/perfil.component.html -->
+<main class="main-perfil" *ngIf="!cargandoAuth">
+  <div class="perfil-layout-dual">
 
     <section class="perfil-tarjeta">
-        <div class="perfil-avatar-wrapper">
-          <img id="avatar-img" class="perfil-avatar"
-               [src]="usuarioActual?.photoURL || 'img/Usuario SINFONDO.png'"
-               alt="Avatar del usuario">
-            <input type="file" id="input-avatar" accept="image/*" class="oculto">
+      <!-- AVATAR -->
+      <div class="perfil-avatar-wrapper" (click)="inputAvatar.click()">
+        <img class="perfil-avatar"
+             [src]="nuevaFotoPreview || fotoGuardada || 'img/Usuario SINFONDO.png'"
+             alt="Avatar">
+        <input type="file" #inputAvatar accept="image/*" class="oculto" (change)="onFotoSeleccionada($event)">
+      </div>
+
+      <div class="perfil-cabecera">
+        <!-- Garantiza que muestre tu nombre si existe -->
+        <h2 class="perfil-nombre" *ngIf="!editandoNombre" (click)="activarEdicion()" style="cursor: pointer;">
+          {{ usuarioActual?.displayName || nuevoNombre || 'AÑADIR NOMBRE' }}
+        </h2>
+
+        <input type="text" class="input-dummy" *ngIf="editandoNombre" autofocus
+               [(ngModel)]="nuevoNombre" (keyup.enter)="guardarCambios()"
+               placeholder="Tu nombre (ej: Pepe) + Enter">
+      </div>
+
+      <!-- FORMULARIO -->
+      <form class="perfil-formulario" id="form-perfil">
+        <div class="form-grupo">
+          <label>Correo Electrónico</label>
+          <input type="email" id="input-email" class="input-dummy input-oscuro"
+                 [value]="usuarioActual?.email" readonly>
         </div>
 
-        <div class="perfil-cabecera">
-          <h2 class="perfil-nombre" id="nombre-display">
-            {{ usuarioActual?.displayName || 'USUARIO' }}
-          </h2>
-            <div class="icon-dummy-pencil" id="btn-editar-nombre" title="Editar nombre">
-                <img src="img/lapiz.png" alt="Editar nombre" class="icono-lapiz">
-            </div>
+        <div class="form-grupo">
+          <label>Tu plan actual</label>
+          <div class="contenedor-plan">
+            <div class="etiqueta-plan" id="texto-plan">Básico</div>
+            <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan">Gestionar</button>
+          </div>
         </div>
 
-        <form class="perfil-formulario" id="form-perfil">
-            <div class="form-grupo">
-                <label>Correo Electrónico</label>
-              <input type="email" id="input-email" class="input-dummy input-oscuro"
-                     [value]="usuarioActual?.email" readonly>
-            </div>
+        <button type="button" class="btn-perfil" id="btn-guardar" (click)="guardarCambios()">Guardar Cambios</button>
 
-            <div class="form-grupo">
-                <label>Tu plan actual</label>
-                <div class="contenedor-plan">
-                    <div class="etiqueta-plan" id="texto-plan">...</div>
-                    <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan">Gestionar</button>
-                </div>
-            </div>
+        <hr class="perfil-separador">
 
-            <button type="submit" class="btn-perfil" id="btn-guardar">Guardar Cambios</button>
+        <button type="button" class="btn-perfil" id="btn-cambiar-password">Cambiar Contraseña</button>
+      </form>
 
-            <hr class="perfil-separador">
-
-            <button type="button" class="btn-perfil" id="btn-cambiar-password">Cambiar Contraseña</button>
-        </form>
-
-        <div class="perfil-enlaces-inferiores">
-            <p>¿Has terminado de cocinar por hoy?</p>
-          <a href="javascript:void(0)" id="btn-logout" (click)="cerrarSesion()">Cerrar Sesión</a>
-        </div>
+      <div class="perfil-enlaces-inferiores">
+        <p>¿Has terminado de cocinar por hoy?</p>
+        <a href="javascript:void(0)" id="btn-logout" (click)="cerrarSesion()">Cerrar Sesión</a>
+      </div>
     </section>
 
     <aside class="perfil-aside-recetas">
-        <div class="cabecera-aside">
-            <h3 class="titulo-mis-recetas">Mis Recetas Creadas</h3>
-            <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta">+ Nueva Receta</button>
-        </div>
-
-        <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside"></div>
+      <div class="cabecera-aside">
+        <h3 class="titulo-mis-recetas">Mis Recetas Creadas</h3>
+        <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta">+ Nueva Receta</button>
+      </div>
+      <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside">
+      </div>
     </aside>
 
-    </div>
+  </div>
 </main>
