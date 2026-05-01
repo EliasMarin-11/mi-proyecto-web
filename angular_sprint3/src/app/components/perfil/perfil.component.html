@@ -1,5 +1,11 @@
 <!-- src/app/components/perfil/perfil.component.html -->
-<main class="main-perfil" *ngIf="!cargandoAuth">
+
+<!-- Mensaje de carga mientras Firebase decide -->
+<div *ngIf="cargandoAuth" style="text-align: center; padding: 50px;">
+  <h2>Verificando sesión...</h2>
+</div>
+
+<main class="main-perfil" *ngIf="!cargandoAuth && usuarioActual">
   <div class="perfil-layout-dual">
 
     <section class="perfil-tarjeta">
@@ -12,14 +18,13 @@
       </div>
 
       <div class="perfil-cabecera">
-        <!-- Garantiza que muestre tu nombre si existe -->
-        <h2 class="perfil-nombre" *ngIf="!editandoNombre" (click)="activarEdicion()" style="cursor: pointer;">
-          {{ usuarioActual?.displayName || nuevoNombre || 'AÑADIR NOMBRE' }}
+        <h2 class="perfil-nombre" *ngIf="!editandoNombre" (click)="activarEdicion()" style="cursor: pointer;" title="Haz clic para editar">
+          {{ nuevoNombre }} <img src="img/lapiz.png" alt="Editar" style="width: 20px; vertical-align: middle;">
         </h2>
 
         <input type="text" class="input-dummy" *ngIf="editandoNombre" autofocus
                [(ngModel)]="nuevoNombre" (keyup.enter)="guardarCambios()"
-               placeholder="Tu nombre (ej: Pepe) + Enter">
+               placeholder="Escribe tu nombre + Enter">
       </div>
 
       <!-- FORMULARIO -->
@@ -27,14 +32,14 @@
         <div class="form-grupo">
           <label>Correo Electrónico</label>
           <input type="email" id="input-email" class="input-dummy input-oscuro"
-                 [value]="usuarioActual?.email" readonly>
+                 [value]="emailUsuario" readonly>
         </div>
 
         <div class="form-grupo">
           <label>Tu plan actual</label>
           <div class="contenedor-plan">
             <div class="etiqueta-plan" id="texto-plan">Básico</div>
-            <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan">Gestionar</button>
+            <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan" (click)="irAPlanes()">Gestionar</button>
           </div>
         </div>
 
@@ -42,7 +47,7 @@
 
         <hr class="perfil-separador">
 
-        <button type="button" class="btn-perfil" id="btn-cambiar-password">Cambiar Contraseña</button>
+        <button type="button" class="btn-perfil" id="btn-cambiar-password" (click)="cambiarPassword()">Cambiar Contraseña</button>
       </form>
 
       <div class="perfil-enlaces-inferiores">
@@ -51,14 +56,16 @@
       </div>
     </section>
 
+    <!-- Resto de tu código (aside recetas) -->
     <aside class="perfil-aside-recetas">
-      <div class="cabecera-aside">
-        <h3 class="titulo-mis-recetas">Mis Recetas Creadas</h3>
-        <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta">+ Nueva Receta</button>
-      </div>
-      <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside">
-      </div>
+      <!-- ... lo que ya tenías ... -->
     </aside>
 
   </div>
 </main>
+
+<!-- Si Firebase resuelve pero el usuario es null (no está logueado), le avisamos -->
+<div *ngIf="!cargandoAuth && !usuarioActual" style="text-align: center; padding: 50px;">
+  <h2>No has iniciado sesión.</h2>
+  <button (click)="cerrarSesion()">Ir al Login</button>
+</div>

@@ -1,10 +1,9 @@
-// src/app/components/header/header.component.ts
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
 import { User } from '@angular/fire/auth';
-import { Firestore, doc, docData } from '@angular/fire/firestore';
+import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -18,42 +17,65 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private firestore: Firestore = inject(Firestore);
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
+  private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   menuAbierto = false;
   user: User | null = null;
   fotoPerfil: string | null = null;
 
   private userSub?: Subscription;
-  private docSub?: Subscription;
+  private unsubscribeSnapshot?: () => void;
 
   ngOnInit() {
     this.userSub = this.authService.user$.subscribe(userData => {
       this.user = userData;
+
       if (userData) {
-        // Solo nos suscribimos a Firestore si no lo hemos hecho ya para este usuario
-        if (!this.docSub) {
-          const docRef = doc(this.firestore, `usuarios/${userData.uid}`);
-          this.docSub = docData(docRef).subscribe((data: any) => {
-            this.fotoPerfil = data?.avatar || null;
-          });
+        if (!this.unsubscribeSnapshot) {
+          try {
+            const userDocRef = doc(this.firestore, 'usuarios', userData.uid);
+            this.unsubscribeSnapshot = onSnapshot(userDocRef, (docSnap) => {
+              if (docSnap.exists()) {
+                const data = docSnap.data();
+                if (data && data['avatar']) {
+                  this.fotoPerfil = data['avatar'];
+                }
+              }
+              this.cdr.detectChanges();
+            }, (error) => {
+              console.error(error);
+            });
+          } catch (error) {
+            console.error(error);
+          }
         }
       } else {
-        // Si cierra sesión, limpiamos todo
-        if (this.docSub) {
-          this.docSub.unsubscribe();
-          this.docSub = undefined;
+        if (this.unsubscribeSnapshot) {
+          this.unsubscribeSnapshot();
+          this.unsubscribeSnapshot = undefined;
         }
         this.fotoPerfil = null;
       }
+      this.cdr.detectChanges();
     });
   }
 
   ngOnDestroy() {
     if (this.userSub) this.userSub.unsubscribe();
-    if (this.docSub) this.docSub.unsubscribe();
+    if (this.unsubscribeSnapshot) this.unsubscribeSnapshot();
   }
 
-  toggleMenu() { this.menuAbierto = !this.menuAbierto; }
-  cerrarMenu() { this.menuAbierto = false; }
-  goToProfile() { this.router.navigate(['/perfil']); }
+  toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
+    this.cdr.detectChanges();
+  }
+
+  cerrarMenu() {
+    this.menuAbierto = false;
+    this.cdr.detectChanges();
+  }
+
+  goToProfile() {
+    this.router.navigate(['/perfil']);
+  }
 }
