@@ -1,16 +1,14 @@
 <main class="contenedor-crear-receta">
-  <form id="formulario-nueva-receta" (ngSubmit)="publicarReceta()">
+  <form id="formulario-nueva-receta" (ngSubmit)="guardarReceta()">
 
     <div class="cabecera-formulario">
-      <input type="text" id="receta-titulo" name="titulo" [(ngModel)]="titulo"
-             placeholder="Nombre de tu deliciosa receta..." class="input-titulo-principal" required minlength="5">
+      <input type="text" id="receta-titulo" name="titulo" [(ngModel)]="titulo" placeholder="Nombre de tu deliciosa receta..." class="input-titulo-principal" required minlength="5">
     </div>
 
     <div class="formulario-dos-columnas">
       <div class="columna-izquierda">
         <div class="grupo-input grupo-doble">
-          <input type="number" id="receta-tiempo-num" name="tiempoNum" [(ngModel)]="tiempoNum"
-                 placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
+          <input type="number" id="receta-tiempo-num" name="tiempoNum" [(ngModel)]="tiempoNum" placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
           <select id="receta-tiempo-unidad" name="tiempoUnidad" [(ngModel)]="tiempoUnidad" class="input-linea input-mitad" required>
             <option value="min">Minutos</option>
             <option value="horas">Horas</option>
@@ -18,8 +16,7 @@
         </div>
 
         <div class="grupo-input">
-          <input type="number" id="receta-raciones" name="raciones" [(ngModel)]="raciones"
-                 placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
+          <input type="number" id="receta-raciones" name="raciones" [(ngModel)]="raciones" placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
         </div>
 
         <div class="grupo-input">
@@ -34,9 +31,9 @@
         <div class="seccion-lista" id="contenedor-ingredientes">
           <h3>Ingredientes</h3>
           <div class="fila-ingrediente" *ngFor="let ing of ingredientes; let i = index">
-            <input type="number" step="any" min="0" placeholder="Cant." class="input-caja ing-cant"
-                   name="ingCant{{i}}" [(ngModel)]="ing.cantidad" required>
-            <select class="input-caja ing-medida" name="ingUnidad{{i}}" [(ngModel)]="ing.unidad" required>
+            <!-- Mantenemos los [name] dinámicos del sprint-3 para evitar fallos de Angular -->
+            <input type="number" step="any" min="0" placeholder="Cant." class="input-caja ing-cant" [name]="'ingCant'+i" [(ngModel)]="ing.cantidad" required>
+            <select class="input-caja ing-medida" [name]="'ingUnidad'+i" [(ngModel)]="ing.unidad" required>
               <option value="" disabled selected>Unidad</option>
               <option value="gr">Gramos (gr)</option>
               <option value="ml">Mililitros (ml)</option>
@@ -44,8 +41,7 @@
               <option value="cdas">Cucharadas</option>
               <option value="tazas">Tazas</option>
             </select>
-            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre"
-                   name="ingNombre{{i}}" [(ngModel)]="ing.nombre" required>
+            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre" [name]="'ingNombre'+i" [(ngModel)]="ing.nombre" required>
 
             <button type="button" class="btn-eliminar" (click)="removeIngrediente(i)" *ngIf="ingredientes.length > 1">×</button>
           </div>
@@ -54,9 +50,9 @@
 
         <div class="seccion-lista" id="contenedor-pasos">
           <h3>Instrucciones paso a paso</h3>
-          <div class="fila-paso" *ngFor="let paso of pasos; let i = index">
-            <textarea [placeholder]="'Paso ' + (i + 1) + ': ...'" class="textarea-paso paso-texto"
-                      name="pasoTexto{{i}}" [(ngModel)]="paso.texto" required></textarea>
+          <!-- Mantenemos el trackByFn del sprint-3 para evitar bugs al escribir en los textareas -->
+          <div class="fila-paso" *ngFor="let paso of pasos; let i = index; trackBy: trackByFn">
+            <textarea [placeholder]="'Paso ' + (i + 1) + ': ...'" class="textarea-paso paso-texto" [name]="'paso'+i" [(ngModel)]="pasos[i]" required></textarea>
             <button type="button" class="btn-eliminar" (click)="removePaso(i)" *ngIf="pasos.length > 1">×</button>
           </div>
           <button type="button" class="btn-anadir" (click)="addPaso()">+ Añadir paso</button>
@@ -78,10 +74,10 @@
 
         <div class="grupo-descripcion">
           <h3>Breve descripción</h3>
-          <textarea id="receta-desc" name="descripcion" [(ngModel)]="descripcion"
-                    placeholder="Cuenta la historia de esta receta..." class="textarea-desc" required minlength="10"></textarea>
+          <textarea id="receta-desc" name="descripcion" [(ngModel)]="descripcion" placeholder="Cuenta la historia de esta receta..." class="textarea-desc" required minlength="10"></textarea>
         </div>
 
+        <!-- Mantenemos la mejora visual de Elías para el botón de carga -->
         <button type="submit" class="btn-guardar-principal" [disabled]="guardando">
           {{ guardando ? 'Publicando en Firebase...' : 'Publicar Receta' }}
         </button>

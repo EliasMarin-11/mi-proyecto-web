@@ -23,6 +23,8 @@
             <li>⏱️ {{ receta.tiempo }}</li>
             <li>👨‍🍳 {{ receta.dificultad }}</li>
             <li>🍽️ {{ receta.tipo_plato }}</li>
+            <!-- NUEVO: Mostrar el nombre del autor en la tarjeta -->
+            <li *ngIf="receta.autorNombre">👤 {{ receta.autorNombre }}</li>
           </ul>
         </div>
 

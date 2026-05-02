@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RecetasService, Receta } from '../../services/recetas.service';
 import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
-
-import { Auth, authState } from '@angular/fire/auth';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-receta_completa',
@@ -17,30 +16,43 @@ import { Auth, authState } from '@angular/fire/auth';
 export class Receta_completaComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private recetasService = inject(RecetasService);
+  private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
   private firestore = inject(Firestore);
-  private auth = inject(Auth);
 
   receta: Receta | undefined;
   cargando = true;
   nuevoComentario: string = '';
   unsubscribe: any;
 
+  // Variables combinadas de Auth
   usuarioActualId: string | null = null;
   usuarioActualNombre: string = '';
 
+  // Variables de Edición (Sprint 3)
+  modoEdicion = false;
+  guardando = false;
+
   ngOnInit() {
-    authState(this.auth).subscribe((user) => {
+    // 1. Obtener quién es el usuario logueado
+    this.authService.user$.subscribe(user => {
       if (user) {
         this.usuarioActualId = user.uid;
-        this.usuarioActualNombre = user.displayName || user.email || 'Chef Anónimo';
-        console.log("Usuario logueado detectado:", this.usuarioActualNombre);
+        this.usuarioActualNombre = user.displayName || user.email?.split('@')[0] || 'Chef Anónimo';
       } else {
         this.usuarioActualId = null;
         this.usuarioActualNombre = '';
       }
     });
 
+    // 2. Comprobar si venimos con el botón de "Editar" pulsado
+    this.route.queryParamMap.subscribe(qParams => {
+      if (qParams.get('modoEdicion') === 'true') {
+        this.modoEdicion = true;
+      }
+    });
+
+    // 3. Cargar la receta en tiempo real
     this.route.paramMap.subscribe((params) => {
       const id = params.get('id');
       if (id) {
@@ -68,6 +80,7 @@ export class Receta_completaComponent implements OnInit, OnDestroy {
     }
   }
 
+  // --- FUNCIONES SOCIALES ---
   async darLike() {
     if (!this.usuarioActualId) {
       alert("¡Debes iniciar sesión para dar me gusta!");
@@ -75,7 +88,8 @@ export class Receta_completaComponent implements OnInit, OnDestroy {
     }
     if (!this.receta || !this.receta.id) return;
 
-    const arrayLikes = this.receta.likes || [];
+    // Ahora TypeScript ya reconoce 'likes' sin problemas
+    const arrayLikes = this.receta.likes || []; 
     const yaDioLike = arrayLikes.includes(this.usuarioActualId);
 
     await this.recetasService.toggleLike(this.receta.id, this.usuarioActualId, yaDioLike);
@@ -97,5 +111,31 @@ export class Receta_completaComponent implements OnInit, OnDestroy {
 
     await this.recetasService.addComentario(this.receta.id, comentarioObj);
     this.nuevoComentario = '';
+  }
+
+  // --- FUNCIONES DE EDICIÓN ---
+  async guardarCambios() {
+    if (!this.receta || !this.receta.id) return;
+
+    this.guardando = true;
+    try {
+      await this.recetasService.actualizarReceta(this.receta.id, {
+        titulo: this.receta.titulo,
+        descripcion: this.receta.descripcion,
+        dificultad: this.receta.dificultad,
+        tiempo: this.receta.tiempo
+      });
+      alert('¡Tus cambios han sido guardados!');
+      this.modoEdicion = false; 
+    } catch (error) {
+      alert('Ocurrió un error guardando los cambios.');
+    } finally {
+      this.guardando = false;
+      this.cdr.detectChanges();
+    }
+  }
+
+  activarEdicion() {
+    this.modoEdicion = true;
   }
 }

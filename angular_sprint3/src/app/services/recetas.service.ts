@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc, arrayUnion, arrayRemove, query, where } from '@angular/fire/firestore';
 
 export interface Comentario {
   usuarioId: string;
@@ -22,8 +22,12 @@ export interface Receta {
   raciones?: number;
   alergenos?: string[];
   estrellas?: number;
+  // Campos de Elías
   likes?: string[];
   comentarios?: Comentario[];
+  // Campos del Sprint 3 (Tuyos)
+  autorNombre?: string;
+  userId?: string;
 }
 
 @Injectable({
@@ -125,6 +129,7 @@ export class RecetasService {
     }
   }
 
+  // --- FUNCIONES DE ELÍAS ---
   async toggleLike(recetaId: string, userId: string, yaDioLike: boolean) {
     const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
     if (yaDioLike) {
@@ -140,5 +145,27 @@ export class RecetasService {
     const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
     // Mete el comentario entero dentro del array 'comentarios'
     await updateDoc(recetaRef, { comentarios: arrayUnion(comentario) });
+  }
+
+  // --- FUNCIONES TUYAS (SPRINT 3) ---
+  // 4. Recupera las recetas creadas por un usuario específico
+  async getRecetasPorUsuario(userId: string): Promise<Receta[]> {
+    const recetasCol = collection(this.firestore, 'recetas');
+    // Creamos una consulta: "Tráeme las recetas donde el userId sea igual al que te paso"
+    const q = query(recetasCol, where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
+  }
+
+  async actualizarReceta(id: string, datosNuevos: Partial<Receta>): Promise<void> {
+    const docRef = doc(this.firestore, `recetas/${id}`);
+    try {
+      await updateDoc(docRef, datosNuevos);
+      console.log("Receta actualizada con éxito");
+    } catch (error) {
+      console.error("Error al actualizar la receta: ", error);
+      throw error;
+    }
   }
 }
