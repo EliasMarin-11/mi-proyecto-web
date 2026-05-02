@@ -1,8 +1,6 @@
-<!-- Opcional: hacemos que el enlace vaya al detalle de esa receta en concreto -->
-<a [href]="'/receta/' + receta.id" class="enlace-tarjeta">
+<a [routerLink]="['/ver-receta', receta.id]" class="enlace-tarjeta">
   <article class="tarjeta-receta">
 
-    <!-- Ponemos la imagen de Firebase como fondo de tu div -->
     <div class="receta-dummy-img"
          [style.backgroundImage]="'url(' + receta.imagen + ')'"
          style="background-size: cover; background-position: center;">
@@ -14,7 +12,7 @@
         <div class="btn-fav-receta"
              title="Guardar receta"
              (click)="clickFavorito($event)"
-             [style.color]="esFavorito ? 'red' : '#ccc'"> <!-- Cambia de color dinámicamente -->
+             [style.color]="esFavorito ? 'red' : '#ccc'">
           ❤
         </div>
       </header>

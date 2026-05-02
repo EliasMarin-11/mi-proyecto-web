@@ -45,8 +45,6 @@ export class BUSCADOR implements OnInit {
     } finally {
       // Angular cambia la variable
       this.cargando = false;
-
-      // 3. ¡LA MAGIA! Le damos un toque a Angular para que redibuje el HTML con las tarjetas
       this.cdr.detectChanges();
     }
   }

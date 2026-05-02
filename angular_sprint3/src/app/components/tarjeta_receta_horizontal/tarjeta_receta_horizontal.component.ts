@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, inject, ChangeDetectorRef } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Receta, RecetasService } from '../../services/recetas.service';
 import { AuthService } from '../../services/auth';
@@ -6,7 +7,7 @@ import { AuthService } from '../../services/auth';
 @Component({
   selector: 'app-tarjeta_receta_horizontal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './tarjeta_receta_horizontal.component.html',
   styleUrl: './tarjeta_receta_horizontal.component.css'
 })

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs, doc, setDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
 
 export interface Receta {
   id?: string;
@@ -11,6 +11,10 @@ export interface Receta {
   dieta: string[];
   ingredientes: string[];
   descripcion: string;
+  instrucciones?: string[];
+  raciones?: number;
+  alergenos?: string[];
+  estrellas?: number;
 }
 
 @Injectable({
@@ -19,20 +23,17 @@ export interface Receta {
 export class RecetasService {
   private firestore: Firestore = inject(Firestore);
 
-  // 1. AQUÍ ESTÁ LA FUNCIÓN QUE FALTABA
   async getTodasLasRecetas(): Promise<Receta[]> {
     const recetasCol = collection(this.firestore, 'recetas');
     const snapshot = await getDocs(recetasCol);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
   }
 
-  // 2. FUNCIÓN DE BÚSQUEDA ACTUALIZADA Y TIPADA
   async buscarRecetas(ingredientesBuscar: string[], filtrosSeleccionados: string[]): Promise<Receta[]> {
     console.log("1. Buscando ingredientes:", ingredientesBuscar);
 
     let todas: Receta[] = await this.getTodasLasRecetas();
 
-    // VAMOS A VER QUÉ DEVUELVE FIREBASE REALMENTE
     console.log("2. Todas las recetas de Firebase:", todas);
 
     if (ingredientesBuscar && ingredientesBuscar.length > 0) {
@@ -45,7 +46,6 @@ export class RecetasService {
           return false;
         }
 
-        // Vemos los ingredientes de cada receta que evaluamos
         console.log(`4. Evaluando receta: ${receta.titulo} con ingredientes:`, receta.ingredientes);
 
         const coincide = receta.ingredientes.some((ing: string) => {
@@ -103,4 +103,17 @@ export class RecetasService {
     const todas = await this.getTodasLasRecetas();
     return todas.filter(receta => idsFavoritos.includes(receta.id!));
   }
+
+  async getRecetaPorId(id: string): Promise<Receta | undefined> {
+    const docRef = doc(this.firestore, `recetas/${id}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() } as Receta;
+    } else {
+      console.error("¡No se encontró la receta!");
+      return undefined;
+    }
+  }
+
 }

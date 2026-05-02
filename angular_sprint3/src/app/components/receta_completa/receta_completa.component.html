@@ -1,0 +1,54 @@
+<div *ngIf="cargando">
+  Cargando tu deliciosa receta...
+</div>
+
+<article class="receta-detalle-pro" *ngIf="!cargando && receta">
+
+  <section class="bloque-superior">
+    <div class="bloque-foto" id="receta-foto"
+         [style.backgroundImage]="'url(' + receta.imagen + ')'"
+         style="background-size: cover; background-position: center;">
+    </div>
+
+    <div class="bloque-info">
+      <h2 id="receta-titulo">{{ receta.titulo }}</h2>
+
+      <ul class="lista-info-breve">
+        <li><span class="cuadrito-mini">⏱️</span> <span>{{ receta.tiempo }}</span></li>
+        <li><span class="cuadrito-mini">👨‍🍳</span> Dificultad: <span>{{ receta.dificultad }}</span></li>
+
+        <li *ngIf="receta.raciones"><span class="cuadrito-mini">🍽️</span> <span>{{ receta.raciones }} Raciones</span></li>
+        <li *ngIf="!receta.raciones"><span class="cuadrito-mini">🍽️</span> <span>{{ receta.tipo_plato }}</span></li>
+      </ul>
+
+      <h3>Descripción del plato</h3>
+      <p id="receta-descripcion">{{ receta.descripcion }}</p>
+    </div>
+  </section>
+
+  <section class="bloque-inferior">
+
+    <aside class="col-ingredientes">
+      <h3>INGREDIENTES</h3>
+      <ul class="lista-ingredientes-alergenos">
+        <li *ngFor="let ing of receta.ingredientes">{{ ing }}</li>
+      </ul>
+    </aside>
+
+    <div class="col-instrucciones">
+      <h3>INSTRUCCIONES PASO A PASO</h3>
+
+      <div class="parrafos-instrucciones" *ngIf="receta.instrucciones && receta.instrucciones.length > 0">
+        <p *ngFor="let paso of receta.instrucciones; let i = index" style="margin-bottom: 15px;">
+          <strong>Paso {{ i + 1 }}:</strong> {{ paso }}
+        </p>
+      </div>
+
+      <div *ngIf="!receta.instrucciones || receta.instrucciones.length === 0">
+        <p>El chef aún no ha subido los pasos de esta receta.</p>
+      </div>
+    </div>
+
+  </section>
+
+</article>
