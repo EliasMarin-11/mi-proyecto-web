@@ -11,7 +11,12 @@
     <div class="receta-info">
       <header class="receta-header">
         <h2 class="receta-titulo">{{ receta.titulo }}</h2>
-        <div class="btn-fav-receta" title="Guardar receta">❤</div>
+        <div class="btn-fav-receta"
+             title="Guardar receta"
+             (click)="clickFavorito($event)"
+             [style.color]="esFavorito ? 'red' : '#ccc'"> <!-- Cambia de color dinámicamente -->
+          ❤
+        </div>
       </header>
 
       <div class="receta-detalles">

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, setDoc, deleteDoc } from '@angular/fire/firestore';
 
 export interface Receta {
   id?: string;
@@ -73,5 +73,34 @@ export class RecetasService {
     }
 
     return todas;
+  }
+
+  // 1. Guarda o elimina la receta de los favoritos del usuario
+  async toggleFavorito(userId: string, recetaId: string, yaEsFavorito: boolean) {
+    const favRef = doc(this.firestore, `usuarios/${userId}/favoritos/${recetaId}`);
+    if (yaEsFavorito) {
+      await deleteDoc(favRef); // Si ya lo era, lo quitamos de la BD
+    } else {
+      await setDoc(favRef, { guardado: true }); // Si no, lo creamos
+    }
+  }
+
+  // 2. Devuelve los IDs de los favoritos (para pintar el corazón rojo en las tarjetas)
+  async getFavoritosIds(userId: string): Promise<string[]> {
+    const favsCol = collection(this.firestore, `usuarios/${userId}/favoritos`);
+    const snapshot = await getDocs(favsCol);
+    return snapshot.docs.map(doc => doc.id);
+  }
+
+  // 3. Recupera la información completa de las recetas favoritas para la sección FAVORITOS
+  async getRecetasFavoritas(userId: string): Promise<Receta[]> {
+    console.log("Buscando IDs en Firebase para el usuario:", userId);
+    const idsFavoritos = await this.getFavoritosIds(userId);
+    console.log("IDs encontrados:", idsFavoritos);
+
+    if (idsFavoritos.length === 0) return [];
+
+    const todas = await this.getTodasLasRecetas();
+    return todas.filter(receta => idsFavoritos.includes(receta.id!));
   }
 }
