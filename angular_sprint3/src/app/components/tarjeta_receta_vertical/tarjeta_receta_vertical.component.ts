@@ -8,4 +8,5 @@ import { RouterLink } from '@angular/router';
     templateUrl: './tarjeta_receta_vertical.component.html',
     styleUrl: './tarjeta_receta_vertical.component.css'
 })
-export class Tarjeta_receta_verticalComponent {}
+export class Tarjeta_receta_verticalComponent {
+}

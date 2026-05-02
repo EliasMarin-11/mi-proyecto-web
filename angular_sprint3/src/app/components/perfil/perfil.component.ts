@@ -6,11 +6,15 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Firestore, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { RecetasService, Receta } from '../../services/recetas.service'; // <--- IMPORTACIÓN NUEVA
+// IMPORTA EL COMPONENTE DE TU TARJETA
+import { Tarjeta_receta_verticalComponent } from '../tarjeta_receta_vertical/tarjeta_receta_vertical.component';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  // AÑADIMOS LA TARJETA A LOS IMPORTS
+  imports: [CommonModule, FormsModule, Tarjeta_receta_verticalComponent],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
@@ -19,6 +23,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private recetasService: RecetasService = inject(RecetasService); // <--- SERVICIO INYECTADO
 
   usuarioActual: User | null = null;
   cargandoAuth = true;
@@ -27,18 +32,20 @@ export class PerfilComponent implements OnInit, OnDestroy {
   fotoGuardada: string | null = null;
   nuevaFotoPreview: string | null = null;
   emailUsuario = '';
-  planUsuario = 'Básico'; // Valor por defecto
+  planUsuario = 'Básico';
 
-  // Variables para la contraseña
   editandoPassword = false;
   passActual = '';
   passNueva = '';
+
+  // NUEVA VARIABLE PARA GUARDAR LAS RECETAS DEL USUARIO
+  misRecetas: Receta[] = [];
 
   private userSub?: Subscription;
   private unsubscribeSnapshot?: () => void;
 
   ngOnInit() {
-    this.userSub = this.authService.user$.subscribe(user => {
+    this.userSub = this.authService.user$.subscribe(async user => {
       this.usuarioActual = user;
 
       if (user) {
@@ -46,6 +53,13 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
         if (!this.editandoNombre) {
           this.nuevoNombre = user.displayName || user.email?.split('@')[0] || 'USUARIO';
+        }
+
+        // --- NUEVA LÓGICA: CARGAR MIS RECETAS ---
+        try {
+          this.misRecetas = await this.recetasService.getRecetasPorUsuario(user.uid);
+        } catch (error) {
+          console.error("Error al cargar recetas del usuario:", error);
         }
 
         if (!this.unsubscribeSnapshot) {
@@ -77,6 +91,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
         }
         this.fotoGuardada = null;
         this.emailUsuario = '';
+        this.misRecetas = []; // Limpiamos las recetas si cierra sesión
       }
 
       this.cargandoAuth = false;
@@ -107,10 +122,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   }
 
   async guardarCambios() {
-    if (!this.usuarioActual) {
-      alert("No hay usuario conectado.");
-      return;
-    }
+    if (!this.usuarioActual) return;
 
     try {
       if (this.nuevaFotoPreview || this.nuevoNombre) {
@@ -138,7 +150,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
       alert("¡Guardado correctamente!");
 
     } catch (error: any) {
-      console.error("Error al guardar cambios:", error);
+      console.error(error);
       alert("Error al guardar.");
     }
   }
@@ -157,35 +169,19 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   async actualizarPassword() {
     if (!this.usuarioActual || !this.usuarioActual.email) return;
-
-    if (!this.passActual || !this.passNueva) {
-      alert('Por favor, rellena ambas contraseñas.');
-      return;
-    }
-
-    if (this.passNueva.length < 6) {
-      alert('La nueva contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
+    if (!this.passActual || !this.passNueva) { alert('Rellena ambas contraseñas.'); return; }
+    if (this.passNueva.length < 6) { alert('La nueva contraseña debe tener al menos 6 caracteres.'); return; }
 
     try {
-      // 1. Reautenticar al usuario
       const cred = EmailAuthProvider.credential(this.usuarioActual.email, this.passActual);
       await reauthenticateWithCredential(this.usuarioActual, cred);
-
-      // 2. Cambiar la contraseña
       await updatePassword(this.usuarioActual, this.passNueva);
 
       alert('Contraseña actualizada con éxito.');
       this.cancelarEdicionPassword();
-
     } catch (error: any) {
-      console.error("Error al cambiar contraseña:", error);
-      if (error.code === 'auth/invalid-credential') {
-        alert('La contraseña actual es incorrecta.');
-      } else {
-        alert('Error al actualizar la contraseña. Revisa la consola.');
-      }
+      if (error.code === 'auth/invalid-credential') alert('La contraseña actual es incorrecta.');
+      else alert('Error al actualizar la contraseña.');
     }
   }
 
@@ -193,9 +189,12 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.router.navigate(['/premium']);
   }
 
+  // NUEVA FUNCIÓN PARA EL BOTÓN
+  irASubirReceta() {
+    this.router.navigate(['/subir-receta']);
+  }
+
   cerrarSesion() {
-    this.authService.logout().then(() => {
-      this.router.navigate(['/login']);
-    });
+    this.authService.logout().then(() => this.router.navigate(['/login']));
   }
 }

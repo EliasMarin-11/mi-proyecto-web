@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, query, where } from '@angular/fire/firestore';
 
 export interface Receta {
   id?: string;
@@ -114,6 +114,16 @@ export class RecetasService {
       console.error("¡No se encontró la receta!");
       return undefined;
     }
+  }
+
+  // 4. Recupera las recetas creadas por un usuario específico
+  async getRecetasPorUsuario(userId: string): Promise<Receta[]> {
+    const recetasCol = collection(this.firestore, 'recetas');
+    // Creamos una consulta: "Tráeme las recetas donde el userId sea igual al que te paso"
+    const q = query(recetasCol, where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
   }
 
 }

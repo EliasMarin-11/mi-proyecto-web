@@ -71,9 +71,30 @@
       </div>
     </section>
 
-    <!-- Resto de tu código (aside recetas) -->
     <aside class="perfil-aside-recetas">
-      <!-- ... lo que ya tenías ... -->
+      <div class="cabecera-aside">
+        <h3 class="titulo-mis-recetas">Mis Recetas Creadas ({{misRecetas.length}})</h3>
+        <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta" (click)="irASubirReceta()">+ Sube otra receta</button>
+      </div>
+
+      <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside">
+
+        <!-- Si NO tiene recetas -->
+        <div *ngIf="misRecetas.length === 0" style="text-align: center; margin-top: 20px; color: #666;">
+          <p>Aún no has creado ninguna receta.</p>
+          <p>¡Anímate a compartir tus platos favoritos!</p>
+        </div>
+
+        <!-- Si SÍ tiene recetas, dibujamos las tarjetas -->
+        <div *ngIf="misRecetas.length > 0" style="display: flex; flex-direction: column; gap: 15px;">
+          <!-- Iteramos sobre misRecetas y le pasamos los datos al componente tarjeta -->
+          <app-tarjeta_receta_vertical
+            *ngFor="let receta of misRecetas"
+            [recetaData]="receta">
+          </app-tarjeta_receta_vertical>
+        </div>
+
+      </div>
     </aside>
 
   </div>
