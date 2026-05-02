@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, query, where, updateDoc } from '@angular/fire/firestore';
 
 export interface Receta {
   id?: string;
@@ -126,6 +126,17 @@ export class RecetasService {
     const snapshot = await getDocs(q);
 
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
+  }
+
+  async actualizarReceta(id: string, datosNuevos: Partial<Receta>): Promise<void> {
+    const docRef = doc(this.firestore, `recetas/${id}`);
+    try {
+      await updateDoc(docRef, datosNuevos);
+      console.log("Receta actualizada con éxito");
+    } catch (error) {
+      console.error("Error al actualizar la receta: ", error);
+      throw error;
+    }
   }
 
 }
