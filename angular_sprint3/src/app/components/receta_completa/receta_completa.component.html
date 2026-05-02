@@ -1,29 +1,42 @@
-<div *ngIf="cargando">
-  Cargando tu deliciosa receta...
+<div *ngIf="cargando" style="text-align: center; padding: 50px; font-size: 20px; font-weight: bold; color: #4E1A0A;">
+  Cargando receta...
 </div>
 
+<!-- MODO VISTA: TU DISEÑO ORIGINAL Y PERFECTO  -->
 <article class="receta-detalle-pro" *ngIf="!cargando && receta">
 
+  <!-- BLOQUE SUPERIOR -->
   <section class="bloque-superior">
-    <div class="bloque-foto" id="receta-foto"
-         [style.backgroundImage]="'url(' + receta.imagen + ')'"
-         style="background-size: cover; background-position: center;">
+    <div class="bloque-foto" id="receta-foto">
+      <img [src]="receta.imagen" class="img-receta-detalle" alt="Foto de la receta">
+    </div>
+
+    <div class="etiqueta-estrellas" id="receta-estrellas-hero">
+      ⭐ {{ mediaEstrellas }} ({{ totalVotos }} {{ totalVotos === 1 ? 'valoración' : 'valoraciones' }})
     </div>
 
     <div class="bloque-info">
+
+      <div class="btn-fav-detalle" *ngIf="!esPropietario" title="Guardar favorito">❤</div>
+
+      <!-- BOTÓN EDITAR QUE LLEVA A TU FORMULARIO -->
+      <div style="position: absolute; top: 30px; right: 40px; display: flex; gap: 10px;" *ngIf="esPropietario">
+        <button (click)="activarEdicion()" style="background: #FFF5E9; border: 3px solid #4E1A0A; padding: 10px 15px; border-radius: 12px; cursor: pointer; font-weight: 900; box-shadow: 4px 4px 0 #4E1A0A; color: #4E1A0A; font-size: 16px;">
+          ✏️ Editar mi receta
+        </button>
+      </div>
+
       <h2 id="receta-titulo">{{ receta.titulo }}</h2>
 
-      <!-- NUEVO: Mostrar el nombre del autor -->
-      <p *ngIf="receta.autorNombre" style="color: #8b5a2b; font-weight: bold; margin-top: -10px; margin-bottom: 15px;">
-        👤 Creado por: {{ receta.autorNombre }}
-      </p>
+      <div class="info-linea-iconos" *ngIf="receta.autorNombre">
+        <span style="color: #E3412B;">Chef: {{ receta.autorNombre }}</span>
+      </div>
 
       <ul class="lista-info-breve">
-        <li><span class="cuadrito-mini">⏱️</span> <span>{{ receta.tiempo }}</span></li>
-        <li><span class="cuadrito-mini">👨‍🍳</span> Dificultad: <span>{{ receta.dificultad }}</span></li>
-
-        <li *ngIf="receta.raciones"><span class="cuadrito-mini">🍽️</span> <span>{{ receta.raciones }} Raciones</span></li>
-        <li *ngIf="!receta.raciones"><span class="cuadrito-mini">🍽️</span> <span>{{ receta.tipo_plato }}</span></li>
+        <li><span class="cuadrito-mini">⏱️</span> {{ receta.tiempo }}</li>
+        <li><span class="cuadrito-mini">👨‍🍳</span> Dificultad: {{ receta.dificultad }}</li>
+        <li *ngIf="receta.raciones"><span class="cuadrito-mini">🍽️</span> {{ receta.raciones }} Raciones</li>
+        <li *ngIf="!receta.raciones"><span class="cuadrito-mini">🍽️</span> Tipo: {{ receta.tipo_plato }}</li>
       </ul>
 
       <h3>Descripción del plato</h3>
@@ -31,70 +44,93 @@
     </div>
   </section>
 
+  <!-- BLOQUE INFERIOR -->
   <section class="bloque-inferior">
-
     <aside class="col-ingredientes">
       <h3>INGREDIENTES</h3>
-      <ul class="lista-ingredientes-alergenos">
+      <ul class="lista-ingredientes-alergenos" id="receta-ingredientes">
         <li *ngFor="let ing of receta.ingredientes">{{ ing }}</li>
       </ul>
     </aside>
 
     <div class="col-instrucciones">
       <h3>INSTRUCCIONES PASO A PASO</h3>
-
-      <div class="parrafos-instrucciones" *ngIf="receta.instrucciones && receta.instrucciones.length > 0">
-        <p *ngFor="let paso of receta.instrucciones; let i = index" style="margin-bottom: 15px;">
-          <strong>Paso {{ i + 1 }}:</strong> {{ paso }}
+      <div class="parrafos-instrucciones" id="receta-instrucciones">
+        <p *ngIf="!receta.instrucciones || receta.instrucciones.length === 0">Sin instrucciones.</p>
+        <p *ngFor="let paso of receta.instrucciones; let i = index">
+          <strong>Paso {{ i + 1 }}</strong>
+          {{ paso }}
         </p>
       </div>
-
-      <div *ngIf="!receta.instrucciones || receta.instrucciones.length === 0">
-        <p>El chef aún no ha subido los pasos de esta receta.</p>
-      </div>
     </div>
-
   </section>
 
-  <section class="bloque-comentarios" style="margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px;">
+  <!-- ZONA DE RESEÑAS -->
+  <!-- ZONA DE RESEÑAS -->
+  <section class="zona-reseñas">
+    <h3 class="titulo-reseñas-bruto">Reseñas de la Comunidad</h3>
 
-    <div class="likes-section" style="margin-bottom: 20px;">
-      <button class="btn btn-outline-danger" (click)="darLike()">
-        ❤️ Me gusta ({{ receta.likes ? receta.likes.length : 0 }})
-      </button>
-    </div>
-
-    <div class="comentarios-section">
-      <h3>Comentarios de la comunidad</h3>
-
-      <div class="lista-comentarios" *ngIf="receta.comentarios && receta.comentarios.length > 0">
-        <div class="comentario-item" *ngFor="let com of receta.comentarios"
-             style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
-          <strong>{{ com.usuarioNombre }}</strong>
-          <span style="color: gray; font-size: 0.85em; margin-left: 10px;">{{ com.fecha | date:'short' }}</span>
-          <p style="margin: 5px 0 0;">{{ com.texto }}</p>
+    <!-- Caja para escribir reseña (Oculta si ya comentó) -->
+    <div class="reseña-item caja-escribir" id="caja-mi-reseña" *ngIf="usuarioActualId && !esPropietario && !usuarioYaComento">
+      <div class="usuario-avatar-reseña">
+        <img src="img/Usuario SINFONDO.png" alt="Tu foto" id="avatar-escribir">
+      </div>
+      <div class="cuerpo-reseña">
+        <textarea id="texto-nueva-reseña" [(ngModel)]="nuevoComentario" placeholder="¿Qué te ha parecido la receta? ¡Cuéntanoslo!" class="input-oscuro"></textarea>
+        <div class="footer-reseña">
+          <div class="selector-interactivo-estrellas" id="selector-puntuacion" (mouseleave)="resetEstrellas()">
+            <span *ngFor="let num of [1, 2, 3, 4, 5]"
+                  class="estrella-click"
+                  [class.activa]="estrellasSeleccionadas >= num"
+                  (mouseenter)="hoverEstrella(num)"
+                  (click)="seleccionarPuntuacion(num)">
+              ⭐
+            </span>
+          </div>
+          <button id="btn-publicar-reseña" class="btn-entrar" (click)="publicarResena()">Publicar</button>
         </div>
       </div>
-
-      <div *ngIf="!receta.comentarios || receta.comentarios.length === 0">
-        <p style="color: gray;">Aún no hay comentarios. ¡Sé el primero en opinar!</p>
-      </div>
-
-      <div class="escribir-comentario" style="margin-top: 20px;">
-        <textarea
-          class="form-control"
-          rows="3"
-          placeholder="Escribe tu opinión sobre esta receta..."
-          [(ngModel)]="nuevoComentario">
-        </textarea>
-        <button class="btn btn-primary mt-2"
-                (click)="enviarComentario()"
-                [disabled]="!nuevoComentario || nuevoComentario.trim() === ''">
-          Enviar Comentario
-        </button>
-      </div>
     </div>
 
-  </section>
+    <!-- MENSAJES DE ESTADO -->
+    <p *ngIf="usuarioYaComento" style="color: #E3412B; font-weight: bold; text-align: center; margin-bottom: 25px; border: 2px dashed #E3412B; padding: 15px; border-radius: 12px; background: #FFF5E9;">
+      ⭐ ¡Gracias por tu reseña! Ya has valorado esta receta.
+    </p>
 
+    <p *ngIf="esPropietario" style="color: #4E1A0A; font-weight: bold; text-align: center;">
+      (Como creador, no puedes puntuar tu propia receta)
+    </p>
+
+    <p *ngIf="!usuarioActualId" style="color: #4E1A0A; font-weight: bold; text-align: center;">
+      Inicia sesión para dejar una reseña.
+    </p>
+
+    <!-- Lista de reseñas de otros usuarios -->
+    <div id="lista-reseñas">
+      <p *ngIf="!receta.comentarios || receta.comentarios.length === 0" style="text-align: center; font-style: italic;">
+        Aún no hay reseñas.
+      </p>
+
+      <div class="reseña-item" *ngFor="let com of receta.comentarios">
+        <div class="usuario-avatar-reseña">
+          <img src="img/Usuario SINFONDO.png" alt="Avatar">
+        </div>
+        <div class="cuerpo-reseña">
+          <p class="nombre-usuario-reseña">
+            {{ com.usuarioNombre }}
+
+            <!-- MOSTRAMOS LAS ESTRELLAS DEL COMENTARIO -->
+            <span *ngIf="com.puntuacion" style="margin-left: 8px; font-size: 14px;">
+              <span *ngFor="let s of [1, 2, 3, 4, 5]">
+                <span *ngIf="s <= com.puntuacion">⭐</span>
+              </span>
+            </span>
+
+            <span style="font-size: 12px; color: #666; font-weight: normal; margin-left: 8px;">({{ com.fecha | date:'dd/MM/yyyy' }})</span>
+          </p>
+          <p class="texto-reseña">{{ com.texto }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </article>

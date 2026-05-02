@@ -1,25 +1,28 @@
-<div class="contenedor-tarjeta-v">
-  <a [routerLink]="['/ver-receta', recetaData?.id]" class="enlace-tarjeta">
-    <article class="tarjeta-v">
-      <header class="tarjeta-v-header">
-        <h2 style="font-size: 1.1rem; text-align: center;">{{ recetaData?.titulo }}</h2>
-      </header>
+<article class="tarjeta-v">
+  <a [routerLink]="['/ver-receta', recetaData?.id]" class="enlace-tarjeta-v">
+    <header class="tarjeta-v-header">
+      <h2 class="tarjeta-v-titulo">{{ recetaData?.titulo }}</h2>
+    </header>
 
-      <div class="tarjeta-v-img">
-        <div class="placeholder-v"
-             [style.backgroundImage]="'url(' + recetaData?.imagen + ')'"
-             style="background-size: cover; background-position: center; width: 100%; height: 100%;">
-        </div>
+    <div class="tarjeta-v-img">
+      <div class="placeholder-v"
+           [style.backgroundImage]="'url(' + recetaData?.imagen + ')'"
+           style="background-size: cover; background-position: center; width: 100%; height: 100%;">
       </div>
+    </div>
 
-      <div class="tarjeta-v-content">
-        <p>⏱️ {{ recetaData?.tiempo }}</p>
-        <p>👨‍🍳 {{ recetaData?.dificultad }}</p>
-        <p *ngIf="recetaData?.autorNombre">👤 {{ recetaData?.autorNombre }}</p>
-      </div>
-    </article>
+    <div class="tarjeta-v-content">
+      <p class="dato-mini">⏱️ {{ recetaData?.tiempo }}</p>
+      <p class="dato-mini">👨‍🍳 {{ recetaData?.dificultad }}</p>
+      <p class="dato-mini" *ngIf="recetaData?.autorNombre">👤 {{ recetaData?.autorNombre }}</p>
+    </div>
   </a>
 
-  <!-- Nuevo botón de Editar -->
-  <button class="btn-editar-tarjeta" (click)="irAEditar($event)">✏️ Editar</button>
-</div>
+  <!-- BOTÓN EDITAR PROFESIONAL (Solo visible para el dueño) -->
+  <footer class="tarjeta-v-footer" *ngIf="esPropietario">
+    <!-- AHORA SÍ APUNTA AL FORMULARIO CORRECTAMENTE -->
+    <a [routerLink]="['/subir-receta']" [queryParams]="{editar: recetaData?.id}" class="btn-tarjeta-editar">
+      ✏️ Editar mi receta
+    </a>
+  </footer>
+</article>

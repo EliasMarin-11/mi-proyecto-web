@@ -1,11 +1,18 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc, arrayUnion, arrayRemove, query, where } from '@angular/fire/firestore';
 
+// 1. Nueva interfaz para las puntuaciones
+export interface Valoracion {
+  userId: string;
+  puntuacion: number; // 1, 2, 3, 4, 5
+}
+
 export interface Comentario {
   usuarioId: string;
   usuarioNombre: string;
   texto: string;
   fecha: number;
+  puntuacion?: number; // <--- AÑADE ESTA LÍNEA
 }
 
 export interface Receta {
@@ -21,13 +28,16 @@ export interface Receta {
   instrucciones?: string[];
   raciones?: number;
   alergenos?: string[];
-  estrellas?: number;
-  // Campos de Elías
-  likes?: string[];
+  estrellas?: number; // Este campo lo mantenemos para la media, si quieres.
+
+  // ELIMINAMOS: likes?: string[];
+
+  // AÑADIMOS: Sistema de Valoraciones (Elías + Fusión Sprint 3)
+  valoraciones?: Valoracion[];
   comentarios?: Comentario[];
-  // Campos del Sprint 3 (Tuyos)
   autorNombre?: string;
   userId?: string;
+  fechaCreacion?: string;
 }
 
 @Injectable({
@@ -42,77 +52,44 @@ export class RecetasService {
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
   }
 
+  // ... (buscarRecetas, toggleFavorito, getFavoritosIds, getRecetasFavoritas, getRecetaPorId permanecen IGUAL) ...
+  // (Copio las funciones que no cambian solo para asegurar que el archivo esté completo si lo necesitas entero)
+
   async buscarRecetas(ingredientesBuscar: string[], filtrosSeleccionados: string[]): Promise<Receta[]> {
-    console.log("1. Buscando ingredientes:", ingredientesBuscar);
-
     let todas: Receta[] = await this.getTodasLasRecetas();
-
-    console.log("2. Todas las recetas de Firebase:", todas);
-
     if (ingredientesBuscar && ingredientesBuscar.length > 0) {
       const ingredientesMin = ingredientesBuscar.map(i => i.toLowerCase());
-      console.log("3. Ingredientes en minúscula para buscar:", ingredientesMin);
-
       todas = todas.filter((receta: Receta) => {
-        if (!receta.ingredientes) {
-          console.log(`La receta ${receta.titulo} NO tiene el array de ingredientes.`);
-          return false;
-        }
-
-        console.log(`4. Evaluando receta: ${receta.titulo} con ingredientes:`, receta.ingredientes);
-
-        const coincide = receta.ingredientes.some((ing: string) => {
-          const ingMin = ing.toLowerCase();
-          const incluye = ingredientesMin.includes(ingMin);
-          if (incluye) {
-            console.log(`   -> ¡MATCH! Encontrado ingrediente: ${ingMin}`);
-          }
-          return incluye;
-        });
-
-        return coincide;
+        if (!receta.ingredientes) return false;
+        return receta.ingredientes.some((ing: string) => ingredientesMin.includes(ing.toLowerCase()));
       });
-      console.log("5. Recetas después de filtrar por ingredientes:", todas);
     }
-
     if (filtrosSeleccionados && filtrosSeleccionados.length > 0) {
       todas = todas.filter((receta: Receta) => {
         const coincideDificultad = filtrosSeleccionados.includes(receta.dificultad.toLowerCase());
         const coincideTipo = filtrosSeleccionados.includes(receta.tipo_plato.toLowerCase());
         const coincideDieta = receta.dieta ? receta.dieta.some((d: string) => filtrosSeleccionados.includes(d.toLowerCase())) : false;
-
         return coincideDificultad || coincideTipo || coincideDieta;
       });
     }
-
     return todas;
   }
 
-  // 1. Guarda o elimina la receta de los favoritos del usuario
   async toggleFavorito(userId: string, recetaId: string, yaEsFavorito: boolean) {
     const favRef = doc(this.firestore, `usuarios/${userId}/favoritos/${recetaId}`);
-    if (yaEsFavorito) {
-      await deleteDoc(favRef); // Si ya lo era, lo quitamos de la BD
-    } else {
-      await setDoc(favRef, { guardado: true }); // Si no, lo creamos
-    }
+    if (yaEsFavorito) await deleteDoc(favRef);
+    else await setDoc(favRef, { guardado: true });
   }
 
-  // 2. Devuelve los IDs de los favoritos (para pintar el corazón rojo en las tarjetas)
   async getFavoritosIds(userId: string): Promise<string[]> {
     const favsCol = collection(this.firestore, `usuarios/${userId}/favoritos`);
     const snapshot = await getDocs(favsCol);
     return snapshot.docs.map(doc => doc.id);
   }
 
-  // 3. Recupera la información completa de las recetas favoritas para la sección FAVORITOS
   async getRecetasFavoritas(userId: string): Promise<Receta[]> {
-    console.log("Buscando IDs en Firebase para el usuario:", userId);
     const idsFavoritos = await this.getFavoritosIds(userId);
-    console.log("IDs encontrados:", idsFavoritos);
-
     if (idsFavoritos.length === 0) return [];
-
     const todas = await this.getTodasLasRecetas();
     return todas.filter(receta => idsFavoritos.includes(receta.id!));
   }
@@ -120,41 +97,47 @@ export class RecetasService {
   async getRecetaPorId(id: string): Promise<Receta | undefined> {
     const docRef = doc(this.firestore, `recetas/${id}`);
     const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      return { id: docSnap.id, ...docSnap.data() } as Receta;
-    } else {
-      console.error("¡No se encontró la receta!");
-      return undefined;
-    }
+    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() } as Receta;
+    console.error("¡No se encontró la receta!");
+    return undefined;
   }
 
-  // --- FUNCIONES DE ELÍAS ---
-  async toggleLike(recetaId: string, userId: string, yaDioLike: boolean) {
+  // --- AQUÍ EMPIEZAN LOS CAMBIOS IMPORTANTES ---
+
+  // ELIMINADA: async toggleLike(...)
+
+  // NUEVA FUNCIÓN: Valorar Receta (Estrellas)
+  async valorarReceta(recetaId: string, userId: string, puntuacion: number) {
     const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
-    if (yaDioLike) {
-      // Si ya dio like, lo borramos del array
-      await updateDoc(recetaRef, { likes: arrayRemove(userId) });
-    } else {
-      // Si no ha dado like, metemos su ID en el array
-      await updateDoc(recetaRef, { likes: arrayUnion(userId) });
+    const docSnap = await getDoc(recetaRef);
+
+    if (!docSnap.exists()) return;
+
+    const receta = docSnap.data() as Receta;
+    const valoracionesActuales = receta.valoraciones || [];
+
+    // Comprobamos si el usuario ya había votado
+    const valoracionPrevia = valoracionesActuales.find(v => v.userId === userId);
+
+    if (valoracionPrevia) {
+      // Si ya votó, primero quitamos la votación antigua (praxis recomendada en Firestore para updates limpios)
+      await updateDoc(recetaRef, { valoraciones: arrayRemove(valoracionPrevia) });
     }
+
+    // Añadimos la nueva votación
+    const nuevaValoracion: Valoracion = { userId, puntuacion };
+    await updateDoc(recetaRef, { valoraciones: arrayUnion(nuevaValoracion) });
   }
 
   async addComentario(recetaId: string, comentario: Comentario) {
     const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
-    // Mete el comentario entero dentro del array 'comentarios'
     await updateDoc(recetaRef, { comentarios: arrayUnion(comentario) });
   }
 
-  // --- FUNCIONES TUYAS (SPRINT 3) ---
-  // 4. Recupera las recetas creadas por un usuario específico
   async getRecetasPorUsuario(userId: string): Promise<Receta[]> {
     const recetasCol = collection(this.firestore, 'recetas');
-    // Creamos una consulta: "Tráeme las recetas donde el userId sea igual al que te paso"
     const q = query(recetasCol, where("userId", "==", userId));
     const snapshot = await getDocs(q);
-
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
   }
 

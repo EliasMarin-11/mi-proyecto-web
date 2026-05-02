@@ -1,6 +1,7 @@
-import { Component, Input, inject } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../services/auth'; // <--- IMPORTACIÓN NUEVA
 
 @Component({
   selector: 'app-tarjeta_receta_vertical',
@@ -9,15 +10,30 @@ import { CommonModule } from '@angular/common';
   templateUrl: './tarjeta_receta_vertical.component.html',
   styleUrl: './tarjeta_receta_vertical.component.css'
 })
-export class Tarjeta_receta_verticalComponent {
+export class Tarjeta_receta_verticalComponent implements OnInit {
+  private authService = inject(AuthService); // <--- INYECCIÓN NUEVA
+
   @Input() recetaData: any;
-  private router = inject(Router);
 
-  irAEditar(evento: Event) {
-    evento.preventDefault(); // Evita que el click accione la etiqueta <a>
-    evento.stopPropagation();
+  // Variables nuevas para seguridad
+  usuarioActualId: string | null = null;
+  esPropietario = false;
 
-    // Viajamos a la receta pasándole un parámetro para que se abra en modo edición
-    this.router.navigate(['/ver-receta', this.recetaData.id], { queryParams: { modoEdicion: 'true' } });
+  ngOnInit() {
+    // Obtenemos el usuario logueado
+    this.authService.user$.subscribe(user => {
+      this.usuarioActualId = user ? user.uid : null;
+
+      // Comprobamos si es el dueño
+      this.comprobarPropiedad();
+    });
+  }
+
+  comprobarPropiedad() {
+    if (this.recetaData && this.usuarioActualId) {
+      this.esPropietario = this.recetaData.userId === this.usuarioActualId;
+    } else {
+      this.esPropietario = false;
+    }
   }
 }
