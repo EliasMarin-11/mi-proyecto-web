@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
-import { User } from '@angular/fire/auth';
+import { User, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Firestore, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
@@ -27,6 +27,12 @@ export class PerfilComponent implements OnInit, OnDestroy {
   fotoGuardada: string | null = null;
   nuevaFotoPreview: string | null = null;
   emailUsuario = '';
+  planUsuario = 'Básico'; // Valor por defecto
+
+  // Variables para la contraseña
+  editandoPassword = false;
+  passActual = '';
+  passNueva = '';
 
   private userSub?: Subscription;
   private unsubscribeSnapshot?: () => void;
@@ -51,6 +57,9 @@ export class PerfilComponent implements OnInit, OnDestroy {
                 const data = docSnap.data();
                 if (data && data['avatar']) {
                   this.fotoGuardada = data['avatar'];
+                }
+                if (data && data['plan']) {
+                  this.planUsuario = data['plan'];
                 }
               }
               this.cdr.detectChanges();
@@ -104,7 +113,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
     }
 
     try {
-      console.log("Iniciando guardado en Firestore y Auth...");
       if (this.nuevaFotoPreview || this.nuevoNombre) {
         const docRef = doc(this.firestore, 'usuarios', this.usuarioActual.uid);
 
@@ -119,18 +127,11 @@ export class PerfilComponent implements OnInit, OnDestroy {
         }
       }
 
-      // 2. Actualizamos el Perfil en Auth (Identidad)
       if (this.nuevoNombre.trim() !== '' && this.nuevoNombre !== this.usuarioActual.displayName) {
         await this.authService.actualizarPerfilUsuario(this.nuevoNombre, '');
-
-        // Actualizamos el objeto local para que el Header y la UI reaccionen al instante
-        this.usuarioActual = {
-          ...this.usuarioActual,
-          displayName: this.nuevoNombre
-        } as User;
+        this.usuarioActual = { ...this.usuarioActual, displayName: this.nuevoNombre } as User;
       }
 
-      // 3. Limpieza de estado y feedback
       this.editandoNombre = false;
       this.nuevaFotoPreview = null;
       this.cdr.detectChanges();
@@ -142,14 +143,49 @@ export class PerfilComponent implements OnInit, OnDestroy {
     }
   }
 
-  cambiarPassword() {
-    if (this.emailUsuario) {
-      this.authService.resetPassword(this.emailUsuario).then(() => {
-        alert("Se ha enviado un correo para restablecer tu contraseña.");
-      }).catch((error) => {
-        console.error(error);
-        alert("Hubo un error al enviar el correo.");
-      });
+  mostrarCamposPassword() {
+    this.editandoPassword = true;
+    this.cdr.detectChanges();
+  }
+
+  cancelarEdicionPassword() {
+    this.editandoPassword = false;
+    this.passActual = '';
+    this.passNueva = '';
+    this.cdr.detectChanges();
+  }
+
+  async actualizarPassword() {
+    if (!this.usuarioActual || !this.usuarioActual.email) return;
+
+    if (!this.passActual || !this.passNueva) {
+      alert('Por favor, rellena ambas contraseñas.');
+      return;
+    }
+
+    if (this.passNueva.length < 6) {
+      alert('La nueva contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
+    try {
+      // 1. Reautenticar al usuario
+      const cred = EmailAuthProvider.credential(this.usuarioActual.email, this.passActual);
+      await reauthenticateWithCredential(this.usuarioActual, cred);
+
+      // 2. Cambiar la contraseña
+      await updatePassword(this.usuarioActual, this.passNueva);
+
+      alert('Contraseña actualizada con éxito.');
+      this.cancelarEdicionPassword();
+
+    } catch (error: any) {
+      console.error("Error al cambiar contraseña:", error);
+      if (error.code === 'auth/invalid-credential') {
+        alert('La contraseña actual es incorrecta.');
+      } else {
+        alert('Error al actualizar la contraseña. Revisa la consola.');
+      }
     }
   }
 

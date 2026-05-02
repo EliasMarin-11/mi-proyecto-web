@@ -27,7 +27,7 @@
                placeholder="Escribe tu nombre + Enter">
       </div>
 
-      <!-- FORMULARIO -->
+
       <form class="perfil-formulario" id="form-perfil">
         <div class="form-grupo">
           <label>Correo Electrónico</label>
@@ -38,7 +38,7 @@
         <div class="form-grupo">
           <label>Tu plan actual</label>
           <div class="contenedor-plan">
-            <div class="etiqueta-plan" id="texto-plan">Básico</div>
+            <div class="etiqueta-plan" id="texto-plan">{{ planUsuario }}</div>
             <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan" (click)="irAPlanes()">Gestionar</button>
           </div>
         </div>
@@ -47,7 +47,22 @@
 
         <hr class="perfil-separador">
 
-        <button type="button" class="btn-perfil" id="btn-cambiar-password" (click)="cambiarPassword()">Cambiar Contraseña</button>
+        <button type="button" class="btn-perfil" id="btn-cambiar-password" (click)="mostrarCamposPassword()">Cambiar Contraseña</button>
+
+        <!-- Novedad: Campos de cambio de contraseña -->
+        <div *ngIf="editandoPassword" style="margin-top: 15px;">
+          <div class="form-grupo">
+            <label>Contraseña Actual</label>
+            <input type="password" [(ngModel)]="passActual" name="passActual" class="input-dummy" placeholder="********" required>
+          </div>
+          <div class="form-grupo">
+            <label>Nueva Contraseña</label>
+            <input type="password" [(ngModel)]="passNueva" name="passNueva" class="input-dummy" placeholder="********" required minlength="6">
+          </div>
+          <button type="button" class="btn-perfil" style="background-color: #28a745; margin-top: 10px;" (click)="actualizarPassword()">Confirmar Nueva Contraseña</button>
+          <button type="button" class="btn-perfil btn-secundario btn-pequeno" style="margin-top: 5px;" (click)="cancelarEdicionPassword()">Cancelar</button>
+        </div>
+
       </form>
 
       <div class="perfil-enlaces-inferiores">
