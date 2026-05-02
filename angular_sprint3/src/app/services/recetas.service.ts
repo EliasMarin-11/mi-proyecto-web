@@ -15,6 +15,8 @@ export interface Receta {
   raciones?: number;
   alergenos?: string[];
   estrellas?: number;
+  autorNombre?: string;
+  userId?: string;
 }
 
 @Injectable({

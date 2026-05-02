@@ -13,6 +13,11 @@
     <div class="bloque-info">
       <h2 id="receta-titulo">{{ receta.titulo }}</h2>
 
+      <!-- NUEVO: Mostrar el nombre del autor -->
+      <p *ngIf="receta.autorNombre" style="color: #8b5a2b; font-weight: bold; margin-top: -10px; margin-bottom: 15px;">
+        👤 Creado por: {{ receta.autorNombre }}
+      </p>
+
       <ul class="lista-info-breve">
         <li><span class="cuadrito-mini">⏱️</span> <span>{{ receta.tiempo }}</span></li>
         <li><span class="cuadrito-mini">👨‍🍳</span> Dificultad: <span>{{ receta.dificultad }}</span></li>

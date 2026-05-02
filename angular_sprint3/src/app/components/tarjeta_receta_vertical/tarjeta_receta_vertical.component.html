@@ -1,14 +1,23 @@
+<a [routerLink]="['/ver-receta', recetaData?.id]" style="text-decoration: none; color: inherit;">
+  <article class="tarjeta-v">
+    <header class="tarjeta-v-header">
+      <!-- Mostramos el título real -->
+      <h2 style="font-size: 1.1rem; text-align: center;">{{ recetaData?.titulo }}</h2>
+    </header>
 
-<article class="tarjeta-v">
-  <header class="tarjeta-v-header">
-    <h2>LOREMIPSUM</h2>
-  </header>
-  <div class="tarjeta-v-img">
-    <div class="placeholder-v"></div>
-  </div>
-  <div class="tarjeta-v-content">
-    <p>loremipsumloremipsum</p>
-    <p>loremipsumloremipsum</p>
-    <p>loremipsumloremipsum</p>
-  </div>
-</article>
+    <div class="tarjeta-v-img">
+      <!-- Mostramos la imagen real de la receta -->
+      <div class="placeholder-v"
+           [style.backgroundImage]="'url(' + recetaData?.imagen + ')'"
+           style="background-size: cover; background-position: center; width: 100%; height: 100%;">
+      </div>
+    </div>
+
+    <div class="tarjeta-v-content">
+      <p>⏱️ {{ recetaData?.tiempo }}</p>
+      <p>👨‍🍳 {{ recetaData?.dificultad }}</p>
+      <!-- Mostrar el autor -->
+      <p *ngIf="recetaData?.autorNombre">👤 {{ recetaData?.autorNombre }}</p>
+    </div>
+  </article>
+</a>
