@@ -1,27 +1,29 @@
 <main class="contenedor-crear-receta">
-  <form id="formulario-nueva-receta">
+  <form id="formulario-nueva-receta" (ngSubmit)="publicarReceta()">
 
     <div class="cabecera-formulario">
-      <input type="text" id="receta-titulo" placeholder="Nombre de tu deliciosa receta..." class="input-titulo-principal" required minlength="5">
+      <input type="text" id="receta-titulo" name="titulo" [(ngModel)]="titulo"
+             placeholder="Nombre de tu deliciosa receta..." class="input-titulo-principal" required minlength="5">
     </div>
 
     <div class="formulario-dos-columnas">
-
       <div class="columna-izquierda">
         <div class="grupo-input grupo-doble">
-          <input type="number" id="receta-tiempo-num" placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
-          <select id="receta-tiempo-unidad" class="input-linea input-mitad" required>
+          <input type="number" id="receta-tiempo-num" name="tiempoNum" [(ngModel)]="tiempoNum"
+                 placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
+          <select id="receta-tiempo-unidad" name="tiempoUnidad" [(ngModel)]="tiempoUnidad" class="input-linea input-mitad" required>
             <option value="min">Minutos</option>
             <option value="horas">Horas</option>
           </select>
         </div>
 
         <div class="grupo-input">
-          <input type="number" id="receta-raciones" placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
+          <input type="number" id="receta-raciones" name="raciones" [(ngModel)]="raciones"
+                 placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
         </div>
 
         <div class="grupo-input">
-          <select id="receta-dificultad" class="input-linea" required>
+          <select id="receta-dificultad" name="dificultad" [(ngModel)]="dificultad" class="input-linea" required>
             <option value="" disabled selected>Nivel de dificultad...</option>
             <option value="facil">Fácil</option>
             <option value="media">Media</option>
@@ -31,10 +33,10 @@
 
         <div class="seccion-lista" id="contenedor-ingredientes">
           <h3>Ingredientes</h3>
-
           <div class="fila-ingrediente" *ngFor="let ing of ingredientes; let i = index">
-            <input type="number" step="any" min="0" placeholder="Cant." class="input-caja ing-cant" required>
-            <select class="input-caja ing-medida" required>
+            <input type="number" step="any" min="0" placeholder="Cant." class="input-caja ing-cant"
+                   name="ingCant{{i}}" [(ngModel)]="ing.cantidad" required>
+            <select class="input-caja ing-medida" name="ingUnidad{{i}}" [(ngModel)]="ing.unidad" required>
               <option value="" disabled selected>Unidad</option>
               <option value="gr">Gramos (gr)</option>
               <option value="ml">Mililitros (ml)</option>
@@ -42,48 +44,47 @@
               <option value="cdas">Cucharadas</option>
               <option value="tazas">Tazas</option>
             </select>
-            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre" required>
+            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre"
+                   name="ingNombre{{i}}" [(ngModel)]="ing.nombre" required>
 
             <button type="button" class="btn-eliminar" (click)="removeIngrediente(i)" *ngIf="ingredientes.length > 1">×</button>
           </div>
-
           <button type="button" class="btn-anadir" (click)="addIngrediente()">+ Añadir ingrediente</button>
         </div>
 
         <div class="seccion-lista" id="contenedor-pasos">
           <h3>Instrucciones paso a paso</h3>
-
           <div class="fila-paso" *ngFor="let paso of pasos; let i = index">
-            <textarea [placeholder]="'Paso ' + (i + 1) + ': ...'" class="textarea-paso paso-texto" required></textarea>
+            <textarea [placeholder]="'Paso ' + (i + 1) + ': ...'" class="textarea-paso paso-texto"
+                      name="pasoTexto{{i}}" [(ngModel)]="paso.texto" required></textarea>
             <button type="button" class="btn-eliminar" (click)="removePaso(i)" *ngIf="pasos.length > 1">×</button>
           </div>
-
           <button type="button" class="btn-anadir" (click)="addPaso()">+ Añadir paso</button>
         </div>
       </div>
 
       <div class="columna-derecha">
-
         <div class="caja-subir-foto" id="caja-foto-visual" (click)="fotoInput.click()">
           <ng-container *ngIf="!imagenPreview">
             <span class="icono-foto">📷</span>
             <p>Sube una foto apetitosa de tu plato</p>
           </ng-container>
-
           <ng-container *ngIf="imagenPreview">
             <img [src]="imagenPreview" class="img-preview" alt="Vista previa">
             <button type="button" class="btn-borrar-foto" (click)="$event.stopPropagation(); borrarFoto()">×</button>
           </ng-container>
         </div>
-
         <input type="file" #fotoInput (change)="onFileSelected($event)" accept="image/*" style="display:none;">
 
         <div class="grupo-descripcion">
           <h3>Breve descripción</h3>
-          <textarea id="receta-desc" placeholder="Cuenta la historia de esta receta..." class="textarea-desc" required minlength="10"></textarea>
+          <textarea id="receta-desc" name="descripcion" [(ngModel)]="descripcion"
+                    placeholder="Cuenta la historia de esta receta..." class="textarea-desc" required minlength="10"></textarea>
         </div>
 
-        <button type="submit" class="btn-guardar-principal">Publicar Receta</button>
+        <button type="submit" class="btn-guardar-principal" [disabled]="guardando">
+          {{ guardando ? 'Publicando en Firebase...' : 'Publicar Receta' }}
+        </button>
       </div>
     </div>
   </form>

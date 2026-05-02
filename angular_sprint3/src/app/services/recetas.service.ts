@@ -1,5 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc, updateDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
+
+export interface Comentario {
+  usuarioId: string;
+  usuarioNombre: string;
+  texto: string;
+  fecha: number;
+}
 
 export interface Receta {
   id?: string;
@@ -15,6 +22,8 @@ export interface Receta {
   raciones?: number;
   alergenos?: string[];
   estrellas?: number;
+  likes?: string[];
+  comentarios?: Comentario[];
 }
 
 @Injectable({
@@ -116,4 +125,20 @@ export class RecetasService {
     }
   }
 
+  async toggleLike(recetaId: string, userId: string, yaDioLike: boolean) {
+    const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
+    if (yaDioLike) {
+      // Si ya dio like, lo borramos del array
+      await updateDoc(recetaRef, { likes: arrayRemove(userId) });
+    } else {
+      // Si no ha dado like, metemos su ID en el array
+      await updateDoc(recetaRef, { likes: arrayUnion(userId) });
+    }
+  }
+
+  async addComentario(recetaId: string, comentario: Comentario) {
+    const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
+    // Mete el comentario entero dentro del array 'comentarios'
+    await updateDoc(recetaRef, { comentarios: arrayUnion(comentario) });
+  }
 }
