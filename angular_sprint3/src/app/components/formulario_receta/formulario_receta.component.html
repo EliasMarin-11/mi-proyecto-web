@@ -6,7 +6,6 @@
     </div>
 
     <div class="formulario-dos-columnas">
-
       <div class="columna-izquierda">
         <div class="grupo-input grupo-doble">
           <input type="number" id="receta-tiempo-num" name="tiempoNum" [(ngModel)]="tiempoNum" placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
@@ -31,8 +30,8 @@
 
         <div class="seccion-lista" id="contenedor-ingredientes">
           <h3>Ingredientes</h3>
-
           <div class="fila-ingrediente" *ngFor="let ing of ingredientes; let i = index">
+            <!-- Mantenemos los [name] dinámicos del sprint-3 para evitar fallos de Angular -->
             <input type="number" step="any" min="0" placeholder="Cant." class="input-caja ing-cant" [name]="'ingCant'+i" [(ngModel)]="ing.cantidad" required>
             <select class="input-caja ing-medida" [name]="'ingUnidad'+i" [(ngModel)]="ing.unidad" required>
               <option value="" disabled selected>Unidad</option>
@@ -46,36 +45,31 @@
 
             <button type="button" class="btn-eliminar" (click)="removeIngrediente(i)" *ngIf="ingredientes.length > 1">×</button>
           </div>
-
           <button type="button" class="btn-anadir" (click)="addIngrediente()">+ Añadir ingrediente</button>
         </div>
 
         <div class="seccion-lista" id="contenedor-pasos">
           <h3>Instrucciones paso a paso</h3>
-
+          <!-- Mantenemos el trackByFn del sprint-3 para evitar bugs al escribir en los textareas -->
           <div class="fila-paso" *ngFor="let paso of pasos; let i = index; trackBy: trackByFn">
             <textarea [placeholder]="'Paso ' + (i + 1) + ': ...'" class="textarea-paso paso-texto" [name]="'paso'+i" [(ngModel)]="pasos[i]" required></textarea>
             <button type="button" class="btn-eliminar" (click)="removePaso(i)" *ngIf="pasos.length > 1">×</button>
           </div>
-
           <button type="button" class="btn-anadir" (click)="addPaso()">+ Añadir paso</button>
         </div>
       </div>
 
       <div class="columna-derecha">
-
         <div class="caja-subir-foto" id="caja-foto-visual" (click)="fotoInput.click()">
           <ng-container *ngIf="!imagenPreview">
             <span class="icono-foto">📷</span>
             <p>Sube una foto apetitosa de tu plato</p>
           </ng-container>
-
           <ng-container *ngIf="imagenPreview">
             <img [src]="imagenPreview" class="img-preview" alt="Vista previa">
             <button type="button" class="btn-borrar-foto" (click)="$event.stopPropagation(); borrarFoto()">×</button>
           </ng-container>
         </div>
-
         <input type="file" #fotoInput (change)="onFileSelected($event)" accept="image/*" style="display:none;">
 
         <div class="grupo-descripcion">
@@ -83,7 +77,10 @@
           <textarea id="receta-desc" name="descripcion" [(ngModel)]="descripcion" placeholder="Cuenta la historia de esta receta..." class="textarea-desc" required minlength="10"></textarea>
         </div>
 
-        <button type="submit" class="btn-guardar-principal">Publicar Receta</button>
+        <!-- Mantenemos la mejora visual de Elías para el botón de carga -->
+        <button type="submit" class="btn-guardar-principal" [disabled]="guardando">
+          {{ guardando ? 'Publicando en Firebase...' : 'Publicar Receta' }}
+        </button>
       </div>
     </div>
   </form>

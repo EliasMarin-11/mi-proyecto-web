@@ -56,4 +56,45 @@
 
   </section>
 
+  <section class="bloque-comentarios" style="margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px;">
+
+    <div class="likes-section" style="margin-bottom: 20px;">
+      <button class="btn btn-outline-danger" (click)="darLike()">
+        ❤️ Me gusta ({{ receta.likes ? receta.likes.length : 0 }})
+      </button>
+    </div>
+
+    <div class="comentarios-section">
+      <h3>Comentarios de la comunidad</h3>
+
+      <div class="lista-comentarios" *ngIf="receta.comentarios && receta.comentarios.length > 0">
+        <div class="comentario-item" *ngFor="let com of receta.comentarios"
+             style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+          <strong>{{ com.usuarioNombre }}</strong>
+          <span style="color: gray; font-size: 0.85em; margin-left: 10px;">{{ com.fecha | date:'short' }}</span>
+          <p style="margin: 5px 0 0;">{{ com.texto }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="!receta.comentarios || receta.comentarios.length === 0">
+        <p style="color: gray;">Aún no hay comentarios. ¡Sé el primero en opinar!</p>
+      </div>
+
+      <div class="escribir-comentario" style="margin-top: 20px;">
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder="Escribe tu opinión sobre esta receta..."
+          [(ngModel)]="nuevoComentario">
+        </textarea>
+        <button class="btn btn-primary mt-2"
+                (click)="enviarComentario()"
+                [disabled]="!nuevoComentario || nuevoComentario.trim() === ''">
+          Enviar Comentario
+        </button>
+      </div>
+    </div>
+
+  </section>
+
 </article>
