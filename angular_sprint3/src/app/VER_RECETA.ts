@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { CommonModule } from '@angular/common';
+import { Receta_completaComponent } from './components/receta_completa/receta_completa.component';
 
 @Component({
-  selector: 'app-ver_receta-page',
+  selector: 'app-ver-receta-page',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent],
+  // 2. Añádelo al array de imports
+  imports: [CommonModule, Receta_completaComponent],
   templateUrl: './VER_RECETA.html',
 })
-export class VER_RECETA { }
+export class VER_RECETA {}

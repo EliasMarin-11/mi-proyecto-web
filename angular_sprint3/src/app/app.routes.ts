@@ -19,13 +19,8 @@ export const routes: Routes = [
   { path: 'premium', component: SUSCRIPCION },
   { path: 'subir-receta', component: SUBIR_RECETA },
   { path: 'buscar', component: BUSCADOR },
-  { path: 'ver-receta', component: VER_RECETA },
+  { path: 'ver-receta/:id', component: VER_RECETA },
   { path: 'inicio', component: INICIO },
-
-  // Página de inicio (si no escriben nada en la URL)
-  // Aquí podrías crear una página llamada INICIO o redirigir a BUSCADOR
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-
-  // Comodín para errores de escritura
   { path: '**', redirectTo: 'inicio' }
 ];
