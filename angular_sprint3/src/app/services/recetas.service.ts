@@ -47,7 +47,7 @@ export class RecetasService {
   async getTodasLasRecetas(): Promise<Receta[]> {
     const recetasCol = collection(this.firestore, 'recetas');
     const snapshot = await getDocs(recetasCol);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
+    return snapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Receta));
   }
 
   async buscarRecetas(ingredientesBuscar: string[], filtrosSeleccionados: string[]): Promise<Receta[]> {
@@ -114,7 +114,7 @@ export class RecetasService {
   async toggleFavorito(userId: string, recetaId: string, yaEsFavorito: boolean) {
     const favRef = doc(this.firestore, `usuarios/${userId}/favoritos/${recetaId}`);
     if (yaEsFavorito) await deleteDoc(favRef);
-    else await setDoc(favRef, { guardado: true });
+    else await setDoc(favRef, {guardado: true});
   }
 
   async getFavoritosIds(userId: string): Promise<string[]> {
@@ -133,7 +133,7 @@ export class RecetasService {
   async getRecetaPorId(id: string): Promise<Receta | undefined> {
     const docRef = doc(this.firestore, `recetas/${id}`);
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() } as Receta;
+    if (docSnap.exists()) return {id: docSnap.id, ...docSnap.data()} as Receta;
     console.error("¡No se encontró la receta!");
     return undefined;
   }
@@ -150,23 +150,23 @@ export class RecetasService {
     const valoracionPrevia = valoracionesActuales.find(v => v.userId === userId);
 
     if (valoracionPrevia) {
-      await updateDoc(recetaRef, { valoraciones: arrayRemove(valoracionPrevia) });
+      await updateDoc(recetaRef, {valoraciones: arrayRemove(valoracionPrevia)});
     }
 
-    const nuevaValoracion: Valoracion = { userId, puntuacion };
-    await updateDoc(recetaRef, { valoraciones: arrayUnion(nuevaValoracion) });
+    const nuevaValoracion: Valoracion = {userId, puntuacion};
+    await updateDoc(recetaRef, {valoraciones: arrayUnion(nuevaValoracion)});
   }
 
   async addComentario(recetaId: string, comentario: Comentario) {
     const recetaRef = doc(this.firestore, `recetas/${recetaId}`);
-    await updateDoc(recetaRef, { comentarios: arrayUnion(comentario) });
+    await updateDoc(recetaRef, {comentarios: arrayUnion(comentario)});
   }
 
   async getRecetasPorUsuario(userId: string): Promise<Receta[]> {
     const recetasCol = collection(this.firestore, 'recetas');
     const q = query(recetasCol, where("userId", "==", userId));
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Receta));
+    return snapshot.docs.map(doc => ({id: doc.id, ...doc.data()} as Receta));
   }
 
   async actualizarReceta(id: string, datosNuevos: Partial<Receta>): Promise<void> {
@@ -176,6 +176,17 @@ export class RecetasService {
       console.log("Receta actualizada con éxito");
     } catch (error) {
       console.error("Error al actualizar la receta: ", error);
+      throw error;
+    }
+  }
+
+  async eliminarReceta(id: string): Promise<void> {
+    const docRef = doc(this.firestore, `recetas/${id}`);
+    try {
+      await deleteDoc(docRef);
+      console.log("Receta eliminada de Firebase");
+    } catch (error) {
+      console.error("Error al eliminar la receta: ", error);
       throw error;
     }
   }

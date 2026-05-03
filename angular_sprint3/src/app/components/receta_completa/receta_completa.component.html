@@ -15,14 +15,25 @@
 
     <div class="bloque-info">
 
-      <div class="cabecera-titulo-acciones">
-        <h2 id="receta-titulo">{{ receta.titulo }}</h2>
+      <div class="cabecera-titulo-acciones" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; width: 100%;">
 
+        <h2 id="receta-titulo" style="margin: 0;">{{ receta.titulo }}</h2>
+
+        <!-- Corazón para los usuarios normales -->
         <div class="btn-fav-detalle-flex" *ngIf="!esPropietario" title="Guardar favorito">❤</div>
 
-        <button (click)="activarEdicion()" class="btn-editar-propietario" *ngIf="esPropietario">
-          ✏️ Editar
-        </button>
+        <!-- Botonera exclusiva para el creador de la receta -->
+        <div class="botones-propietario" *ngIf="esPropietario" style="display: flex; gap: 10px; flex-shrink: 0;">
+
+          <button (click)="activarEdicion()" class="btn-editar-propietario">
+            ✏️ Editar
+          </button>
+
+          <button (click)="borrarReceta()" class="btn-borrar-propietario">
+            🗑️ Borrar
+          </button>
+        </div>
+
       </div>
 
       <div class="info-linea-iconos" *ngIf="receta.autorNombre">

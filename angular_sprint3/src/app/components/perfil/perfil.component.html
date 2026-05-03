@@ -82,7 +82,9 @@
         </div>
 
         <!-- Si SÍ tiene recetas -->
-        <div *ngIf="misRecetas.length > 0" class="lista-tarjetas-recetas">
+        <!-- El contenedor principal de las tarjetas -->
+        <div class="grid-recetas-perfil">
+          <!-- Tu componente de la tarjeta vertical con el *ngFor -->
           <app-tarjeta_receta_vertical
             *ngFor="let receta of misRecetas"
             [recetaData]="receta">

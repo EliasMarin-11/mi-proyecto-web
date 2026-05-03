@@ -167,4 +167,21 @@ export class Receta_completaComponent implements OnInit {
       this.router.navigate(['/subir-receta'], { queryParams: { editar: this.recetaId } });
     }
   }
+
+  async borrarReceta() {
+    // Pedimos confirmación antes de hacer nada (buena praxis)
+    const confirmar = confirm('¿Estás totalmente seguro de que quieres borrar esta receta? Esta acción no se puede deshacer.');
+
+    if (confirmar && this.recetaId) {
+      try {
+        await this.recetasService.eliminarReceta(this.recetaId);
+        alert('Receta borrada con éxito.');
+        // Lo mandamos de vuelta a su perfil para que no se quede en una página vacía
+        this.router.navigate(['/perfil']);
+      } catch (error) {
+        console.error("Error al borrar la receta:", error);
+        alert("Hubo un error al intentar borrar la receta.");
+      }
+    }
+  }
 }

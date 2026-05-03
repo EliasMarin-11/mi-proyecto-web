@@ -668,3 +668,31 @@
     flex-direction: column;
   }
 }
+
+/* Estilo normal del botón borrar */
+.btn-borrar-propietario {
+  background-color: #E3412B; /* Tu rojo */
+  color: white;
+  border: 2px solid #E3412B;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Esta es la magia de la animación */
+}
+
+/* El efecto cuando pasas el ratón por encima */
+.btn-borrar-propietario:hover {
+  background-color: white;
+  color: #E3412B;
+  transform: translateY(-2px); /* Esto hace que "salte" un poquito hacia arriba */
+  box-shadow: 0 4px 8px rgba(227, 65, 43, 0.2); /* Una sombra roja suave */
+}
+
+/* Y si quieres asegurarte de que el de editar tiene el mismo salto hacia arriba, comprueba que tiene esto: */
+.btn-editar-propietario {
+  transition: all 0.3s ease;
+}
+.btn-editar-propietario:hover {
+  transform: translateY(-2px);
+}

@@ -407,3 +407,13 @@
   flex-direction: column;
   gap: 15px;
 }
+
+
+.grid-recetas-perfil {
+  display: grid;
+  /* Esto crea columnas automáticas. 220px es el ancho aproximado de tu tarjeta, puedes ajustarlo si lo ves muy ancho o estrecho */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px; /* El espacio o hueco entre las tarjetas */
+  align-items: start; /* Evita que las tarjetas se estiren a lo alto si una tiene un título más largo */
+  margin-top: 20px;
+}
