@@ -190,4 +190,19 @@ export class RecetasService {
       throw error;
     }
   }
+
+  // Función para leer la lista de ingredientes sugeridos de la base de datos
+  async getIngredientesSugeridos(): Promise<string[]> {
+    const docRef = doc(this.firestore, 'configuracion/ingredientes');
+    try {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists() && docSnap.data()['lista']) {
+        return docSnap.data()['lista']; // Devuelve la lista que creamos en Firebase
+      }
+      return []; // Si no hay nada, devuelve una lista vacía
+    } catch (error) {
+      console.error("Error al cargar los ingredientes: ", error);
+      return [];
+    }
+  }
 }

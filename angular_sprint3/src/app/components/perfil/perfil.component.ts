@@ -136,7 +136,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
           avatar: this.nuevaFotoPreview || this.fotoGuardada,
           nombre: this.nuevoNombre,
           email: this.usuarioActual.email
-        }, { merge: true });
+        }, {merge: true});
 
         if (this.nuevaFotoPreview) {
           this.fotoGuardada = this.nuevaFotoPreview;
@@ -145,7 +145,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
       if (this.nuevoNombre.trim() !== '' && this.nuevoNombre !== this.usuarioActual.displayName) {
         await this.authService.actualizarPerfilUsuario(this.nuevoNombre, '');
-        this.usuarioActual = { ...this.usuarioActual, displayName: this.nuevoNombre } as User;
+        this.usuarioActual = {...this.usuarioActual, displayName: this.nuevoNombre} as User;
       }
 
       this.editandoNombre = false;
@@ -173,8 +173,14 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   async actualizarPassword() {
     if (!this.usuarioActual || !this.usuarioActual.email) return;
-    if (!this.passActual || !this.passNueva) { alert('Rellena ambas contraseñas.'); return; }
-    if (this.passNueva.length < 6) { alert('La nueva contraseña debe tener al menos 6 caracteres.'); return; }
+    if (!this.passActual || !this.passNueva) {
+      alert('Rellena ambas contraseñas.');
+      return;
+    }
+    if (this.passNueva.length < 6) {
+      alert('La nueva contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
 
     try {
       const cred = EmailAuthProvider.credential(this.usuarioActual.email, this.passActual);

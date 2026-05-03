@@ -5,6 +5,7 @@ import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage
 import { Firestore, collection, addDoc, doc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { AuthService } from '../../services/auth';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RecetasService } from '../../services/recetas.service';
 
 @Component({
   selector: 'app-formulario_receta',
@@ -20,6 +21,7 @@ export class Formulario_recetaComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
+  private recetasService = inject(RecetasService);
 
   // --- VARIABLES PARA MODO EDICIÓN ---
   recetaIdEdicion: string | null = null;
@@ -53,10 +55,10 @@ export class Formulario_recetaComponent implements OnInit {
   guardando: boolean = false;
 
   ngOnInit() {
-    fetch('/data/ingredientes.json')
-      .then(res => res.json())
-      .then(datos => this.opcionesSugeridas = datos.ingredientes)
-      .catch(err => console.error(err));
+    // NUEVO: Pedimos los ingredientes a la base de datos
+    this.recetasService.getIngredientesSugeridos().then(datos => {
+      this.opcionesSugeridas = datos;
+    });
 
     this.route.queryParams.subscribe(async params => {
       if (params['editar']) {
