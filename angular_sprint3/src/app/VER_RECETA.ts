@@ -5,7 +5,6 @@ import { Receta_completaComponent } from './components/receta_completa/receta_co
 @Component({
   selector: 'app-ver-receta-page',
   standalone: true,
-  // 2. Añádelo al array de imports
   imports: [CommonModule, Receta_completaComponent],
   templateUrl: './VER_RECETA.html',
 })
