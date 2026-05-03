@@ -18,9 +18,8 @@
     </div>
   </a>
 
-  <!-- BOTÓN EDITAR PROFESIONAL (Solo visible para el dueño) -->
-  <footer class="tarjeta-v-footer" *ngIf="esPropietario">
-    <!-- AHORA SÍ APUNTA AL FORMULARIO CORRECTAMENTE -->
+  <!-- Añadimos: && !ocultarBotonEditar -->
+  <footer class="tarjeta-v-footer" *ngIf="esPropietario && !ocultarBotonEditar">
     <a [routerLink]="['/subir-receta']" [queryParams]="{editar: recetaData?.id}" class="btn-tarjeta-editar">
       ✏️ Editar mi receta
     </a>

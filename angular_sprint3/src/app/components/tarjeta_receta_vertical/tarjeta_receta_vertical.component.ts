@@ -14,6 +14,7 @@ export class Tarjeta_receta_verticalComponent implements OnInit {
   private authService = inject(AuthService); // <--- INYECCIÓN NUEVA
 
   @Input() recetaData: any;
+  @Input() ocultarBotonEditar: boolean = false;
 
   // Variables nuevas para seguridad
   usuarioActualId: string | null = null;
