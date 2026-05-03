@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { Tarjeta_receta_verticalComponent } from './components/tarjeta_receta_vertical/tarjeta_receta_vertical.component';
 import { RecetasService, Receta } from './services/recetas.service';
+import { PromocionesComponent } from './components/promociones/promociones.component';
 
 @Component({
   selector: 'app-inicio-page',
   standalone: true,
-  imports: [CommonModule, BuscadorComponent, Tarjeta_receta_verticalComponent],
+  imports: [CommonModule, BuscadorComponent, Tarjeta_receta_verticalComponent, PromocionesComponent],
   templateUrl: './INICIO.html',
 })
 export class INICIO implements OnInit {
