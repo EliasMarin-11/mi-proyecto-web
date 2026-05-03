@@ -10,24 +10,31 @@ import { Tarjeta_receta_horizontalComponent } from './components/tarjeta_receta_
   imports: [CommonModule, Tarjeta_receta_horizontalComponent],
   templateUrl: './BUSCADOR.html',
 })
-
 export class BUSCADOR implements OnInit {
   private recetasService = inject(RecetasService);
   private route = inject(ActivatedRoute);
-
   private cdr = inject(ChangeDetectorRef);
 
   recetasEncontradas: Receta[] = [];
   cargando = true;
   ingredientesBuscados: string[] = [];
+  filtrosAplicados: string[] = [];
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
+      // 1. Recoger ingredientes
       if (params['ingredientes']) {
         this.ingredientesBuscados = params['ingredientes'].split(',');
       } else {
         this.ingredientesBuscados = [];
       }
+
+      if (params['filtros']) {
+        this.filtrosAplicados = params['filtros'].split(',');
+      } else {
+        this.filtrosAplicados = [];
+      }
+
       this.ejecutarBusqueda();
     });
   }
@@ -35,18 +42,21 @@ export class BUSCADOR implements OnInit {
   async ejecutarBusqueda() {
     this.cargando = true;
     try {
-      console.log("Buscando estos ingredientes:", this.ingredientesBuscados);
+      console.log("Buscando con ingredientes:", this.ingredientesBuscados);
+      console.log("Aplicando filtros:", this.filtrosAplicados);
 
-      this.recetasEncontradas = await this.recetasService.buscarRecetas(this.ingredientesBuscados, []);
+      // Enviamos AMBOS arrays al servicio
+      this.recetasEncontradas = await this.recetasService.buscarRecetas(
+        this.ingredientesBuscados,
+        this.filtrosAplicados
+      );
 
       console.log("¡Recetas encontradas!", this.recetasEncontradas);
     } catch (error) {
       console.error("Error buscando:", error);
     } finally {
-      // Angular cambia la variable
       this.cargando = false;
       this.cdr.detectChanges();
     }
   }
 }
-

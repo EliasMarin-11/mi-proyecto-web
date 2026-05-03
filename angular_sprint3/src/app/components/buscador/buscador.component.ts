@@ -68,12 +68,20 @@ export class BuscadorComponent implements OnInit {
       inputElement.value = '';
     }
 
-    // AHORA MANDAMOS LAS DOS COSAS EN LA URL: Ingredientes y Filtros
-    this.router.navigate(['/buscar'], {
-      queryParams: {
-        ingredientes: this.listaIngredientes.join(','),
-        filtros: this.filtrosSeleccionados.join(',') // Mandamos los filtros separados por comas
-      }
-    });
+    // PREPARAMOS LOS PARÁMETROS DINÁMICAMENTE
+    const queryParams: any = {};
+
+    // Solo enviamos si hay ingredientes
+    if (this.listaIngredientes.length > 0) {
+      queryParams.ingredientes = this.listaIngredientes.join(',');
+    }
+
+    // Solo enviamos si hay filtros seleccionados
+    if (this.filtrosSeleccionados.length > 0) {
+      queryParams.filtros = this.filtrosSeleccionados.join(',');
+    }
+
+    // NAVEGAMOS CON LOS PARÁMETROS LIMPIOS
+    this.router.navigate(['/buscar'], { queryParams });
   }
 }

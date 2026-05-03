@@ -53,7 +53,6 @@ export class RecetasService {
   async buscarRecetas(ingredientesBuscar: string[], filtrosSeleccionados: string[]): Promise<Receta[]> {
     let todas: Receta[] = await this.getTodasLasRecetas();
 
-    // 1. FILTRO DE INGREDIENTES
     if (ingredientesBuscar && ingredientesBuscar.length > 0) {
       const ingredientesBuscadosMin = ingredientesBuscar.map(i => i.toLowerCase().trim());
       todas = todas.filter(receta => {
@@ -65,46 +64,48 @@ export class RecetasService {
       });
     }
 
-    // 2. FILTROS AVANZADOS (Dificultad, Dieta, Tiempo y Estrellas)
     if (filtrosSeleccionados && filtrosSeleccionados.length > 0) {
-      let minEstrellasRequeridas = 0;
-      filtrosSeleccionados.forEach(filtro => {
-        if (filtro.startsWith('estrellas-')) {
-          const numeroEstrellas = parseInt(filtro.split('-')[1]);
-          if (numeroEstrellas > minEstrellasRequeridas) {
-            minEstrellasRequeridas = numeroEstrellas;
-          }
-        }
-      });
+      // Separar los filtros de estrellas del resto
+      const filtroEstrellas = filtrosSeleccionados.find(f => f.startsWith('estrellas-'));
+      const minEstrellas = filtroEstrellas ? parseInt(filtroEstrellas.split('-')[1]) : 0;
 
       const filtrosNormales = filtrosSeleccionados.filter(f => !f.startsWith('estrellas-'));
 
       todas = todas.filter(receta => {
-
-        // Comprobación de Estrellas
-        let pasaFiltroEstrellas = true;
-        if (minEstrellasRequeridas > 0) {
+        // A. Validar Estrellas
+        let cumpleEstrellas = true;
+        if (minEstrellas > 0) {
           let media = 0;
           if (receta.valoraciones && receta.valoraciones.length > 0) {
             const suma = receta.valoraciones.reduce((sum, v) => sum + v.puntuacion, 0);
             media = suma / receta.valoraciones.length;
           }
-          pasaFiltroEstrellas = media >= minEstrellasRequeridas;
+          cumpleEstrellas = media >= minEstrellas;
         }
 
-        // Comprobación del resto de filtros
-        let pasaFiltroNormal = true;
+        let cumpleCategorias = true;
         if (filtrosNormales.length > 0) {
-          // Usamos (variable || '') para asegurar que siempre sea texto y nunca 'undefined'
-          const coincideDificultad = filtrosNormales.includes((receta.dificultad || '').toLowerCase());
-          const coincideTipo = filtrosNormales.includes((receta.tipo_plato || '').toLowerCase());
-          const coincideDieta = receta.dieta ? receta.dieta.some((d: string) => filtrosNormales.includes((d || '').toLowerCase())) : false;
-          const coincideDuracion = filtrosNormales.includes((receta.duracion_categoria || '').toLowerCase());
+          // Normalizamos los datos de la receta para compararlos
+          const rDificultad = (receta.dificultad || '').toLowerCase();
+          const rTipo = (receta.tipo_plato || '').toLowerCase();
+          const rDuracion = (receta.duracion_categoria || '').toLowerCase();
+          const rDietas = receta.dieta ? receta.dieta.map(d => d.toLowerCase()) : [];
 
-          pasaFiltroNormal = coincideDificultad || coincideTipo || coincideDieta || coincideDuracion;
+          const diffSel = filtrosNormales.filter(f => ['facil', 'media', 'dificil'].includes(f));
+          const durSel = filtrosNormales.filter(f => ['rapido', 'medio', 'lento'].includes(f));
+          const tipoSel = filtrosNormales.filter(f => ['primero', 'segundo', 'cuchara', 'postre', 'principal'].includes(f));
+          const dietaSel = filtrosNormales.filter(f => ['singluten', 'sinlactosa', 'vegetariano', 'vegano'].includes(f));
+
+          const pasaDificultad = diffSel.length === 0 || diffSel.includes(rDificultad);
+          const pasaDuracion = durSel.length === 0 || durSel.includes(rDuracion);
+          // Nota: He añadido 'principal' a los filtros para que coincida con tu captura de BD
+          const pasaTipo = tipoSel.length === 0 || tipoSel.includes(rTipo);
+          const pasaDieta = dietaSel.length === 0 || dietaSel.some(d => rDietas.includes(d));
+
+          cumpleCategorias = pasaDificultad && pasaDuracion && pasaTipo && pasaDieta;
         }
 
-        return pasaFiltroEstrellas && pasaFiltroNormal;
+        return cumpleEstrellas && cumpleCategorias;
       });
     }
 
