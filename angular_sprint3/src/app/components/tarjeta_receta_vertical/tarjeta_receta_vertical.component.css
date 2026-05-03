@@ -73,20 +73,25 @@
   color: #4E1A0A;
 }
 
-/* BOTÓN EDITAR */
-.tarjeta-v-footer {
-  padding: 10px;
-  background-color: #FFFFFF;
+.tarjeta-v-footer, .footer-tarjeta, .contenedor-boton-editar {
+  padding: 16px !important; /* Obligamos a dar un buen espacio interior */
+  background-color: #FFF5E9;
   border-top: 3px solid #4E1A0A;
   text-align: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.btn-tarjeta-editar {
+/* -----------------------------
+   EL BOTÓN EN SÍ
+   ----------------------------- */
+.btn-tarjeta-editar, .btn-editar, .btn-editar-tarjeta {
   width: 100%;
+  box-sizing: border-box; /* Impide que el botón sea más ancho que la tarjeta */
   justify-content: center;
-  font-size: 0.85rem;
-  padding: 8px;
-  background-color: #FFF5E9;
+  font-size: 0.9rem;
+  padding: 10px;
+  background-color: transparent;
   color: #4E1A0A;
   border: 2px solid #4E1A0A;
   border-radius: 8px;
@@ -96,10 +101,11 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  margin: 0 !important; /* Quitamos márgenes invisibles que puedan empujarlo hacia abajo */
 }
 
-.btn-tarjeta-editar:hover {
-  background-color: #E3412B;
-  color: white;
+.btn-tarjeta-editar:hover, .btn-editar:hover, .btn-editar-tarjeta:hover {
+  background-color: #4E1A0A;
+  color: #FFF5E9;
 }
