@@ -62,7 +62,10 @@
               <option value="cdas">Cucharadas</option>
               <option value="tazas">Tazas</option>
             </select>
-            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre" [name]="'ingNombre'+i" [(ngModel)]="ing.nombre" required>
+            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre" [name]="'ingNombre'+i" [(ngModel)]="ing.nombre" list="sugerencias-ingredientes" autocomplete="off" required>
+            <datalist id="sugerencias-ingredientes">
+              <option *ngFor="let op of opcionesSugeridas" [value]="op"></option>
+            </datalist>
 
             <button type="button" class="btn-eliminar" (click)="removeIngrediente(i)" *ngIf="ingredientes.length > 1">×</button>
           </div>

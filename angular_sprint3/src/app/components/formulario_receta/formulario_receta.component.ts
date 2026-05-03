@@ -42,6 +42,7 @@ export class Formulario_recetaComponent implements OnInit {
     vegetariano: false,
     vegano: false
   };
+  opcionesSugeridas: string[] = [];
 
   ingredientes = [{ nombre: '', cantidad: null as number | null, unidad: '' }];
   pasos = [''];
@@ -52,6 +53,11 @@ export class Formulario_recetaComponent implements OnInit {
   guardando: boolean = false;
 
   ngOnInit() {
+    fetch('/data/ingredientes.json')
+      .then(res => res.json())
+      .then(datos => this.opcionesSugeridas = datos.ingredientes)
+      .catch(err => console.error(err));
+
     this.route.queryParams.subscribe(async params => {
       if (params['editar']) {
         this.recetaIdEdicion = params['editar'];
@@ -225,7 +231,14 @@ export class Formulario_recetaComponent implements OnInit {
         }
         else if (this.estaEditando && this.recetaIdEdicion) {
           const docRef = doc(this.firestore, `recetas/${this.recetaIdEdicion}`);
-          await updateDoc(docRef, datosComunes);
+
+          // Le decimos que, al editar, también actualice el nombre del autor con tu nombre actual
+          const datosActualizados = {
+            ...datosComunes,
+            autorNombre: user.displayName || user.email?.split('@')[0] || 'Usuario Anónimo'
+          };
+
+          await updateDoc(docRef, datosActualizados);
           alert("¡Receta actualizada con éxito!");
         }
 

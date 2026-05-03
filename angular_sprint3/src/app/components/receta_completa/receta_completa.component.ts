@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router'; // Añadido Router
-import { RecetasService, Receta } from '../../services/recetas.service';
-import { Firestore, doc, onSnapshot } from '@angular/fire/firestore';
+import { RecetasService, Receta, Comentario } from '../../services/recetas.service';
 import { AuthService } from '../../services/auth';
+import { Firestore, doc, getDoc } from '@angular/fire/firestore'; // IMPORTANTE AÑADIR getDoc Y doc AQUÍ
 
 @Component({
   selector: 'app-receta_completa',
@@ -13,163 +13,158 @@ import { AuthService } from '../../services/auth';
   templateUrl: './receta_completa.component.html',
   styleUrl: './receta_completa.component.css'
 })
-export class Receta_completaComponent implements OnInit, OnDestroy {
+export class Receta_completaComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private router = inject(Router); // Para poder navegar al formulario
+  private router = inject(Router);
   private recetasService = inject(RecetasService);
   private authService = inject(AuthService);
   private cdr = inject(ChangeDetectorRef);
-  private firestore = inject(Firestore);
+  private firestore = inject(Firestore); // INYECTAMOS FIRESTORE
 
+  recetaId: string | null = null;
   receta: Receta | undefined;
   cargando = true;
-  nuevoComentario: string = '';
-  unsubscribe: any;
-
-  usuarioActualId: string | null = null;
-  usuarioActualNombre: string = '';
 
   esPropietario = false;
+  usuarioActualId: string | null = null;
+  usuarioActualNombre: string = '';
+  usuarioActualFoto: string | null = null; // NUEVA VARIABLE PARA LA FOTO
   usuarioYaComento = false;
-  mediaEstrellas = 0;
-  totalVotos = 0;
+
+  nuevoComentario = '';
   estrellasSeleccionadas = 0;
+  totalVotos = 0;
+  mediaEstrellas = '0.0';
 
   ngOnInit() {
-    this.authService.user$.subscribe(user => {
+    this.route.paramMap.subscribe(params => {
+      this.recetaId = params.get('id');
+      if (this.recetaId) {
+        this.cargarReceta(this.recetaId);
+      }
+    });
+
+    this.authService.user$.subscribe(async user => {
       if (user) {
         this.usuarioActualId = user.uid;
-        this.usuarioActualNombre = user.displayName || user.email?.split('@')[0] || 'Chef Anónimo';
+        this.usuarioActualNombre = user.displayName || user.email?.split('@')[0] || 'Anónimo';
+
+        // NUEVO: LEER LA FOTO DEL USUARIO DESDE FIRESTORE
+        try {
+          const userDocRef = doc(this.firestore, 'usuarios', user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+          if (userDocSnap.exists() && userDocSnap.data()['avatar']) {
+            this.usuarioActualFoto = userDocSnap.data()['avatar'];
+          }
+        } catch (e) {
+          console.error("Error al cargar foto del usuario:", e);
+        }
+
+        this.verificarSiYaComento();
       } else {
         this.usuarioActualId = null;
-        this.usuarioActualNombre = '';
+        this.usuarioActualFoto = null;
       }
-      this.comprobarEstadoUsuario();
-    });
-
-    this.route.paramMap.subscribe((params) => {
-      const id = params.get('id');
-      if (id) {
-        this.escucharRecetaEnTiempoReal(id);
-      }
-    });
-  }
-
-  escucharRecetaEnTiempoReal(id: string) {
-    this.cargando = true;
-    const recetaRef = doc(this.firestore, `recetas/${id}`);
-
-    this.unsubscribe = onSnapshot(recetaRef, (docSnap) => {
-      if (docSnap.exists()) {
-        this.receta = { id: docSnap.id, ...docSnap.data() } as Receta;
-        this.calcularMediaEstrellas();
-        this.comprobarEstadoUsuario();
-      }
-      this.cargando = false;
       this.cdr.detectChanges();
     });
   }
 
-  calcularMediaEstrellas() {
-    if (!this.receta || !this.receta.valoraciones || this.receta.valoraciones.length === 0) {
-      this.mediaEstrellas = 0;
-      this.totalVotos = 0;
-      return;
+  async cargarReceta(id: string) {
+    try {
+      this.receta = await this.recetasService.getRecetaPorId(id);
+      if (this.receta) {
+        this.calcularEstrellas();
+        this.verificarSiYaComento();
+
+        if (this.usuarioActualId && this.receta.userId === this.usuarioActualId) {
+          this.esPropietario = true;
+        }
+      } else {
+        this.router.navigate(['/']);
+      }
+    } catch (error) {
+      console.error('Error cargando receta:', error);
+    } finally {
+      this.cargando = false;
+      this.cdr.detectChanges();
     }
-    const valoraciones = this.receta.valoraciones;
-    this.totalVotos = valoraciones.length;
-    const sumaPuntos = valoraciones.reduce((sum, v) => sum + v.puntuacion, 0);
-    this.mediaEstrellas = Math.round((sumaPuntos / this.totalVotos) * 10) / 10;
   }
 
-  comprobarEstadoUsuario() {
-    if (this.receta && this.usuarioActualId) {
-      this.esPropietario = this.receta.userId === this.usuarioActualId;
-
-      // Comprobamos si el ID del usuario ya está dentro de los comentarios de la receta
-      const comentariosArray = this.receta.comentarios || [];
-      this.usuarioYaComento = comentariosArray.some(c => c.usuarioId === this.usuarioActualId);
-
+  calcularEstrellas() {
+    if (this.receta && this.receta.valoraciones && this.receta.valoraciones.length > 0) {
+      this.totalVotos = this.receta.valoraciones.length;
+      const suma = this.receta.valoraciones.reduce((acc, val) => acc + val.puntuacion, 0);
+      this.mediaEstrellas = (suma / this.totalVotos).toFixed(1);
     } else {
-      this.esPropietario = false;
-      this.usuarioYaComento = false;
+      this.totalVotos = 0;
+      this.mediaEstrellas = '0.0';
     }
   }
 
-  ngOnDestroy() {
-    if (this.unsubscribe) this.unsubscribe();
+  verificarSiYaComento() {
+    if (this.receta && this.receta.comentarios && this.usuarioActualId) {
+      this.usuarioYaComento = this.receta.comentarios.some(c => c.usuarioId === this.usuarioActualId);
+    }
   }
 
-// --- SOCIAL ---
-  puntuacionFija = 0; // <--- NUEVA VARIABLE para guardar las estrellas seleccionadas antes de publicar
-
-  hoverEstrella(numero: number) {
-    if (this.esPropietario) return;
-    this.estrellasSeleccionadas = numero;
-    this.cdr.detectChanges();
-  }
-
-  resetEstrellas() {
-    // Al quitar el ratón, vuelve a la puntuación que el usuario hubiera fijado con el clic
-    this.estrellasSeleccionadas = this.puntuacionFija;
-    this.cdr.detectChanges();
-  }
-
-  seleccionarPuntuacion(numero: number) {
-    if (this.esPropietario) return;
-    this.puntuacionFija = numero; // Fijamos la puntuación
-    this.estrellasSeleccionadas = numero;
-    this.cdr.detectChanges();
-  }
+  hoverEstrella(num: number) { this.estrellasSeleccionadas = num; }
+  resetEstrellas() { if (this.estrellasSeleccionadas === 0) this.estrellasSeleccionadas = 0; }
+  seleccionarPuntuacion(num: number) { this.estrellasSeleccionadas = num; }
 
   async publicarResena() {
     if (!this.usuarioActualId) {
-      alert("¡Inicia sesión para reseñar!");
+      alert("Debes iniciar sesión para comentar.");
       return;
     }
-    if (!this.receta || !this.receta.id) return;
-
-    // VALIDACIONES ANTES DE ENVIAR
-    if (this.puntuacionFija === 0) {
-      alert("Por favor, dale una puntuación con las estrellas antes de publicar.");
+    if (this.esPropietario) {
+      alert("No puedes valorar tu propia receta.");
       return;
     }
-    if (this.nuevoComentario.trim() === '') {
-      alert("Por favor, escribe un comentario para tu reseña.");
+    if (this.usuarioYaComento) {
+      alert("Ya has comentado en esta receta.");
       return;
     }
+    if (this.estrellasSeleccionadas === 0) {
+      alert("Por favor, selecciona una puntuación.");
+      return;
+    }
+    if (!this.nuevoComentario.trim()) {
+      alert("Por favor, escribe un comentario.");
+      return;
+    }
+    if (!this.recetaId) return;
 
     try {
-      // 1. Guardamos la puntuación para que cuente en la media global
-      await this.recetasService.valorarReceta(this.receta.id, this.usuarioActualId, this.puntuacionFija);
+      await this.recetasService.valorarReceta(this.recetaId, this.usuarioActualId, this.estrellasSeleccionadas);
 
-      // 2. Guardamos el comentario adjuntando las estrellas que eligió
-      const comentarioObj = {
+      const comentarioObj: Comentario = {
         usuarioId: this.usuarioActualId,
         usuarioNombre: this.usuarioActualNombre,
+        // GUARDAMOS LA FOTO REAL DEL USUARIO O LA DE POR DEFECTO
+        avatar: this.usuarioActualFoto || '/img/usuario-sinfondo.png',
         texto: this.nuevoComentario,
         fecha: Date.now(),
-        puntuacion: this.puntuacionFija // <--- Metemos las estrellas en el comentario
+        puntuacion: this.estrellasSeleccionadas
       };
 
-      await this.recetasService.addComentario(this.receta.id, comentarioObj);
+      await this.recetasService.addComentario(this.recetaId, comentarioObj);
 
-      // 3. Limpiamos el formulario tras publicarlo con éxito
+      alert("¡Reseña publicada con éxito!");
+
+      this.usuarioYaComento = true;
       this.nuevoComentario = '';
-      this.puntuacionFija = 0;
       this.estrellasSeleccionadas = 0;
+      await this.cargarReceta(this.recetaId);
 
     } catch (error) {
-      alert("Hubo un error al publicar tu reseña.");
+      console.error("Error al publicar la reseña:", error);
+      alert("Hubo un error al publicar la reseña.");
     }
   }
 
-  // --- NAVEGAR AL FORMULARIO DE EDICIÓN ---
   activarEdicion() {
-    if (this.receta && this.receta.id) {
-      // Te lleva al componente que tú ya tenías creado: app-formulario_receta
-      // Le pasamos el ID por la URL para que el formulario sepa que tiene que cargar datos
-      this.router.navigate(['/subir-receta'], { queryParams: { editar: this.receta.id } });
+    if (this.recetaId) {
+      this.router.navigate(['/subir-receta'], { queryParams: { editar: this.recetaId } });
     }
   }
 }

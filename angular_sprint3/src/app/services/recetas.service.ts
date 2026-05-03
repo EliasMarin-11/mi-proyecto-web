@@ -13,6 +13,7 @@ export interface Comentario {
   texto: string;
   fecha: number;
   puntuacion?: number;
+  avatar?: string;
 }
 
 export interface Receta {

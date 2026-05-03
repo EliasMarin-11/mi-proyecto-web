@@ -33,7 +33,17 @@
         <li><span class="cuadrito-mini">⏱️</span> {{ receta.tiempo }}</li>
         <li><span class="cuadrito-mini">👨‍🍳</span> Dificultad: {{ receta.dificultad }}</li>
         <li *ngIf="receta.raciones"><span class="cuadrito-mini">🍽️</span> {{ receta.raciones }} Raciones</li>
-        <li *ngIf="!receta.raciones"><span class="cuadrito-mini">🍽️</span> Tipo: {{ receta.tipo_plato }}</li>
+
+        <!-- NUEVO: Mostrar Tipo de Plato -->
+        <li *ngIf="receta.tipo_plato"><span class="cuadrito-mini">🍲</span> Tipo: <span style="text-transform: capitalize;">{{ receta.tipo_plato }}</span></li>
+
+        <!-- NUEVO: Mostrar Dieta / Alérgenos como etiquetas rojas -->
+        <li *ngIf="receta.dieta && receta.dieta.length > 0" style="display: flex; gap: 5px; flex-wrap: wrap; align-items: center;">
+          <span class="cuadrito-mini">🌱</span> Dieta:
+          <span *ngFor="let d of receta.dieta" style="background: #E3412B; color: white; padding: 3px 8px; border-radius: 10px; font-size: 13px; font-weight: bold; text-transform: uppercase;">
+            {{ d }}
+          </span>
+        </li>
       </ul>
 
       <h3>Descripción del plato</h3>
@@ -66,10 +76,11 @@
   <section class="zona-reseñas">
     <h3 class="titulo-reseñas-bruto">Reseñas de la Comunidad</h3>
 
-    <!-- Caja para escribir reseña -->
+
     <div class="reseña-item caja-escribir" id="caja-mi-reseña" *ngIf="usuarioActualId && !esPropietario && !usuarioYaComento">
       <div class="usuario-avatar-reseña">
-        <img src="img/Usuario SINFONDO.png" alt="Tu foto" id="avatar-escribir">
+        <!-- Mostramos la foto del usuario actual, o la de defecto si no tiene -->
+        <img [src]="usuarioActualFoto || '/img/usuario-sinfondo.png'" alt="Tu foto" id="avatar-escribir">
       </div>
       <div class="cuerpo-reseña">
         <textarea id="texto-nueva-reseña" [(ngModel)]="nuevoComentario" placeholder="¿Qué te ha parecido la receta? ¡Cuéntanoslo!" class="input-oscuro"></textarea>
@@ -109,8 +120,10 @@
 
       <div class="reseña-item" *ngFor="let com of receta.comentarios" [class.comentario-creador]="com.usuarioId === receta.userId">
         <div class="usuario-avatar-reseña">
-          <img src="img/Usuario SINFONDO.png" alt="Avatar">
+          <!-- Mostramos la foto que guardamos en el comentario, o la de defecto -->
+          <img [src]="com.avatar || '/img/usuario-sinfondo.png'" alt="Avatar">
         </div>
+        <!-- ... resto del código ... -->
         <div class="cuerpo-reseña">
           <p class="nombre-usuario-reseña">
             {{ com.usuarioNombre }}

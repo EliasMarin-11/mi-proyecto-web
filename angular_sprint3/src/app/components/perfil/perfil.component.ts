@@ -75,6 +75,10 @@ export class PerfilComponent implements OnInit, OnDestroy {
                 if (data && data['plan']) {
                   this.planUsuario = data['plan'];
                 }
+                // NUEVO: Obligamos a Angular a leer el nombre real de la base de datos
+                if (data && data['nombre'] && !this.editandoNombre) {
+                  this.nuevoNombre = data['nombre'];
+                }
               }
               this.cdr.detectChanges();
             }, (error) => {
