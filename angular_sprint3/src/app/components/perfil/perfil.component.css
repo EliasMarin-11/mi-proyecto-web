@@ -366,3 +366,44 @@
     height: 30px;
     object-fit: contain;
 }
+
+.pantalla-aviso-perfil {
+  text-align: center;
+  padding: 50px;
+}
+
+.perfil-nombre-editable {
+  cursor: pointer;
+}
+
+.icono-editar-nombre-mini {
+  width: 20px;
+  vertical-align: middle;
+}
+
+.contenedor-editar-pass {
+  margin-top: 15px;
+}
+
+.btn-confirmar-pass {
+  background-color: #28a745; /* Puedes cambiarlo a #E3412B si quieres mantener el coral */
+  margin-top: 10px;
+}
+
+.btn-confirmar-pass:hover {
+  background-color: #218838; /* Hover verde oscuro */
+}
+
+.btn-cancelar-pass {
+  margin-top: 5px;
+}
+
+.mensaje-vacio-recetas p {
+  margin: 5px 0;
+}
+
+.lista-tarjetas-recetas {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}

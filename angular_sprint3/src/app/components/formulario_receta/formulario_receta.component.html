@@ -16,6 +16,27 @@
         </div>
 
         <div class="grupo-input">
+          <select id="receta-tipo" name="tipoPlato" [(ngModel)]="tipoPlato" class="input-linea" required>
+            <option value="" disabled selected>Tipo de plato...</option>
+            <option value="primero">Primero</option>
+            <option value="segundo">Segundo</option>
+            <option value="cuchara">De Cuchara</option>
+            <option value="postre">Postre</option>
+          </select>
+        </div>
+
+        <!-- NUEVO: Casillas de Dieta (Alergenos) -->
+        <div class="grupo-input" style="background: #FFF5E9; padding: 15px; border-radius: 10px; border: 2px dashed #4E1A0A; margin-bottom: 20px;">
+          <label style="font-weight: bold; color: #4E1A0A; display: block; margin-bottom: 10px; text-transform: uppercase; font-size: 14px;">¿Apto para dietas especiales?</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 15px; color: #4E1A0A;">
+            <label><input type="checkbox" name="dieta-singluten" [(ngModel)]="dieta.singluten"> Sin Gluten</label>
+            <label><input type="checkbox" name="dieta-sinlactosa" [(ngModel)]="dieta.sinlactosa"> Sin Lácteos</label>
+            <label><input type="checkbox" name="dieta-vegetariano" [(ngModel)]="dieta.vegetariano"> Vegetariano</label>
+            <label><input type="checkbox" name="dieta-vegano" [(ngModel)]="dieta.vegano"> Vegano</label>
+          </div>
+        </div>
+
+        <div class="grupo-input">
           <input type="number" id="receta-raciones" name="raciones" [(ngModel)]="raciones" placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
         </div>
 

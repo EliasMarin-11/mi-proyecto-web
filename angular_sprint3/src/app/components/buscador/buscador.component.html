@@ -11,39 +11,41 @@
         <div class="filtros-grid">
           <div class="grupo-filtro">
             <h4>Dificultad</h4>
-            <label><input type="checkbox" value="facil"> Fácil</label>
-            <label><input type="checkbox" value="media"> Media</label>
-            <label><input type="checkbox" value="dificil"> Difícil</label>
+            <label><input type="checkbox" value="facil" (change)="toggleFiltro('facil')"> Fácil</label>
+            <label><input type="checkbox" value="media" (change)="toggleFiltro('media')"> Media</label>
+            <label><input type="checkbox" value="dificil" (change)="toggleFiltro('dificil')"> Difícil</label>
           </div>
 
           <div class="grupo-filtro">
             <h4>Duración</h4>
-            <label><input type="checkbox" value="rapido"> - 30 min</label>
-            <label><input type="checkbox" value="medio"> 30 - 60 min</label>
-            <label><input type="checkbox" value="lento"> + 1 hora</label>
+            <label><input type="checkbox" value="rapido" (change)="toggleFiltro('rapido')"> - 30 min</label>
+            <label><input type="checkbox" value="medio" (change)="toggleFiltro('medio')"> 30 - 60 min</label>
+            <label><input type="checkbox" value="lento" (change)="toggleFiltro('lento')"> + 1 hora</label>
           </div>
 
           <div class="grupo-filtro">
             <h4>Alérgenos / Dieta</h4>
-            <label><input type="checkbox" value="singluten"> Sin Gluten</label>
-            <label><input type="checkbox" value="sinlactosa"> Sin Lácteos</label>
-            <label><input type="checkbox" value="vegetariano"> Vegetariano</label>
-            <label><input type="checkbox" value="vegano"> Vegano</label>
+            <label><input type="checkbox" value="singluten" (change)="toggleFiltro('singluten')"> Sin Gluten</label>
+            <label><input type="checkbox" value="sinlactosa" (change)="toggleFiltro('sinlactosa')"> Sin Lácteos</label>
+            <label><input type="checkbox" value="vegetariano" (change)="toggleFiltro('vegetariano')"> Vegetariano</label>
+            <label><input type="checkbox" value="vegano" (change)="toggleFiltro('vegano')"> Vegano</label>
           </div>
 
           <div class="grupo-filtro">
             <h4>Tipo de Plato</h4>
-            <label><input type="checkbox" value="primero"> Primero</label>
-            <label><input type="checkbox" value="segundo"> Segundo</label>
-            <label><input type="checkbox" value="cuchara"> De Cuchara</label>
-            <label><input type="checkbox" value="postre"> Postre</label>
+            <label><input type="checkbox" value="primero" (change)="toggleFiltro('primero')"> Primero</label>
+            <label><input type="checkbox" value="segundo" (change)="toggleFiltro('segundo')"> Segundo</label>
+            <label><input type="checkbox" value="cuchara" (change)="toggleFiltro('cuchara')"> De Cuchara</label>
+            <label><input type="checkbox" value="postre" (change)="toggleFiltro('postre')"> Postre</label>
           </div>
 
           <div class="grupo-filtro">
             <h4>Valoración</h4>
-            <label><input type="checkbox" value="estrellas-3"> ⭐⭐⭐+</label>
-            <label><input type="checkbox" value="estrellas-4"> ⭐⭐⭐⭐+</label>
-            <label><input type="checkbox" value="estrellas-5"> ⭐⭐⭐⭐⭐</label>
+            <label><input type="checkbox" value="estrellas-1" (change)="toggleFiltro('estrellas-1')"> ⭐ o más</label>
+            <label><input type="checkbox" value="estrellas-2" (change)="toggleFiltro('estrellas-2')"> ⭐⭐ o más</label>
+            <label><input type="checkbox" value="estrellas-3" (change)="toggleFiltro('estrellas-3')"> ⭐⭐⭐ o más</label>
+            <label><input type="checkbox" value="estrellas-4" (change)="toggleFiltro('estrellas-4')"> ⭐⭐⭐⭐ o más</label>
+            <label><input type="checkbox" value="estrellas-5" (change)="toggleFiltro('estrellas-5')"> ⭐⭐⭐⭐⭐</label>
           </div>
         </div>
 
@@ -53,10 +55,15 @@
     </div>
 
     <div class="columna-input">
-      <!-- Añadimos el evento para capturar el Enter -->
-      <input type="text" id="input-ingrediente" placeholder="Añade ingredientes: huevo, patata, tomate..." (keyup.enter)="anadirIngrediente($event)">
+      <!-- INPUT CONECTADO AL DATALIST -->
+      <input type="text" id="input-ingrediente" list="sugerencias-ingredientes" placeholder="Añade ingredientes: huevo, patata, tomate..." autocomplete="off" (keyup.enter)="anadirIngrediente($event)">
 
-      <!-- Usamos *ngFor para pintar tus tags dinámicamente -->
+      <!-- EL DATALIST INVISIBLE -->
+      <datalist id="sugerencias-ingredientes">
+        <option *ngFor="let opcion of opcionesSugeridas" [value]="opcion"></option>
+      </datalist>
+
+      <!-- TAGS VISUALES -->
       <div id="contenedor-tags" class="busqueda-tags">
         <div class="tag" *ngFor="let ing of listaIngredientes; let i = index">
           {{ ing }} <span (click)="eliminarIngrediente(i)">×</span>

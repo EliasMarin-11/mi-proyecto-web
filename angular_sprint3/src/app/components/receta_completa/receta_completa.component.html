@@ -1,11 +1,9 @@
-<div *ngIf="cargando" style="text-align: center; padding: 50px; font-size: 20px; font-weight: bold; color: #4E1A0A;">
+<div *ngIf="cargando" class="pantalla-carga-receta">
   Cargando receta...
 </div>
 
-<!-- MODO VISTA: TU DISEÑO ORIGINAL Y PERFECTO  -->
 <article class="receta-detalle-pro" *ngIf="!cargando && receta">
 
-  <!-- BLOQUE SUPERIOR -->
   <section class="bloque-superior">
     <div class="bloque-foto" id="receta-foto">
       <img [src]="receta.imagen" class="img-receta-detalle" alt="Foto de la receta">
@@ -17,19 +15,18 @@
 
     <div class="bloque-info">
 
-      <div class="btn-fav-detalle" *ngIf="!esPropietario" title="Guardar favorito">❤</div>
+      <div class="cabecera-titulo-acciones">
+        <h2 id="receta-titulo">{{ receta.titulo }}</h2>
 
-      <!-- BOTÓN EDITAR QUE LLEVA A TU FORMULARIO -->
-      <div style="position: absolute; top: 30px; right: 40px; display: flex; gap: 10px;" *ngIf="esPropietario">
-        <button (click)="activarEdicion()" style="background: #FFF5E9; border: 3px solid #4E1A0A; padding: 10px 15px; border-radius: 12px; cursor: pointer; font-weight: 900; box-shadow: 4px 4px 0 #4E1A0A; color: #4E1A0A; font-size: 16px;">
-          ✏️ Editar mi receta
+        <div class="btn-fav-detalle-flex" *ngIf="!esPropietario" title="Guardar favorito">❤</div>
+
+        <button (click)="activarEdicion()" class="btn-editar-propietario" *ngIf="esPropietario">
+          ✏️ Editar
         </button>
       </div>
 
-      <h2 id="receta-titulo">{{ receta.titulo }}</h2>
-
       <div class="info-linea-iconos" *ngIf="receta.autorNombre">
-        <span style="color: #E3412B;">Chef: {{ receta.autorNombre }}</span>
+        <span class="chef-destacado">Chef: {{ receta.autorNombre }}</span>
       </div>
 
       <ul class="lista-info-breve">
@@ -66,11 +63,10 @@
   </section>
 
   <!-- ZONA DE RESEÑAS -->
-  <!-- ZONA DE RESEÑAS -->
   <section class="zona-reseñas">
     <h3 class="titulo-reseñas-bruto">Reseñas de la Comunidad</h3>
 
-    <!-- Caja para escribir reseña (Oculta si ya comentó) -->
+    <!-- Caja para escribir reseña -->
     <div class="reseña-item caja-escribir" id="caja-mi-reseña" *ngIf="usuarioActualId && !esPropietario && !usuarioYaComento">
       <div class="usuario-avatar-reseña">
         <img src="img/Usuario SINFONDO.png" alt="Tu foto" id="avatar-escribir">
@@ -93,25 +89,25 @@
     </div>
 
     <!-- MENSAJES DE ESTADO -->
-    <p *ngIf="usuarioYaComento" style="color: #E3412B; font-weight: bold; text-align: center; margin-bottom: 25px; border: 2px dashed #E3412B; padding: 15px; border-radius: 12px; background: #FFF5E9;">
+    <p *ngIf="usuarioYaComento" class="mensaje-ya-comento">
       ⭐ ¡Gracias por tu reseña! Ya has valorado esta receta.
     </p>
 
-    <p *ngIf="esPropietario" style="color: #4E1A0A; font-weight: bold; text-align: center;">
+    <p *ngIf="esPropietario" class="mensaje-aviso-comunidad">
       (Como creador, no puedes puntuar tu propia receta)
     </p>
 
-    <p *ngIf="!usuarioActualId" style="color: #4E1A0A; font-weight: bold; text-align: center;">
+    <p *ngIf="!usuarioActualId" class="mensaje-aviso-comunidad">
       Inicia sesión para dejar una reseña.
     </p>
 
-    <!-- Lista de reseñas de otros usuarios -->
+    <!-- Lista de reseñas -->
     <div id="lista-reseñas">
-      <p *ngIf="!receta.comentarios || receta.comentarios.length === 0" style="text-align: center; font-style: italic;">
+      <p *ngIf="!receta.comentarios || receta.comentarios.length === 0" class="mensaje-sin-resenas">
         Aún no hay reseñas.
       </p>
 
-      <div class="reseña-item" *ngFor="let com of receta.comentarios">
+      <div class="reseña-item" *ngFor="let com of receta.comentarios" [class.comentario-creador]="com.usuarioId === receta.userId">
         <div class="usuario-avatar-reseña">
           <img src="img/Usuario SINFONDO.png" alt="Avatar">
         </div>
@@ -119,14 +115,14 @@
           <p class="nombre-usuario-reseña">
             {{ com.usuarioNombre }}
 
-            <!-- MOSTRAMOS LAS ESTRELLAS DEL COMENTARIO -->
-            <span *ngIf="com.puntuacion" style="margin-left: 8px; font-size: 14px;">
+            <!-- MOSTRAMOS LAS ESTRELLAS -->
+            <span *ngIf="com.puntuacion" class="estrellas-comentario">
               <span *ngFor="let s of [1, 2, 3, 4, 5]">
                 <span *ngIf="s <= com.puntuacion">⭐</span>
               </span>
             </span>
 
-            <span style="font-size: 12px; color: #666; font-weight: normal; margin-left: 8px;">({{ com.fecha | date:'dd/MM/yyyy' }})</span>
+            <span class="fecha-comentario">({{ com.fecha | date:'dd/MM/yyyy' }})</span>
           </p>
           <p class="texto-reseña">{{ com.texto }}</p>
         </div>

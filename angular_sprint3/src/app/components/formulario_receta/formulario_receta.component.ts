@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core'; // <--- AÑADIDO ChangeDetectorRef
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Storage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
@@ -19,7 +19,7 @@ export class Formulario_recetaComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private cdr = inject(ChangeDetectorRef); // <--- INYECTAMOS LA HERRAMIENTA
+  private cdr = inject(ChangeDetectorRef);
 
   // --- VARIABLES PARA MODO EDICIÓN ---
   recetaIdEdicion: string | null = null;
@@ -33,6 +33,15 @@ export class Formulario_recetaComponent implements OnInit {
   raciones: number | null = null;
   dificultad = '';
   descripcion = '';
+
+  // NUEVAS VARIABLES
+  tipoPlato = '';
+  dieta = {
+    singluten: false,
+    sinlactosa: false,
+    vegetariano: false,
+    vegano: false
+  };
 
   ingredientes = [{ nombre: '', cantidad: null as number | null, unidad: '' }];
   pasos = [''];
@@ -52,7 +61,6 @@ export class Formulario_recetaComponent implements OnInit {
     });
   }
 
-  // --- FUNCIÓN PARA CARGAR LOS DATOS EN LOS INPUTS ---
   async cargarDatosParaEdicion(id: string) {
     try {
       const docRef = doc(this.firestore, `recetas/${id}`);
@@ -65,6 +73,17 @@ export class Formulario_recetaComponent implements OnInit {
         this.raciones = recetaData['raciones'] || null;
         this.dificultad = recetaData['dificultad'] || '';
         this.descripcion = recetaData['descripcion'] || '';
+
+        // Cargar Tipo de Plato
+        this.tipoPlato = recetaData['tipo_plato'] || '';
+
+        // Cargar Dieta
+        if (recetaData['dieta']) {
+          this.dieta.singluten = recetaData['dieta'].includes('singluten');
+          this.dieta.sinlactosa = recetaData['dieta'].includes('sinlactosa');
+          this.dieta.vegetariano = recetaData['dieta'].includes('vegetariano');
+          this.dieta.vegano = recetaData['dieta'].includes('vegano');
+        }
 
         this.imagenPreview = recetaData['imagen'];
         this.urlImagenAntigua = recetaData['imagen'];
@@ -84,7 +103,6 @@ export class Formulario_recetaComponent implements OnInit {
             const partes = ingString.split(' ');
             const cantidadStr = partes[0];
             const unidadStr = partes[1];
-            // Dependiendo de cómo guardamos antes, reconstruimos el string
             const indexDe = partes.indexOf('de');
             const nombreStr = indexDe !== -1 ? partes.slice(indexDe + 1).join(' ') : partes.slice(2).join(' ');
 
@@ -96,7 +114,6 @@ export class Formulario_recetaComponent implements OnInit {
           });
         }
 
-        // ¡LA MAGIA OCURRE AQUÍ! Le decimos a Angular que refresque la pantalla con los datos recién traídos.
         this.cdr.detectChanges();
       }
     } catch (error) {
@@ -127,6 +144,14 @@ export class Formulario_recetaComponent implements OnInit {
     if (this.estaEditando) this.urlImagenAntigua = null;
   }
 
+  // NUEVO: Calculadora de duración automática
+  calcularDuracionCategoria(num: number | null, unidad: string): string {
+    if (!num) return 'medio';
+    if (unidad === 'horas' || num > 60) return 'lento';
+    if (num <= 30) return 'rapido';
+    return 'medio';
+  }
+
   async guardarReceta() {
     this.authService.user$.subscribe(async (user) => {
       if (!user) {
@@ -135,8 +160,9 @@ export class Formulario_recetaComponent implements OnInit {
         return;
       }
 
-      if (!this.titulo || !this.tiempoNum || !this.raciones || !this.dificultad || !this.descripcion) {
-        alert("Por favor, rellena todos los campos principales.");
+      // Añadimos validación del tipo de plato
+      if (!this.titulo || !this.tiempoNum || !this.raciones || !this.dificultad || !this.tipoPlato || !this.descripcion) {
+        alert("Por favor, rellena todos los campos principales (incluido el Tipo de Plato).");
         return;
       }
 
@@ -161,20 +187,33 @@ export class Formulario_recetaComponent implements OnInit {
           `${ing.cantidad || ''} ${ing.unidad} de ${ing.nombre}`.trim().replace('  ', ' ')
         );
 
+        // Preparamos los arrays de dietas activas
+        const dietasActivas = Object.entries(this.dieta)
+          .filter(([key, value]) => value === true)
+          .map(([key]) => key);
+
+        // Calculamos la duración automática (rápido, medio, lento)
+        const categoriaDuracion = this.calcularDuracionCategoria(this.tiempoNum, this.tiempoUnidad);
+
+        const datosComunes = {
+          titulo: this.titulo,
+          tiempo: `${this.tiempoNum} ${this.tiempoUnidad}`,
+          raciones: this.raciones,
+          dificultad: this.dificultad,
+          descripcion: this.descripcion,
+          ingredientes: ingredientesFormateados,
+          instrucciones: this.pasos,
+          imagen: urlDescarga,
+          tipo_plato: this.tipoPlato,           // Guardamos el tipo de plato
+          dieta: dietasActivas,                 // Guardamos el array de dietas (ej: ["singluten", "vegano"])
+          duracion_categoria: categoriaDuracion // Guardamos el filtro de duración auto-calculado
+        };
+
         if (!this.estaEditando) {
           const nuevaReceta = {
-            titulo: this.titulo,
-            tiempo: `${this.tiempoNum} ${this.tiempoUnidad}`,
-            raciones: this.raciones,
-            dificultad: this.dificultad,
-            descripcion: this.descripcion,
-            ingredientes: ingredientesFormateados,
-            instrucciones: this.pasos,
-            imagen: urlDescarga,
+            ...datosComunes,
             estrellas: 0,
             alergenos: [],
-            dieta: [],
-            tipo_plato: "Principal",
             userId: user.uid,
             autorNombre: user.displayName || user.email?.split('@')[0] || 'Usuario Anónimo',
             fechaCreacion: new Date().toISOString()
@@ -186,16 +225,7 @@ export class Formulario_recetaComponent implements OnInit {
         }
         else if (this.estaEditando && this.recetaIdEdicion) {
           const docRef = doc(this.firestore, `recetas/${this.recetaIdEdicion}`);
-          await updateDoc(docRef, {
-            titulo: this.titulo,
-            tiempo: `${this.tiempoNum} ${this.tiempoUnidad}`,
-            raciones: this.raciones,
-            dificultad: this.dificultad,
-            descripcion: this.descripcion,
-            ingredientes: ingredientesFormateados,
-            instrucciones: this.pasos,
-            imagen: urlDescarga
-          });
+          await updateDoc(docRef, datosComunes);
           alert("¡Receta actualizada con éxito!");
         }
 

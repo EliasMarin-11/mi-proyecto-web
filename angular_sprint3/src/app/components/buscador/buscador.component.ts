@@ -1,8 +1,6 @@
-// src/app/components/buscador/buscador.component.ts
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-// Necesitas FormsModule si usas ngModel, aunque aquí estamos usando eventos directos[cite: 26]
 
 @Component({
   selector: 'app-buscador',
@@ -11,16 +9,43 @@ import { Router } from '@angular/router';
   templateUrl: './buscador.component.html',
   styleUrl: './buscador.component.css'
 })
-export class BuscadorComponent {
+export class BuscadorComponent implements OnInit {
   menuAbierto = false;
   listaIngredientes: string[] = [];
+  opcionesSugeridas: string[] = [];
+
+  // NUEVO: Array para guardar los filtros que marcamos
+  filtrosSeleccionados: string[] = [];
+
   private router = inject(Router);
 
-  toggleFiltros() { this.menuAbierto = !this.menuAbierto; }
+  ngOnInit() {
+    fetch('/data/ingredientes.json')
+      .then(respuesta => respuesta.json())
+      .then(datos => {
+        this.opcionesSugeridas = datos.ingredientes;
+      })
+      .catch(error => console.error("Error al cargar el JSON", error));
+  }
+
+  toggleFiltros() {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  // NUEVA FUNCIÓN: Añade o quita un filtro de la lista si lo marcas o desmarcas
+  toggleFiltro(filtro: string) {
+    const index = this.filtrosSeleccionados.indexOf(filtro);
+    if (index > -1) {
+      this.filtrosSeleccionados.splice(index, 1); // Si ya estaba, lo quita
+    } else {
+      this.filtrosSeleccionados.push(filtro); // Si no estaba, lo añade
+    }
+  }
 
   anadirIngrediente(evento: any) {
     const input = evento.target;
-    const valor = input.value.trim();
+    const valor = input.value.trim().toLowerCase();
+
     if (valor && !this.listaIngredientes.includes(valor)) {
       this.listaIngredientes.push(valor);
       input.value = '';
@@ -33,24 +58,21 @@ export class BuscadorComponent {
 
   buscar() {
     this.menuAbierto = false;
-
-    // 1. Buscamos el elemento input en el HTML
     const inputElement = document.getElementById('input-ingrediente') as HTMLInputElement;
 
-    // 2. Si el usuario dejó algo escrito pero no le dio a Enter, lo capturamos
     if (inputElement) {
-      const valorPendiente = inputElement.value.trim();
+      const valorPendiente = inputElement.value.trim().toLowerCase();
       if (valorPendiente && !this.listaIngredientes.includes(valorPendiente)) {
         this.listaIngredientes.push(valorPendiente);
       }
-      // Limpiamos el input visualmente
       inputElement.value = '';
     }
 
-    // 3. Ahora sí, navegamos con la lista de ingredientes actualizada
+    // AHORA MANDAMOS LAS DOS COSAS EN LA URL: Ingredientes y Filtros
     this.router.navigate(['/buscar'], {
       queryParams: {
-        ingredientes: this.listaIngredientes.join(',')
+        ingredientes: this.listaIngredientes.join(','),
+        filtros: this.filtrosSeleccionados.join(',') // Mandamos los filtros separados por comas
       }
     });
   }
