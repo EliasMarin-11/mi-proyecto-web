@@ -1,0 +1,403 @@
+/* CONTENEDOR GENERAL */
+.contenedor-busqueda {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 15px;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #FFF5E9;
+    border-radius: 20px;
+    border: 4px solid #4E1A0A;
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.1);
+}
+
+/* Etiqueta superior */
+.busqueda-label {
+    grid-column: 1 / -1;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-family: 'Momo Trust Display', sans-serif;
+    color: #4E1A0A;
+    font-weight: bold;
+}
+
+/* Barra de input */
+.barra-busqueda {
+    position: relative;
+    display: flex;
+    align-items: flex-start; /* CRÍTICO: Alinea los botones con el input, ignorando los tags de abajo */
+    gap: 15px;
+    width: 100%;
+}
+
+/* NUEVA CLASE: La columna que envuelve el input y las etiquetas */
+.columna-input {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Esto hace que el input ocupe todo el espacio central */
+    gap: 12px; /* Espacio entre el input y las etiquetas */
+    min-width: 0; /* Evita que rompa el flexbox en móviles */
+}
+
+/* Ajuste del input que ahora vive dentro de la columna */
+.columna-input input {
+    width: 100%;
+    box-sizing: border-box; /* Asegura que no se desborde */
+    padding: 16px 25px;
+    border: 3px solid #4E1A0A;
+    background-color: #FFFFFF;
+    font-size: 18px;
+    outline: none;
+    border-radius: 60px;
+    font-family: inherit;
+    color: #4E1A0A;
+    transition: all 0.3s ease;
+}
+
+/* Ajustamos el contenedor de los tags */
+.busqueda-tags {
+    margin-top: 0; /* Quitamos el margen viejo porque ya usamos 'gap' en la columna */
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.barra-busqueda input {
+    flex-grow: 1; /* Hace que el input ocupe todo el espacio sobrante */
+    padding: 16px 25px;
+    border: 3px solid #4E1A0A;
+    background-color: #FFFFFF;
+    font-size: 18px;
+    outline: none;
+    border-radius: 60px;
+    font-family: inherit;
+    color: #4E1A0A;
+    transition: all 0.3s ease;
+}
+
+.barra-busqueda input:focus { /*EFECTO BOTÓN*/
+    border-color: #E3412B;
+    box-shadow: 4px 4px 0px rgba(227, 65, 43, 0.2);
+}
+
+/* X de la barra principal */
+.icono-cerrar-busqueda {
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    cursor: pointer; /* Hace que sea pulsable */
+    color: #4E1A0A;
+    transition: color 0.3s ease;
+}
+
+.icono-cerrar-busqueda:hover {
+    color: #E3412B;
+}
+
+/* Boton buscar */
+.btn-buscar-dummy {
+    background-color: #4E1A0A;
+    color: #FFFFFF;
+    border: 3px solid #4E1A0A; /* ¡Le devolvemos su borde grueso! */
+    padding: 14px 36px; /* Igualamos la altura con los otros botones */
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 60px;
+    letter-spacing: 1.5px;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.2); /* Sombra dura alineada con el resto */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap; /* Evita que el texto salte de línea */
+}
+
+.btn-buscar-dummy:hover {
+    background-color: #E3412B;
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.15); /* La sombra crece al flotar */
+}
+/* EL NUEVO BOTÓN DE FILTROS NEO-BRUTALISTA */
+.btn-secundario-bruto {
+    background-color: #FFF5E9; /* Color crema para contrastar con el marrón del botón buscar */
+    color: #4E1A0A;
+    border: 3px solid #4E1A0A;
+    padding: 14px 24px;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 60px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px rgba(78, 26, 10, 0.2);
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Evita que el texto "Filtros ▾" se parta en dos líneas */
+}
+
+.btn-secundario-bruto:hover {
+    background-color: #ffd6d1; /* Un toque coral suave al pasar el ratón */
+    transform: translateY(-2px);
+    box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+}
+
+/* CONTENEDOR DE TAGS */
+.busqueda-tags {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.tag {
+    background-color: #FFFFFF;
+    padding: 8px 18px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #4E1A0A;
+    border-radius: 30px;
+    color: #4E1A0A;
+    font-weight: bold;
+    box-shadow: 3px 3px 0px rgba(78, 26, 10, 0.1);
+}
+
+/* LAS X DE LOS TAGS (PULSABLES) */
+.tag span {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer; /* Aparece la mano al pasar por encima */
+    color: #4E1A0A;
+    display: inline-block;
+    line-height: 1;
+    transition: 0.2s;
+    transition: all 0.2s ease;
+}
+
+.tag span:hover {
+    color: #E3412B; /* Se pone roja al querer borrarla */
+    transform: scale(1.3) rotate(90deg);
+}
+
+.mensaje-sin-resultados {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #FFF5E9;
+    border-radius: 20px;
+    border: 4px dashed #4E1A0A;
+    max-width: 600px;
+    margin: 40px auto;
+    color: #4E1A0A;
+}
+
+.icono-ups {
+    font-size: 60px;
+    margin-bottom: 20px;
+    color: #E3412B;
+
+}
+
+.mensaje-sin-resultados h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    margin-top: 0;
+    font-family: 'Momo Trust Display', sans-serif;
+}
+
+.mensaje-sin-resultados p {
+    font-size: 18px;
+    color: #4E1A0A;
+    font-family: 'Momo Trust Display', sans-serif;
+}
+
+
+/* --- ESTILOS DEL DESPLEGABLE DE FILTROS --- */
+
+/* Contenedor relativo para que el menú flote anclado al botón */
+.contenedor-filtros {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+}
+
+/* El cuadro del menú desplegable */
+.dropdown-bruto {
+    position: absolute;
+    top: 100%; /* Empieza justo debajo del botón */
+    left: 0;
+    margin-top: 15px; /* Un poco de aire */
+    background-color: #FFFFFF;
+    border: 4px solid #4E1A0A;
+    border-radius: 15px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.2);
+    z-index: 100; /* Fundamental para que se monte por encima de las recetas de abajo */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.2s ease;
+}
+
+/* Clase para ocultarlo */
+.dropdown-bruto {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 15px;
+    background-color: #FFFFFF;
+    border: 4px solid #4E1A0A;
+    border-radius: 15px;
+    padding: 25px;
+    width: 600px; /* Lo hacemos mucho más ancho */
+    max-width: 85vw; /* Por si la pantalla es pequeña, que no se salga */
+    box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.2);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease;
+
+    /* Si el menú es muy alto en portátiles pequeños, le ponemos scroll interno */
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.dropdown-bruto.oculto {
+    display: none;
+}
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 25px;
+}
+
+/* Estilos de los checks y textos del filtro */
+.grupo-filtro h4 {
+    margin: 0 0 10px 0;
+    color: #4E1A0A;
+    font-size: 18px;
+    border-bottom: 3px solid #E3412B; /* Subrayado coral duro */
+    padding-bottom: 5px;
+    display: inline-block;
+}
+
+.grupo-filtro label {
+    display: block;
+    margin-bottom: 8px;
+    color: #4E1A0A;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.1s ease;
+}
+
+.grupo-filtro label:hover {
+    transform: translateX(5px); /* Pequeño saltito a la derecha al pasar el ratón */
+}
+
+/* Agrandamos las cajas de los checkboxes para que se vean toscas y potentes */
+.grupo-filtro input[type="checkbox"] {
+    accent-color: #E3412B; /* Color coral al marcarlo */
+    transform: scale(1.3); /* Lo hacemos más grande */
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* --- INTERVALO TABLET (Hasta 1024px) --- */
+@media (max-width: 1024px) {
+    .contenedor-busqueda {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    /* El menú de filtros era de 600px, lo achicamos un poco para tablet */
+    .dropdown-bruto {
+        width: 500px;
+    }
+}
+
+/* --- INTERVALO MÓVIL (Hasta 768px) --- */
+@media (max-width: 768px) {
+    .contenedor-busqueda {
+        display: flex;
+        flex-direction: column;
+        width: calc(100vw - 55px);
+        max-width: calc(100vw - 50px);
+        margin: 20px 15px;
+        padding: 15px;
+        box-sizing: border-box;
+        overflow: visible;
+    }
+
+    .busqueda-label {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .barra-busqueda {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 10px;
+        box-sizing: border-box;
+    }
+
+    .columna-input {
+        width: 100%;
+        order: -1;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    .columna-input input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 14px 15px;
+    }
+
+    .contenedor-filtros {
+        position: static;
+        flex: 1;
+        min-width: 0;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    #btn-buscar {
+        flex: 1;
+        min-width: 0;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    #btn-filtros, #btn-buscar {
+        width: 100%;
+        padding: 12px 5px;
+        font-size: 14px;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .dropdown-bruto {
+        width: 100%;
+        left: 0;
+        top: 100%;
+        box-sizing: border-box;
+        margin-top: 15px;
+        padding: 25px 20px;
+    }
+
+    .filtros-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px 40px;
+    }
+
+    .btn-aplicar-filtros {
+        width: 100%;
+        margin-top: 25px;
+        padding: 16px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+}

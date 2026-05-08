@@ -1,0 +1,24 @@
+<app-buscador></app-buscador>
+
+<h2 class="titulo_centrado">Recetas que son Tendencia</h2>
+
+<div class="contenedor-slider-bruto">
+  <button id="btn-izq" class="btn-flecha" (click)="moverIzquierda()">◄</button>
+
+  <div class="slider_horizontal" id="tarjetas_trending" #carrusel>
+
+    @for (receta of recetas; track receta.id) {
+      <app-tarjeta_receta_vertical
+        [recetaData]="receta"
+        [ocultarBotonEditar]="true">
+      </app-tarjeta_receta_vertical>
+    } @empty {
+      <p style="text-align: center; width: 100%;">Cargando recetas deliciosas...</p>
+    }
+
+  </div>
+
+  <button id="btn-der" class="btn-flecha" (click)="moverDerecha()" >►</button>
+</div>
+
+<app-promociones></app-promociones>

@@ -1,0 +1,20 @@
+<main style="padding: 20px;">
+  <h2>Resultados de la búsqueda</h2>
+
+  <div *ngIf="cargando">
+    <p>Buscando en la nevera de Firebase...</p>
+  </div>
+
+  <div *ngIf="!cargando && recetasEncontradas.length === 0">
+    <p>No hemos encontrado recetas con esos ingredientes 😢</p>
+  </div>
+
+  <div *ngIf="!cargando && recetasEncontradas.length > 0" style="display: flex; flex-direction: column; gap: 20px;">
+
+    <app-tarjeta_receta_horizontal
+      *ngFor="let receta of recetasEncontradas"
+      [receta]="receta">
+    </app-tarjeta_receta_horizontal>
+
+  </div>
+</main>

@@ -1,0 +1,48 @@
+<header class="header-principal">
+
+  <div class="header-izquierda">
+    <button class="hamburger-btn" (click)="toggleMenu()" aria-label="Abrir menú">☰</button>
+
+    <a routerLink="/" class="logo-link">
+      <img src="/img/PrimaryLogo.png" alt="Logo What's In Your Fridge" class="img-logo">
+    </a>
+  </div>
+
+  <nav class="header-centro">
+    <a routerLink="/" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact: true}" class="btn-nav-inicio">Inicio</a>
+    <a routerLink="/favoritos" routerLinkActive="active-nav" class="boton-sesion" id="nav-favoritos">Mis Favoritos</a>
+    <a routerLink="/subir-receta" routerLinkActive="active-nav" class="boton-sesion" id="nav-subir">Subir Receta</a>
+    <a routerLink="/premium" routerLinkActive="active-nav" class="boton-sesion" id="nav-premium">Premium</a>
+  </nav>
+
+  <nav class="header-derecha">
+    <ng-container *ngIf="user; else noUser">
+      <div class="user-info" (click)="goToProfile()" title="Ver perfil">
+        <img
+          *ngIf="fotoPerfil || user.photoURL; else userIcon"
+          [src]="fotoPerfil || user.photoURL"
+          alt="Foto de perfil"
+          class="user-photo"
+        />
+        <ng-template #userIcon>
+          <img src="/img/Usuario%20SINFONDO.png" alt="Usuario" class="user-photo" />
+        </ng-template>
+      </div>
+    </ng-container>
+
+    <ng-template #noUser>
+      <a routerLink="/login" routerLinkActive="active-nav" class="boton-sesion" id="nav-auth">Entrar</a>
+    </ng-template>
+  </nav>
+
+</header>
+
+<div class="mobile-menu-drawer" [class.active]="menuAbierto" id="mobileMenu">
+  <nav class="mobile-nav-links">
+    <a routerLink="/" routerLinkActive="active-nav" [routerLinkActiveOptions]="{exact: true}" (click)="cerrarMenu()" class="mobile-link">Inicio</a>
+    <a routerLink="/favoritos" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link">Mis Favoritos</a>
+    <a routerLink="/subir-receta" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link">Subir Receta</a>
+    <a routerLink="/premium" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link">Premium</a>
+    <a routerLink="/login" routerLinkActive="active-nav" (click)="cerrarMenu()" class="mobile-link auth-link">Entrar</a>
+  </nav>
+</div>

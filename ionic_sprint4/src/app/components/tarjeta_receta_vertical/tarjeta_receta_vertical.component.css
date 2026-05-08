@@ -1,0 +1,111 @@
+:host {
+  /* 1. Evitamos que Flexbox encoja la tarjeta cuando hay muchas */
+  flex-shrink: 0;
+  /* 2. Aseguramos que se comporte como un bloque con su ancho definido */
+  display: block;
+}
+
+.tarjeta-v {
+  background-color: white;
+  border: 3px solid #4E1A0A; /* Tu marrón oficial */
+  border-radius: 16px;
+  box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.1);
+  width: 220px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-v:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px rgba(78, 26, 10, 0.2);
+}
+
+.enlace-tarjeta-v {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.tarjeta-v-header {
+  padding: 12px;
+  background-color: #FFFFFF;
+  border-bottom: 3px solid #4E1A0A;
+}
+
+.tarjeta-v-titulo {
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+  font-weight: 900;
+  color: #4E1A0A;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tarjeta-v-img {
+  width: 100%;
+  height: 140px;
+  border-bottom: 3px solid #4E1A0A;
+}
+
+.tarjeta-v-content {
+  padding: 12px;
+  background-color: #FFFAF3; /* Tu fondo crema */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.dato-mini {
+  margin: 0;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  color: #4E1A0A;
+}
+
+.tarjeta-v-footer, .footer-tarjeta, .contenedor-boton-editar {
+  padding: 16px !important; /* Obligamos a dar un buen espacio interior */
+  background-color: #FFF5E9;
+  border-top: 3px solid #4E1A0A;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* -----------------------------
+   EL BOTÓN EN SÍ
+   ----------------------------- */
+.btn-tarjeta-editar, .btn-editar, .btn-editar-tarjeta {
+  width: 100%;
+  box-sizing: border-box; /* Impide que el botón sea más ancho que la tarjeta */
+  justify-content: center;
+  font-size: 0.9rem;
+  padding: 10px;
+  background-color: transparent;
+  color: #4E1A0A;
+  border: 2px solid #4E1A0A;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+  margin: 0 !important; /* Quitamos márgenes invisibles que puedan empujarlo hacia abajo */
+}
+
+.btn-tarjeta-editar:hover, .btn-editar:hover, .btn-editar-tarjeta:hover {
+  background-color: #4E1A0A;
+  color: #FFF5E9;
+}

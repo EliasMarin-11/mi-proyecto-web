@@ -1,0 +1,21 @@
+<!-- Opcional: <app-header></app-header> -->
+
+<main>
+  <h2>Mis Recetas Favoritas</h2>
+
+  <div *ngIf="cargando">
+    <p>Cargando tu libro de recetas...</p>
+  </div>
+
+  <div *ngIf="!cargando && misFavoritas.length === 0">
+    <p>Aún no tienes recetas favoritas guardadas 💔</p>
+  </div>
+
+  <div *ngIf="!cargando && misFavoritas.length > 0">
+
+    <app-tarjeta_receta_horizontal
+      *ngFor="let receta of misFavoritas"
+      [receta]="receta">
+    </app-tarjeta_receta_horizontal>
+  </div>
+</main>

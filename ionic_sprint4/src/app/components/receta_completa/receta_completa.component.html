@@ -1,0 +1,156 @@
+<div *ngIf="cargando" class="pantalla-carga-receta">
+  Cargando receta...
+</div>
+
+<article class="receta-detalle-pro" *ngIf="!cargando && receta">
+
+  <section class="bloque-superior">
+    <div class="bloque-foto" id="receta-foto">
+      <img [src]="receta.imagen" class="img-receta-detalle" alt="Foto de la receta">
+    </div>
+
+    <div class="etiqueta-estrellas" id="receta-estrellas-hero">
+      ⭐ {{ mediaEstrellas }} ({{ totalVotos }} {{ totalVotos === 1 ? 'valoración' : 'valoraciones' }})
+    </div>
+
+    <div class="bloque-info">
+
+      <div class="cabecera-titulo-acciones" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; width: 100%;">
+
+        <h2 id="receta-titulo" style="margin: 0;">{{ receta.titulo }}</h2>
+
+        <!-- Corazón para los usuarios normales -->
+        <div class="btn-fav-detalle-flex" *ngIf="!esPropietario" title="Guardar favorito">❤</div>
+
+        <!-- Botonera exclusiva para el creador de la receta -->
+        <div class="botones-propietario" *ngIf="esPropietario" style="display: flex; gap: 10px; flex-shrink: 0;">
+
+          <button (click)="activarEdicion()" class="btn-editar-propietario">
+            ✏️ Editar
+          </button>
+
+          <button (click)="borrarReceta()" class="btn-borrar-propietario">
+            🗑️ Borrar
+          </button>
+        </div>
+
+      </div>
+
+      <div class="info-linea-iconos" *ngIf="receta.autorNombre">
+        <span class="chef-destacado">Chef: {{ receta.autorNombre }}</span>
+      </div>
+
+      <ul class="lista-info-breve">
+        <li><span class="cuadrito-mini">⏱️</span> {{ receta.tiempo }}</li>
+        <li><span class="cuadrito-mini">👨‍🍳</span> Dificultad: {{ receta.dificultad }}</li>
+        <li *ngIf="receta.raciones"><span class="cuadrito-mini">🍽️</span> {{ receta.raciones }} Raciones</li>
+
+        <!-- NUEVO: Mostrar Tipo de Plato -->
+        <li *ngIf="receta.tipo_plato"><span class="cuadrito-mini">🍲</span> Tipo: <span style="text-transform: capitalize;">{{ receta.tipo_plato }}</span></li>
+
+        <!-- NUEVO: Mostrar Dieta / Alérgenos como etiquetas rojas -->
+        <li *ngIf="receta.dieta && receta.dieta.length > 0" style="display: flex; gap: 5px; flex-wrap: wrap; align-items: center;">
+          <span class="cuadrito-mini">🌱</span> Dieta:
+          <span *ngFor="let d of receta.dieta" style="background: #E3412B; color: white; padding: 3px 8px; border-radius: 10px; font-size: 13px; font-weight: bold; text-transform: uppercase;">
+            {{ d }}
+          </span>
+        </li>
+      </ul>
+
+      <h3>Descripción del plato</h3>
+      <p id="receta-descripcion">{{ receta.descripcion }}</p>
+    </div>
+  </section>
+
+  <!-- BLOQUE INFERIOR -->
+  <section class="bloque-inferior">
+    <aside class="col-ingredientes">
+      <h3>INGREDIENTES</h3>
+      <ul class="lista-ingredientes-alergenos" id="receta-ingredientes">
+        <li *ngFor="let ing of receta.ingredientes">{{ ing }}</li>
+      </ul>
+    </aside>
+
+    <div class="col-instrucciones">
+      <h3>INSTRUCCIONES PASO A PASO</h3>
+      <div class="parrafos-instrucciones" id="receta-instrucciones">
+        <p *ngIf="!receta.instrucciones || receta.instrucciones.length === 0">Sin instrucciones.</p>
+        <p *ngFor="let paso of receta.instrucciones; let i = index">
+          <strong>Paso {{ i + 1 }}</strong>
+          {{ paso }}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONA DE RESEÑAS -->
+  <section class="zona-reseñas">
+    <h3 class="titulo-reseñas-bruto">Reseñas de la Comunidad</h3>
+
+
+    <div class="reseña-item caja-escribir" id="caja-mi-reseña" *ngIf="usuarioActualId && !esPropietario && !usuarioYaComento">
+      <div class="usuario-avatar-reseña">
+        <!-- Mostramos la foto del usuario actual, o la de defecto si no tiene -->
+        <img [src]="usuarioActualFoto || '/img/usuario-sinfondo.png'" alt="Tu foto" id="avatar-escribir">
+      </div>
+      <div class="cuerpo-reseña">
+        <textarea id="texto-nueva-reseña" [(ngModel)]="nuevoComentario" placeholder="¿Qué te ha parecido la receta? ¡Cuéntanoslo!" class="input-oscuro"></textarea>
+        <div class="footer-reseña">
+          <div class="selector-interactivo-estrellas" id="selector-puntuacion" (mouseleave)="resetEstrellas()">
+            <span *ngFor="let num of [1, 2, 3, 4, 5]"
+                  class="estrella-click"
+                  [class.activa]="estrellasSeleccionadas >= num"
+                  (mouseenter)="hoverEstrella(num)"
+                  (click)="seleccionarPuntuacion(num)">
+              ⭐
+            </span>
+          </div>
+          <button id="btn-publicar-reseña" class="btn-entrar" (click)="publicarResena()">Publicar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MENSAJES DE ESTADO -->
+    <p *ngIf="usuarioYaComento" class="mensaje-ya-comento">
+      ⭐ ¡Gracias por tu reseña! Ya has valorado esta receta.
+    </p>
+
+    <p *ngIf="esPropietario" class="mensaje-aviso-comunidad">
+      (Como creador, no puedes puntuar tu propia receta)
+    </p>
+
+    <p *ngIf="!usuarioActualId" class="mensaje-aviso-comunidad">
+      Inicia sesión para dejar una reseña.
+    </p>
+
+    <!-- Lista de reseñas -->
+    <div id="lista-reseñas">
+      <p *ngIf="!receta.comentarios || receta.comentarios.length === 0" class="mensaje-sin-resenas">
+        Aún no hay reseñas.
+      </p>
+
+      <div class="reseña-item" *ngFor="let com of receta.comentarios" [class.comentario-creador]="com.usuarioId === receta.userId">
+        <div class="usuario-avatar-reseña">
+          <!-- Mostramos la foto que guardamos en el comentario, o la de defecto -->
+          <img [src]="com.avatar || '/img/usuario-sinfondo.png'" alt="Avatar">
+        </div>
+        <!-- ... resto del código ... -->
+        <div class="cuerpo-reseña">
+          <p class="nombre-usuario-reseña">
+            {{ com.usuarioNombre }}
+
+            <!-- MOSTRAMOS LAS ESTRELLAS -->
+            <span *ngIf="com.puntuacion" class="estrellas-comentario">
+              <span *ngFor="let s of [1, 2, 3, 4, 5]">
+                <span *ngIf="s <= com.puntuacion">⭐</span>
+              </span>
+            </span>
+
+            <span class="fecha-comentario">({{ com.fecha | date:'dd/MM/yyyy' }})</span>
+          </p>
+          <p class="texto-reseña">{{ com.texto }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>

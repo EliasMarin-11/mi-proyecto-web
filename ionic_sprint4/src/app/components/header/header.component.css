@@ -1,0 +1,178 @@
+:host {
+  --fondo-crema: #FFF5E9;
+  --coral-principal: #E3412B;
+  --marron-boton: #4E1A0A;
+}
+
+.header-principal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 80px;
+  height: 120px;
+  background-color: var(--fondo-crema);
+  border-bottom: 5px solid var(--coral-principal);
+  position: relative;
+}
+
+.header-izquierda {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.img-logo {
+  width: auto;
+  height: 80px;
+  background-color: transparent;
+  display: block;
+}
+
+
+.header-centro, .header-derecha {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+
+.boton-sesion, .btn-nav-inicio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--marron-boton);
+  color: white;
+  text-decoration: none;
+  padding: 16px 36px;
+  border-radius: 60px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 6px 6px 0px rgba(78, 26, 10, 0.2);
+}
+
+.boton-sesion:hover, .btn-nav-inicio:hover {
+  background-color: var(--coral-principal);
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+}
+
+.active-nav {
+  background-color: var(--coral-principal);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.15);
+  pointer-events: none;
+}
+
+.hamburger-btn,
+.mobile-menu-drawer {
+  display: none;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 55px;  /* Controla el tamaño máximo aquí */
+  height: 55px;
+  border-radius: 50%; /* Lo hace un círculo perfecto */
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid var(--marron-boton);
+  background-color: var(--fondo-crema);
+  transition: transform 0.3s ease;
+}
+
+.user-info:hover {
+  transform: scale(1.05);
+}
+
+/* La imagen dentro del contenedor */
+.user-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Evita que la imagen se estire feo */
+}
+
+
+/* =========================================
+   DISEÑO RESPONSIVE (De PC a Móvil)
+========================================= */
+
+
+@media (max-width: 1024px) {
+  .header-principal {
+    padding: 0px 40px;
+    height: 100px;
+  }
+  .img-logo { height: 60px; }
+  .boton-sesion, .btn-nav-inicio {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+/* Cuando la pantalla es pequeña (Móviles) */
+@media (max-width: 768px) {
+  .header-principal {
+    padding: 0px 15px;
+    height: 80px;
+    border-bottom-width: 3px;
+  }
+  .header-centro { display: none; }
+
+  .header-derecha .boton-sesion {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .img-logo { height: 40px; }
+
+  /* Mostramos el botón hamburguesa */
+  .hamburger-btn {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 35px;
+    color: var(--marron-boton);
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+  }
+
+  /* Estilos del panel lateral del menú móvil */
+  .mobile-menu-drawer {
+    display: block;
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 250px;
+    height: calc(100vh - 80px);
+    background-color: var(--fondo-crema);
+    border-right: 4px solid var(--marron-boton);
+    z-index: 100;
+    transition: left 0.3s ease;
+    padding: 30px 20px;
+    box-shadow: 10px 0px 0px rgba(78, 26, 10, 0.1);
+  }
+
+  /* Esta clase la añadiremos con TypeScript más adelante para abrir el menú */
+  .mobile-menu-drawer.active { left: 0; }
+
+  .mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobile-link {
+    text-decoration: none;
+    color: var(--marron-boton);
+    font-size: 20px;
+    font-weight: 700;
+    border-bottom: 2px dashed rgba(78, 26, 10, 0.2);
+    padding-bottom: 10px;
+  }
+
+  .mobile-link:hover { color: var(--coral-principal); }
+}

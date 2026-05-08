@@ -1,0 +1,27 @@
+<article class="tarjeta-v">
+  <a [routerLink]="['/ver-receta', recetaData?.id]" class="enlace-tarjeta-v">
+    <header class="tarjeta-v-header">
+      <h2 class="tarjeta-v-titulo">{{ recetaData?.titulo }}</h2>
+    </header>
+
+    <div class="tarjeta-v-img">
+      <div class="placeholder-v"
+           [style.backgroundImage]="'url(' + recetaData?.imagen + ')'"
+           style="background-size: cover; background-position: center; width: 100%; height: 100%;">
+      </div>
+    </div>
+
+    <div class="tarjeta-v-content">
+      <p class="dato-mini">⏱️ {{ recetaData?.tiempo }}</p>
+      <p class="dato-mini">👨‍🍳 {{ recetaData?.dificultad }}</p>
+      <p class="dato-mini" *ngIf="recetaData?.autorNombre">👤 {{ recetaData?.autorNombre }}</p>
+    </div>
+  </a>
+
+  <!-- Añadimos: && !ocultarBotonEditar -->
+  <footer class="tarjeta-v-footer" *ngIf="esPropietario && !ocultarBotonEditar">
+    <a [routerLink]="['/subir-receta']" [queryParams]="{editar: recetaData?.id}" class="btn-tarjeta-editar">
+      ✏️ Editar mi receta
+    </a>
+  </footer>
+</article>

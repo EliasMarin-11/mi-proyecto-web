@@ -1,0 +1,698 @@
+/* --- TU CSS ORIGINAL --- */
+
+.receta-detalle-pro {
+  max-width: 950px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-family: 'Momo Trust Display', sans-serif;
+}
+
+.bloque-superior {
+  display: flex;
+  border-radius: 30px;
+  background-color: #FFFFFF;
+  height: auto;
+  border: 4px solid #4E1A0A;
+  box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
+  position: relative;
+}
+
+.bloque-foto {
+  width: 45%;
+  flex-shrink: 0;
+  background-color: #FFF5E9;
+  border-right: 4px solid #4E1A0A;
+  cursor: zoom-in;
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px 0 0 26px;
+}
+
+.bloque-foto img.img-receta-detalle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0 !important;
+}
+
+.bloque-info {
+  flex: 1;
+  padding: 40px;
+  position: relative;
+  color: #4E1A0A;
+}
+
+.btn-fav-detalle {
+  position: absolute;
+  top: 38px;
+  right: 40px;
+  font-size: 30px;
+  color: #4E1A0A;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.btn-fav-detalle:hover {
+  color: #E3412B;
+  transform: scale(1.2);
+}
+
+.btn-fav-detalle:active {
+  transform: scale(0.9);
+}
+
+.bloque-info h2 {
+  margin: 0 0 20px 0;
+  font-size: 32px;
+  padding-right: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.info-linea-iconos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.bloque-info h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.bloque-info p {
+  line-height: 1.6;
+  font-size: 16px;
+  margin: 0;
+  word-break: break-word;
+}
+
+.bloque-inferior {
+  display: flex;
+  border-radius: 30px;
+  overflow: hidden;
+  min-height: 450px;
+  border: 4px solid #4E1A0A;
+  box-shadow: 10px 10px 0px rgba(78, 26, 10, 0.1);
+}
+
+.col-ingredientes {
+  width: 35%;
+  background-color: #FFFAF3;
+  padding: 40px;
+  box-sizing: border-box;
+  border-right: 4px solid #4E1A0A;
+  background-image: linear-gradient(180deg, #FFFAF3 0%, #F9F1E7 100%);
+}
+
+.col-ingredientes h3 {
+  font-size: 22px;
+  margin: 0 0 25px 0;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #4E1A0A;
+  display: inline-block;
+  border-bottom: 3px solid #E3412B;
+}
+
+.lista-ingredientes-alergenos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-ingredientes-alergenos li {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 18px;
+  font-size: 16px;
+  color: #4E1A0A;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.lista-ingredientes-alergenos li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  background-color: #E3412B;
+  border: 2px solid #4E1A0A;
+  border-radius: 3px;
+  box-shadow: 2px 2px 0px #4E1A0A;
+  transition: all 0.2s ease;
+}
+
+.lista-ingredientes-alergenos li:hover {
+  transform: translateX(5px);
+  color: #000;
+}
+
+.lista-ingredientes-alergenos li:hover::before {
+  background-color: #4E1A0A;
+  transform: rotate(45deg);
+  box-shadow: 0px 0px 0px transparent;
+}
+
+.col-instrucciones {
+  width: 65%;
+  background-color: #FFFFFF;
+  padding: 40px;
+  padding-right: 60px;
+  box-sizing: border-box;
+}
+
+.col-instrucciones h3 {
+  font-size: 22px;
+  margin: 0 0 25px 0;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #4E1A0A;
+  display: inline-block;
+  border-bottom: 3px solid #E3412B;
+}
+
+.parrafos-instrucciones p {
+  background-color: #FFFFFF;
+  border: 3px solid #4E1A0A;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+  line-height: 1.6;
+  font-size: 16px;
+  color: #4E1A0A;
+  box-shadow: 5px 5px 0px #4E1A0A;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  word-break: break-word;
+}
+.parrafos-instrucciones p strong {
+  color: #E3412B;
+  font-size: 18px;
+  font-weight: 900;
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.parrafos-instrucciones p:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px #E3412B;
+  border-color: #E3412B;
+}
+
+.zona-reseñas {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.titulo-reseñas-bruto {
+  font-size: 28px;
+  color: #4E1A0A;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  border-bottom: 4px solid #4E1A0A;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.reseña-item {
+  background-color: #FFF5E9;
+  border: 4px solid #4E1A0A;
+  border-radius: 16px;
+  padding: 20px 30px;
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center; /* Todo centrado verticalmente */
+  gap: 20px;
+  box-shadow: 6px 6px 0px #4E1A0A;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.reseña-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #4E1A0A;
+}
+
+.usuario-avatar-reseña {
+  width: 65px;
+  height: 65px;
+  border: 3px solid #4E1A0A;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: white;
+}
+
+.usuario-avatar-reseña img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.caja-escribir {
+  background-color: white;
+}
+
+.caja-escribir .cuerpo-reseña {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+.caja-escribir textarea.input-oscuro {
+  flex-grow: 1; /* Ocupa todo el espacio sobrante */
+  height: 55px;
+  padding: 15px 20px;
+  font-size: 16px;
+  font-family: inherit;
+  border: 3px solid #4E1A0A;
+  border-radius: 8px;
+  resize: none;
+  outline: none;
+  margin: 0;
+  transition: all 0.2s ease;
+}
+
+.caja-escribir textarea.input-oscuro:focus {
+  box-shadow: 4px 4px 0px #E3412B;
+  border-color: #E3412B;
+  transform: translate(-2px, -2px);
+}
+
+.caja-escribir .footer-reseña {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 0;
+}
+
+#btn-publicar-reseña {
+  background-color: white;
+  color: #4E1A0A;
+  border: 3px solid #4E1A0A;
+  padding: 10px 15px;
+  font-weight: 900;
+  text-transform: uppercase;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px #4E1A0A;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+#btn-publicar-reseña:hover {
+  background-color: #4E1A0A;
+  color: white;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #E3412B;
+}
+
+#lista-reseñas .cuerpo-reseña {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  flex-grow: 1;
+}
+
+.nombre-usuario-reseña {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  color: #4E1A0A;
+}
+
+.texto-reseña {
+  margin: 0;
+  font-size: 15px;
+  color: #111;
+  line-height: 1.5;
+}
+
+.etiqueta-estrellas {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  background-color: white;
+  border: 3px solid #4E1A0A;
+  border-radius: 12px;
+  padding: 8px 15px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  box-shadow: 4px 4px 0px #4E1A0A;
+  z-index: 10;
+}
+
+.lista-info-breve {
+  list-style: none;
+  padding: 0;
+  margin: -5px 0 25px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lista-info-breve li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: #4E1A0A;
+  font-weight: 600;
+}
+
+#receta-alergenos {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.selector-interactivo-estrellas {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.estrella-click {
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: grayscale(100%) opacity(0.5); /* Por defecto, apagadas */
+}
+
+.estrella-click:hover {
+  transform: scale(1.2);
+}
+
+.estrella-click.activa {
+  filter: grayscale(0%) opacity(1); /* Encendidas mediante Angular */
+}
+
+@media (max-width: 768px) {
+  .receta-detalle-pro { margin: 20px 15px; gap: 25px; }
+  .bloque-superior { flex-direction: column; }
+  .bloque-foto { width: 100%; height: 250px; border-right: none; border-bottom: 4px; border-radius: 26px 26px 0 0; }
+  .bloque-info { padding: 25px 20px; }
+  .bloque-info h2 { font-size: 24px; padding-right: 0; margin-bottom: 15px; }
+  .btn-fav-detalle { top: 20px; right: 20px; font-size: 28px; }
+  .etiqueta-estrellas { top: 15px; left: 15px; padding: 5px 10px; font-size: 15px; }
+  .bloque-inferior { flex-direction: column; }
+  .col-ingredientes { width: 100%; border-right: none; border-bottom: 4px solid; padding: 30px 20px; }
+  .col-instrucciones { width: 100%; padding: 30px 20px; }
+  .zona-reseñas { margin: 30px auto; padding: 0 10px; }
+  .titulo-reseñas-bruto { font-size: 22px; }
+  .reseña-item { flex-direction: column; align-items: flex-start; padding: 20px; gap: 15px; }
+  .caja-escribir .cuerpo-reseña { flex-direction: column; width: 100%; align-items: stretch; }
+  .caja-escribir textarea.input-oscuro { height: 80px; }
+  .caja-escribir .footer-reseña { justify-content: space-between; margin-top: 10px; flex-wrap: wrap; }
+}
+
+.formulario-edicion {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.fila-doble-edicion {
+  display: flex;
+  gap: 25px;
+}
+
+.fila-doble-edicion > div {
+  flex: 1;
+}
+
+.grupo-edicion label {
+  display: block;
+  font-weight: 900;
+  color: #4E1A0A;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+
+.input-edicion {
+  width: 100%;
+  padding: 15px;
+  border: 3px solid #4E1A0A;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 16px;
+  background-color: #FFF5E9;
+  color: #4E1A0A;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.input-edicion:focus {
+  outline: none;
+  background-color: white;
+  box-shadow: 4px 4px 0px #E3412B;
+  transform: translate(-2px, -2px);
+}
+
+.caja-array {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 16px;
+  border: 3px solid #eee;
+}
+
+.btn-rojo-mini {
+  background-color: #E3412B;
+  color: white;
+  border: 3px solid #4E1A0A;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0 15px;
+  box-shadow: 2px 2px 0px #4E1A0A;
+  transition: transform 0.1s;
+}
+
+.btn-rojo-mini:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px transparent;
+}
+
+.btn-crema-mini {
+  background-color: #FFF5E9;
+  color: #4E1A0A;
+  border: 3px dashed #4E1A0A;
+  border-radius: 10px;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 12px;
+  margin-top: 10px;
+  width: 100%;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.btn-crema-mini:hover {
+  background-color: #E3412B;
+  color: white;
+  border-style: solid;
+}
+
+.btn-guardar-edicion {
+  background-color: #E3412B;
+  color: white;
+  border: 4px solid #4E1A0A;
+  padding: 15px 40px;
+  font-weight: 900;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 6px 6px 0px #4E1A0A;
+  transition: all 0.2s ease;
+}
+
+.btn-guardar-edicion:hover:not(:disabled) {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0px #4E1A0A;
+}
+
+.btn-cancelar-edicion {
+  background-color: #FFF5E9;
+  color: #4E1A0A;
+  border: 4px solid #4E1A0A;
+  padding: 15px 30px;
+  font-weight: 900;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: 6px 6px 0px #4E1A0A;
+  transition: all 0.2s ease;
+}
+
+.btn-cancelar-edicion:hover {
+  background-color: white;
+}
+
+.pantalla-carga-receta {
+  text-align: center;
+  padding: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #4E1A0A;
+}
+
+
+
+
+
+.btn-editar-propietario:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #4E1A0A;
+}
+
+.chef-destacado {
+  color: #E3412B;
+}
+
+.mensaje-ya-comento {
+  color: #E3412B;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+  border: 2px dashed #E3412B;
+  padding: 15px;
+  border-radius: 12px;
+  background: #FFF5E9;
+}
+
+.mensaje-aviso-comunidad {
+  color: #4E1A0A;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mensaje-sin-resenas {
+  text-align: center;
+  font-style: italic;
+}
+
+.comentario-creador {
+  border-color: #E3412B !important;
+}
+
+.estrellas-comentario {
+  margin-left: 8px;
+  font-size: 14px;
+}
+
+.fecha-comentario {
+  font-size: 12px;
+  color: #666;
+  font-weight: normal;
+  margin-left: 8px;
+}
+
+.cabecera-titulo-acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.cabecera-titulo-acciones h2 {
+  margin: 0 !important;
+  padding-right: 0 !important; /* Anulamos el padding original del h2 */
+  flex: 1; /* El texto ocupa el espacio que necesite sin aplastar al botón */
+  word-break: break-word;
+}
+
+.btn-fav-detalle-flex {
+  font-size: 30px;
+  color: #4E1A0A;
+  cursor: pointer;
+  transition: transform 0.3s ease, color 0.3s ease;
+  user-select: none;
+  flex-shrink: 0; /* Evita que el corazón se aplaste */
+  margin-top: -5px; /* Ajuste visual con el título */
+}
+
+.btn-fav-detalle-flex:hover {
+  color: #E3412B;
+  transform: scale(1.2);
+}
+
+.btn-fav-detalle-flex:active {
+  transform: scale(0.9);
+}
+
+.btn-editar-propietario {
+  flex-shrink: 0; /* Evita que el botón se aplaste si el título es muy largo */
+  background: #FFF5E9;
+  border: 3px solid #4E1A0A;
+  padding: 8px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 900;
+  box-shadow: 4px 4px 0 #4E1A0A;
+  color: #4E1A0A;
+  font-size: 15px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap; /* Evita que el texto salte de línea */
+}
+
+.btn-editar-propietario:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #4E1A0A;
+}
+
+@media (max-width: 768px) {
+  .fila-doble-edicion {
+    flex-direction: column;
+  }
+}
+
+/* Estilo normal del botón borrar */
+.btn-borrar-propietario {
+  background-color: #E3412B; /* Tu rojo */
+  color: white;
+  border: 2px solid #E3412B;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease; /* Esta es la magia de la animación */
+}
+
+/* El efecto cuando pasas el ratón por encima */
+.btn-borrar-propietario:hover {
+  background-color: white;
+  color: #E3412B;
+  transform: translateY(-2px); /* Esto hace que "salte" un poquito hacia arriba */
+  box-shadow: 0 4px 8px rgba(227, 65, 43, 0.2); /* Una sombra roja suave */
+}
+
+/* Y si quieres asegurarte de que el de editar tiene el mismo salto hacia arriba, comprueba que tiene esto: */
+.btn-editar-propietario {
+  transition: all 0.3s ease;
+}
+.btn-editar-propietario:hover {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,102 @@
+<!-- Mensaje de carga mientras Firebase decide -->
+<div *ngIf="cargandoAuth" class="pantalla-aviso-perfil">
+  <h2>Verificando sesión...</h2>
+</div>
+
+<main class="main-perfil" *ngIf="!cargandoAuth && usuarioActual">
+  <div class="perfil-layout-dual">
+
+    <section class="perfil-tarjeta">
+      <!-- AVATAR -->
+      <div class="perfil-avatar-wrapper" (click)="inputAvatar.click()">
+        <img class="perfil-avatar"
+             [src]="nuevaFotoPreview || fotoGuardada || 'img/Usuario SINFONDO.png'"
+             alt="Avatar">
+        <input type="file" #inputAvatar accept="image/*" class="oculto" (change)="onFotoSeleccionada($event)">
+      </div>
+
+      <div class="perfil-cabecera">
+        <h2 class="perfil-nombre perfil-nombre-editable" *ngIf="!editandoNombre" (click)="activarEdicion()" title="Haz clic para editar">
+          {{ nuevoNombre }} <img src="img/lapiz.png" alt="Editar" class="icono-editar-nombre-mini">
+        </h2>
+
+        <input type="text" class="input-dummy" *ngIf="editandoNombre" autofocus
+               [(ngModel)]="nuevoNombre" (keyup.enter)="guardarCambios()"
+               placeholder="Escribe tu nombre + Enter">
+      </div>
+
+      <form class="perfil-formulario" id="form-perfil">
+        <div class="form-grupo">
+          <label>Correo Electrónico</label>
+          <input type="email" id="input-email" class="input-dummy input-oscuro"
+                 [value]="emailUsuario" readonly>
+        </div>
+
+        <div class="form-grupo">
+          <label>Tu plan actual</label>
+          <div class="contenedor-plan">
+            <div class="etiqueta-plan" id="texto-plan">{{ planUsuario }}</div>
+            <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan" (click)="irAPlanes()">Gestionar</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-perfil" id="btn-guardar" (click)="guardarCambios()">Guardar Cambios</button>
+
+        <hr class="perfil-separador">
+
+        <button type="button" class="btn-perfil" id="btn-cambiar-password" (click)="mostrarCamposPassword()">Cambiar Contraseña</button>
+
+        <div *ngIf="editandoPassword" class="contenedor-editar-pass">
+          <div class="form-grupo">
+            <label>Contraseña Actual</label>
+            <input type="password" [(ngModel)]="passActual" name="passActual" class="input-dummy" placeholder="********" required>
+          </div>
+          <div class="form-grupo">
+            <label>Nueva Contraseña</label>
+            <input type="password" [(ngModel)]="passNueva" name="passNueva" class="input-dummy" placeholder="********" required minlength="6">
+          </div>
+          <button type="button" class="btn-perfil btn-confirmar-pass" (click)="actualizarPassword()">Confirmar Nueva Contraseña</button>
+          <button type="button" class="btn-perfil btn-secundario btn-pequeno btn-cancelar-pass" (click)="cancelarEdicionPassword()">Cancelar</button>
+        </div>
+
+      </form>
+
+      <div class="perfil-enlaces-inferiores">
+        <p>¿Has terminado de cocinar por hoy?</p>
+        <a href="javascript:void(0)" id="btn-logout" (click)="cerrarSesion()">Cerrar Sesión</a>
+      </div>
+    </section>
+
+    <aside class="perfil-aside-recetas">
+      <div class="cabecera-aside">
+        <h3 class="titulo-mis-recetas">Mis Recetas Creadas ({{misRecetas.length}})</h3>
+        <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta" (click)="irASubirReceta()">+ Sube otra receta</button>
+      </div>
+
+      <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside">
+
+        <!-- Si NO tiene recetas -->
+        <div *ngIf="misRecetas.length === 0" class="mensaje-vacio-recetas">
+          <p>Aún no has creado ninguna receta.</p>
+          <p>¡Anímate a compartir tus platos favoritos!</p>
+        </div>
+
+        <div class="grid-recetas-perfil">
+          <!-- Tu componente de la tarjeta vertical con el *ngFor -->
+          <app-tarjeta_receta_vertical
+            *ngFor="let receta of misRecetas"
+            [recetaData]="receta">
+          </app-tarjeta_receta_vertical>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<!-- Si Firebase resuelve pero el usuario es null -->
+<div *ngIf="!cargandoAuth && !usuarioActual" class="pantalla-aviso-perfil">
+  <h2>No has iniciado sesión.</h2>
+  <button class="btn-perfil" (click)="cerrarSesion()" style="width: auto; padding: 10px 30px;">Ir al Login</button>
+</div>

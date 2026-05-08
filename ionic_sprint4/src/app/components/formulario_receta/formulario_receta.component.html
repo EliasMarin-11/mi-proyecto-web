@@ -1,0 +1,111 @@
+<main class="contenedor-crear-receta">
+  <form id="formulario-nueva-receta" (ngSubmit)="guardarReceta()">
+
+    <div class="cabecera-formulario">
+      <input type="text" id="receta-titulo" name="titulo" [(ngModel)]="titulo" placeholder="Nombre de tu deliciosa receta..." class="input-titulo-principal" required minlength="5">
+    </div>
+
+    <div class="formulario-dos-columnas">
+      <div class="columna-izquierda">
+        <div class="grupo-input grupo-doble">
+          <input type="number" id="receta-tiempo-num" name="tiempoNum" [(ngModel)]="tiempoNum" placeholder="Tiempo" class="input-linea input-mitad" required min="1" step="1">
+          <select id="receta-tiempo-unidad" name="tiempoUnidad" [(ngModel)]="tiempoUnidad" class="input-linea input-mitad" required>
+            <option value="min">Minutos</option>
+            <option value="horas">Horas</option>
+          </select>
+        </div>
+
+        <div class="grupo-input">
+          <select id="receta-tipo" name="tipoPlato" [(ngModel)]="tipoPlato" class="input-linea" required>
+            <option value="" disabled selected>Tipo de plato...</option>
+            <option value="primero">Primero</option>
+            <option value="segundo">Segundo</option>
+            <option value="cuchara">De Cuchara</option>
+            <option value="postre">Postre</option>
+          </select>
+        </div>
+
+        <!-- NUEVO: Casillas de Dieta (Alergenos) -->
+        <div class="grupo-input" style="background: #FFF5E9; padding: 15px; border-radius: 10px; border: 2px dashed #4E1A0A; margin-bottom: 20px;">
+          <label style="font-weight: bold; color: #4E1A0A; display: block; margin-bottom: 10px; text-transform: uppercase; font-size: 14px;">¿Apto para dietas especiales?</label>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 15px; color: #4E1A0A;">
+            <label><input type="checkbox" name="dieta-singluten" [(ngModel)]="dieta.singluten"> Sin Gluten</label>
+            <label><input type="checkbox" name="dieta-sinlactosa" [(ngModel)]="dieta.sinlactosa"> Sin Lácteos</label>
+            <label><input type="checkbox" name="dieta-vegetariano" [(ngModel)]="dieta.vegetariano"> Vegetariano</label>
+            <label><input type="checkbox" name="dieta-vegano" [(ngModel)]="dieta.vegano"> Vegano</label>
+          </div>
+        </div>
+
+        <div class="grupo-input">
+          <input type="number" id="receta-raciones" name="raciones" [(ngModel)]="raciones" placeholder="Raciones (ej. 4)" class="input-linea" required min="1" step="1">
+        </div>
+
+        <div class="grupo-input">
+          <select id="receta-dificultad" name="dificultad" [(ngModel)]="dificultad" class="input-linea" required>
+            <option value="" disabled selected>Nivel de dificultad...</option>
+            <option value="facil">Fácil</option>
+            <option value="media">Media</option>
+            <option value="dificil">Difícil</option>
+          </select>
+        </div>
+
+        <div class="seccion-lista" id="contenedor-ingredientes">
+          <h3>Ingredientes</h3>
+          <div class="fila-ingrediente" *ngFor="let ing of ingredientes; let i = index">
+            <!-- Mantenemos los [name] dinámicos del sprint-3 para evitar fallos de Angular -->
+            <input type="number" step="any" min="0" placeholder="Cant." class="input-caja ing-cant" [name]="'ingCant'+i" [(ngModel)]="ing.cantidad" required>
+            <select class="input-caja ing-medida" [name]="'ingUnidad'+i" [(ngModel)]="ing.unidad" required>
+              <option value="" disabled selected>Unidad</option>
+              <option value="gr">Gramos (gr)</option>
+              <option value="ml">Mililitros (ml)</option>
+              <option value="ud">Unidades (ud)</option>
+              <option value="cdas">Cucharadas</option>
+              <option value="tazas">Tazas</option>
+            </select>
+            <input type="text" placeholder="Ingrediente (ej. Pollo)" class="input-caja ing-nombre" [name]="'ingNombre'+i" [(ngModel)]="ing.nombre" list="sugerencias-ingredientes" autocomplete="off" required>
+            <datalist id="sugerencias-ingredientes">
+              <option *ngFor="let op of opcionesSugeridas" [value]="op"></option>
+            </datalist>
+
+            <button type="button" class="btn-eliminar" (click)="removeIngrediente(i)" *ngIf="ingredientes.length > 1">×</button>
+          </div>
+          <button type="button" class="btn-anadir" (click)="addIngrediente()">+ Añadir ingrediente</button>
+        </div>
+
+        <div class="seccion-lista" id="contenedor-pasos">
+          <h3>Instrucciones paso a paso</h3>
+          <!-- Mantenemos el trackByFn del sprint-3 para evitar bugs al escribir en los textareas -->
+          <div class="fila-paso" *ngFor="let paso of pasos; let i = index; trackBy: trackByFn">
+            <textarea [placeholder]="'Paso ' + (i + 1) + ': ...'" class="textarea-paso paso-texto" [name]="'paso'+i" [(ngModel)]="pasos[i]" required></textarea>
+            <button type="button" class="btn-eliminar" (click)="removePaso(i)" *ngIf="pasos.length > 1">×</button>
+          </div>
+          <button type="button" class="btn-anadir" (click)="addPaso()">+ Añadir paso</button>
+        </div>
+      </div>
+
+      <div class="columna-derecha">
+        <div class="caja-subir-foto" id="caja-foto-visual" (click)="fotoInput.click()">
+          <ng-container *ngIf="!imagenPreview">
+            <span class="icono-foto">📷</span>
+            <p>Sube una foto apetitosa de tu plato</p>
+          </ng-container>
+          <ng-container *ngIf="imagenPreview">
+            <img [src]="imagenPreview" class="img-preview" alt="Vista previa">
+            <button type="button" class="btn-borrar-foto" (click)="$event.stopPropagation(); borrarFoto()">×</button>
+          </ng-container>
+        </div>
+        <input type="file" #fotoInput (change)="onFileSelected($event)" accept="image/*" style="display:none;">
+
+        <div class="grupo-descripcion">
+          <h3>Breve descripción</h3>
+          <textarea id="receta-desc" name="descripcion" [(ngModel)]="descripcion" placeholder="Cuenta la historia de esta receta..." class="textarea-desc" required minlength="10"></textarea>
+        </div>
+
+        <!-- Mantenemos la mejora visual de Elías para el botón de carga -->
+        <button type="submit" class="btn-guardar-principal" [disabled]="guardando">
+          {{ guardando ? 'Publicando en Firebase...' : 'Publicar Receta' }}
+        </button>
+      </div>
+    </div>
+  </form>
+</main>

@@ -1,0 +1,38 @@
+<a [routerLink]="['/ver-receta', receta.id]" class="enlace-tarjeta">
+  <article class="tarjeta-receta">
+
+    <div class="receta-dummy-img"
+         [style.backgroundImage]="'url(' + receta.imagen + ')'"
+         style="background-size: cover; background-position: center;">
+    </div>
+
+    <div class="receta-info">
+      <header class="receta-header">
+        <h2 class="receta-titulo">{{ receta.titulo }}</h2>
+        <div class="btn-fav-receta"
+             title="Guardar receta"
+             (click)="clickFavorito($event)"
+             [style.color]="esFavorito ? 'red' : '#ccc'">
+          ❤
+        </div>
+      </header>
+
+      <div class="receta-detalles">
+        <div class="detalles-datos">
+          <ul class="lista-mini">
+            <li>⏱️ {{ receta.tiempo }}</li>
+            <li>👨‍🍳 {{ receta.dificultad }}</li>
+            <li>🍽️ {{ receta.tipo_plato }}</li>
+            <!-- NUEVO: Mostrar el nombre del autor en la tarjeta -->
+            <li *ngIf="receta.autorNombre">👤 {{ receta.autorNombre }}</li>
+          </ul>
+        </div>
+
+        <div class="detalles-desc">
+          <p>{{ receta.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+
+  </article>
+</a>
