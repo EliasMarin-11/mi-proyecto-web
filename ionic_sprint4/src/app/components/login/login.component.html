@@ -1,42 +1,36 @@
-<main class="main-login">
-<h2 class="titulo-login">Inicia Sesión</h2>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="titulo-login ion-text-center">Inicia Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<div class="contenedor-formulario">
-  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="formulario-login">
+<ion-content class="ion-padding main-login">
 
-    <div class="grupo-input">
-      <input
-        type="email"
-        formControlName="email"
-        placeholder="E-mail"
-        class="input-oscuro"
-      >
-    </div>
+  <div class="contenedor-formulario">
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="formulario-login">
 
-    <div class="grupo-input">
-      <input
-        type="password"
-        formControlName="password"
-        placeholder="Contraseña"
-        class="input-oscuro"
-      >
-    </div>
+      <ion-item lines="none" class="grupo-input">
+        <ion-input label="E-mail" labelPlacement="floating" type="email" formControlName="email" class="input-oscuro"></ion-input>
+      </ion-item>
 
-    <div class="opciones-login">
-      <label class="checkbox-recordar">
-        <input type="checkbox"> Seguir conectado
-      </label>
-      <a routerLink="#" class="link-olvido">¿Has olvidado la contraseña?</a>
-    </div>
+      <ion-item lines="none" class="grupo-input">
+        <ion-input label="Contraseña" labelPlacement="floating" type="password" formControlName="password" class="input-oscuro"></ion-input>
+      </ion-item>
 
-    <button type="submit" class="btn-entrar" [disabled]="loginForm.invalid">Inicia Sesión</button>
+      <div class="opciones-login ion-margin-vertical">
+        <ion-checkbox labelPlacement="end" justify="start">Seguir conectado</ion-checkbox>
+        <a routerLink="#" class="link-olvido">¿Has olvidado la contraseña?</a>
+      </div>
 
-    <div class="enlace-registro">
-      <a routerLink="/registro" class="link-subrayado">¿No tienes cuenta? Registrate</a>
-    </div>
+      <ion-button type="submit" expand="block" class="btn-entrar" [disabled]="loginForm.invalid">
+        Inicia Sesión
+      </ion-button>
 
-  </form>
-</div>
+      <div class="enlace-registro ion-text-center">
+        <a routerLink="/registro" class="link-subrayado">¿No tienes cuenta? Regístrate</a>
+      </div>
 
-</main>
+    </form>
+  </div>
 
+</ion-content>

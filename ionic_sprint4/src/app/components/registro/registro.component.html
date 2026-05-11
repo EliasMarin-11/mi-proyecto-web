@@ -1,41 +1,50 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="titulo-registro ion-text-center">Crea tu cuenta</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<main class="main-registro">
-
-  <h2 class="titulo-registro">Crea tu cuenta</h2>
+<ion-content class="ion-padding main-registro">
 
   <div class="contenedor-formulario">
     <form [formGroup]="registroForm" (ngSubmit)="onRegistro()" class="formulario-registro">
 
-      <div class="grupo-input">
-        <input type="text" formControlName="nombre" placeholder="Nombre" class="input-oscuro">
+      <ion-item lines="none" class="grupo-input">
+        <ion-input label="Nombre" labelPlacement="floating" type="text" formControlName="nombre" class="input-oscuro"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="grupo-input">
+        <ion-input label="Apellidos" labelPlacement="floating" type="text" formControlName="apellidos" class="input-oscuro"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="grupo-input">
+        <ion-input label="E-mail" labelPlacement="floating" type="email" formControlName="email" class="input-oscuro"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="grupo-input grupo-password">
+        <ion-input label="Contraseña" labelPlacement="floating" type="password" formControlName="password" class="input-oscuro"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="grupo-input grupo-password">
+        <ion-input label="Repetir Contraseña" labelPlacement="floating" type="password" formControlName="confirmarPassword" class="input-oscuro"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="grupo-input ion-margin-top">
+        <ion-label position="stacked">Foto de perfil:</ion-label>
+        <input type="file" (change)="onFileSelected($event)" accept="image/*">
+      </ion-item>
+
+      <div class="opciones-registro ion-margin-vertical">
+        <ion-checkbox labelPlacement="end" justify="start">Seguir Conectado</ion-checkbox>
       </div>
 
-      <div class="grupo-input">
-        <input type="email" formControlName="email" placeholder="E-mail" class="input-oscuro">
-      </div>
+      <ion-button type="submit" expand="block" class="btn-registro">Registrarse</ion-button>
 
-      <div class="grupo-input grupo-password">
-        <input type="password" formControlName="password" placeholder="Contraseña" class="input-oscuro">
-      </div>
-
-      <div class="grupo-input grupo-password">
-        <input type="password" formControlName="confirmarPassword" placeholder="Repetir Contraseña" class="input-oscuro">
-      </div>
-
-      <div class="opciones-registro">
-        <label class="checkbox-terminos">
-          <input type="checkbox" required> Seguir Conectado
-        </label>
-      </div>
-
-      <button type="submit" class="btn-registro">Registrarse</button>
-
-      <div class="enlace-login">
+      <div class="enlace-login ion-text-center">
         <a routerLink="/login" class="link-subrayado">¿Ya tienes cuenta?</a>
       </div>
 
     </form>
   </div>
 
-</main>
-
+</ion-content>

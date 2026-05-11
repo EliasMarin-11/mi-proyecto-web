@@ -1,24 +1,47 @@
-<app-buscador></app-buscador>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center" style="color: #4E1A0A; font-weight: bold;">
+      What's in your fridge
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<h2 class="titulo_centrado">Recetas que son Tendencia</h2>
+<ion-content class="ion-padding">
 
-<div class="contenedor-slider-bruto">
-  <button id="btn-izq" class="btn-flecha" (click)="moverIzquierda()">◄</button>
+  <app-buscador></app-buscador>
 
-  <div class="slider_horizontal" id="tarjetas_trending" #carrusel>
+  <h2 class="titulo_centrado ion-text-center ion-margin-top" style="color: #4E1A0A; font-weight: bold;">
+    Recetas que son Tendencia
+  </h2>
 
-    @for (receta of recetas; track receta.id) {
-      <app-tarjeta_receta_vertical
-        [recetaData]="receta"
-        [ocultarBotonEditar]="true">
-      </app-tarjeta_receta_vertical>
-    } @empty {
-      <p style="text-align: center; width: 100%;">Cargando recetas deliciosas...</p>
-    }
+  <div class="contenedor-slider-bruto" style="display: flex; align-items: center; width: 100%;">
+
+    <ion-button fill="clear" color="dark" (click)="moverIzquierda()" class="btn-flecha ion-hide-md-down">
+      ◄
+    </ion-button>
+
+    <div class="slider_horizontal" id="tarjetas_trending" #carrusel style="display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 15px; padding-bottom: 15px; flex-grow: 1;">
+
+      @for (receta of recetas; track receta.id) {
+        <app-tarjeta_receta_vertical
+          [recetaData]="receta"
+          [ocultarBotonEditar]="true">
+        </app-tarjeta_receta_vertical>
+      } @empty {
+        <div class="ion-text-center ion-padding" style="width: 100%; color: #4E1A0A;">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <p>Cargando recetas deliciosas...</p>
+        </div>
+      }
+
+    </div>
+
+    <ion-button fill="clear" color="dark" (click)="moverDerecha()" class="btn-flecha ion-hide-md-down">
+      ►
+    </ion-button>
 
   </div>
 
-  <button id="btn-der" class="btn-flecha" (click)="moverDerecha()" >►</button>
-</div>
+  <app-promociones class="ion-margin-top"></app-promociones>
 
-<app-promociones></app-promociones>
+</ion-content>

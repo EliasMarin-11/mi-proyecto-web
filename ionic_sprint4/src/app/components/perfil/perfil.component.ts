@@ -6,15 +6,26 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Firestore, doc, setDoc, onSnapshot } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
-import { RecetasService, Receta } from '../../services/recetas.service'; // <--- IMPORTACIÓN NUEVA
-// IMPORTA EL COMPONENTE DE TU TARJETA
+import { RecetasService, Receta } from '../../services/recetas.service';
 import { Tarjeta_receta_verticalComponent } from '../tarjeta_receta_vertical/tarjeta_receta_vertical.component';
+
+// --- NUEVAS IMPORTACIONES DE IONIC ---
+import {
+  IonHeader, IonToolbar, IonTitle, IonContent, IonSpinner,
+  IonCard, IonCardContent, IonCardHeader, IonItem, IonLabel,
+  IonInput, IonButton
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  // AÑADIMOS LA TARJETA A LOS IMPORTS
-  imports: [CommonModule, FormsModule, Tarjeta_receta_verticalComponent],
+  // --- AÑADIMOS LAS ETIQUETAS AQUÍ ---
+  imports: [
+    CommonModule, FormsModule, Tarjeta_receta_verticalComponent,
+    IonHeader, IonToolbar, IonTitle, IonContent, IonSpinner,
+    IonCard, IonCardContent, IonCardHeader, IonItem, IonLabel,
+    IonInput, IonButton
+  ],
   templateUrl: './perfil.component.html',
   styleUrls: ['./perfil.component.css']
 })
@@ -23,7 +34,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
   private authService: AuthService = inject(AuthService);
   private router: Router = inject(Router);
   private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  private recetasService: RecetasService = inject(RecetasService); // <--- SERVICIO INYECTADO
+  private recetasService: RecetasService = inject(RecetasService);
 
   usuarioActual: User | null = null;
   cargandoAuth = true;
@@ -38,12 +49,12 @@ export class PerfilComponent implements OnInit, OnDestroy {
   passActual = '';
   passNueva = '';
 
-  // NUEVA VARIABLE PARA GUARDAR LAS RECETAS DEL USUARIO
   misRecetas: Receta[] = [];
 
   private userSub?: Subscription;
   private unsubscribeSnapshot?: () => void;
 
+  /* ... (El resto de tus métodos ngOnInit, ngOnDestroy, guardarCambios, etc. se queda EXACTAMENTE IGUAL) ... */
   ngOnInit() {
     this.userSub = this.authService.user$.subscribe(async user => {
       this.usuarioActual = user;
@@ -55,7 +66,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
           this.nuevoNombre = user.displayName || user.email?.split('@')[0] || 'USUARIO';
         }
 
-        // --- NUEVA LÓGICA: CARGAR MIS RECETAS ---
         try {
           this.misRecetas = await this.recetasService.getRecetasPorUsuario(user.uid);
         } catch (error) {
@@ -75,7 +85,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
                 if (data && data['plan']) {
                   this.planUsuario = data['plan'];
                 }
-                // NUEVO: Obligamos a Angular a leer el nombre real de la base de datos
                 if (data && data['nombre'] && !this.editandoNombre) {
                   this.nuevoNombre = data['nombre'];
                 }
@@ -95,7 +104,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
         }
         this.fotoGuardada = null;
         this.emailUsuario = '';
-        this.misRecetas = []; // Limpiamos las recetas si cierra sesión
+        this.misRecetas = [];
       }
 
       this.cargandoAuth = false;
@@ -127,11 +136,9 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   async guardarCambios() {
     if (!this.usuarioActual) return;
-
     try {
       if (this.nuevaFotoPreview || this.nuevoNombre) {
         const docRef = doc(this.firestore, 'usuarios', this.usuarioActual.uid);
-
         await setDoc(docRef, {
           avatar: this.nuevaFotoPreview || this.fotoGuardada,
           nombre: this.nuevoNombre,
@@ -152,7 +159,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
       this.nuevaFotoPreview = null;
       this.cdr.detectChanges();
       alert("¡Guardado correctamente!");
-
     } catch (error: any) {
       console.error(error);
       alert("Error al guardar.");
@@ -199,7 +205,6 @@ export class PerfilComponent implements OnInit, OnDestroy {
     this.router.navigate(['/premium']);
   }
 
-  // NUEVA FUNCIÓN PARA EL BOTÓN
   irASubirReceta() {
     this.router.navigate(['/subir-receta']);
   }

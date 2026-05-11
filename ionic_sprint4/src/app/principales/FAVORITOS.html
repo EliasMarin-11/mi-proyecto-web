@@ -1,21 +1,28 @@
-<!-- Opcional: <app-header></app-header> -->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center" style="color: #4E1A0A; font-weight: bold;">
+      Mis Favoritos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<main>
-  <h2>Mis Recetas Favoritas</h2>
+<ion-content class="ion-padding">
 
-  <div *ngIf="cargando">
-    <p>Cargando tu libro de recetas...</p>
+  <div *ngIf="cargando" class="ion-text-center ion-padding" style="margin-top: 50px;">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <p style="color: #4E1A0A; font-weight: bold;">Cargando tu libro de recetas...</p>
   </div>
 
-  <div *ngIf="!cargando && misFavoritas.length === 0">
-    <p>Aún no tienes recetas favoritas guardadas 💔</p>
+  <div *ngIf="!cargando && misFavoritas.length === 0" class="ion-text-center ion-padding" style="margin-top: 50px;">
+    <h2 style="color: #4E1A0A;">Aún no tienes recetas favoritas guardadas 💔</h2>
+    <p>¡Ve a la página de inicio y pulsa el corazón en las que más te gusten!</p>
   </div>
 
   <div *ngIf="!cargando && misFavoritas.length > 0">
-
     <app-tarjeta_receta_horizontal
       *ngFor="let receta of misFavoritas"
       [receta]="receta">
     </app-tarjeta_receta_horizontal>
   </div>
-</main>
+
+</ion-content>

@@ -1,102 +1,111 @@
-<!-- Mensaje de carga mientras Firebase decide -->
-<div *ngIf="cargandoAuth" class="pantalla-aviso-perfil">
-  <h2>Verificando sesión...</h2>
-</div>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center" style="color: #4E1A0A; font-weight: bold;">
+      Mi Perfil
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<main class="main-perfil" *ngIf="!cargandoAuth && usuarioActual">
-  <div class="perfil-layout-dual">
+<ion-content class="ion-padding main-perfil">
 
-    <section class="perfil-tarjeta">
-      <!-- AVATAR -->
-      <div class="perfil-avatar-wrapper" (click)="inputAvatar.click()">
-        <img class="perfil-avatar"
-             [src]="nuevaFotoPreview || fotoGuardada || 'img/Usuario SINFONDO.png'"
-             alt="Avatar">
-        <input type="file" #inputAvatar accept="image/*" class="oculto" (change)="onFotoSeleccionada($event)">
-      </div>
+  <div *ngIf="cargandoAuth" class="pantalla-aviso-perfil ion-text-center ion-margin-top">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+    <h2>Verificando sesión...</h2>
+  </div>
 
-      <div class="perfil-cabecera">
-        <h2 class="perfil-nombre perfil-nombre-editable" *ngIf="!editandoNombre" (click)="activarEdicion()" title="Haz clic para editar">
-          {{ nuevoNombre }} <img src="img/lapiz.png" alt="Editar" class="icono-editar-nombre-mini">
-        </h2>
+  <div class="perfil-layout-dual" *ngIf="!cargandoAuth && usuarioActual">
 
-        <input type="text" class="input-dummy" *ngIf="editandoNombre" autofocus
-               [(ngModel)]="nuevoNombre" (keyup.enter)="guardarCambios()"
-               placeholder="Escribe tu nombre + Enter">
-      </div>
+    <ion-card class="perfil-tarjeta">
+      <ion-card-content class="ion-text-center">
 
-      <form class="perfil-formulario" id="form-perfil">
-        <div class="form-grupo">
-          <label>Correo Electrónico</label>
-          <input type="email" id="input-email" class="input-dummy input-oscuro"
-                 [value]="emailUsuario" readonly>
+        <div class="perfil-avatar-wrapper" (click)="inputAvatar.click()" style="margin: 0 auto;">
+          <img class="perfil-avatar"
+               [src]="nuevaFotoPreview || fotoGuardada || 'img/Usuario SINFONDO.png'"
+               alt="Avatar">
+          <input type="file" #inputAvatar accept="image/*" class="oculto" (change)="onFotoSeleccionada($event)">
         </div>
 
-        <div class="form-grupo">
-          <label>Tu plan actual</label>
-          <div class="contenedor-plan">
-            <div class="etiqueta-plan" id="texto-plan">{{ planUsuario }}</div>
-            <button type="button" class="btn-perfil btn-secundario btn-pequeno" id="btn-gestionar-plan" (click)="irAPlanes()">Gestionar</button>
+        <div class="perfil-cabecera ion-justify-content-center" style="display:flex; align-items:center; justify-content:center; gap: 10px;">
+          <h2 class="perfil-nombre perfil-nombre-editable" *ngIf="!editandoNombre" (click)="activarEdicion()" title="Haz clic para editar">
+            {{ nuevoNombre }} <img src="img/lapiz.png" alt="Editar" class="icono-editar-nombre-mini">
+          </h2>
+          <ion-input *ngIf="editandoNombre" [(ngModel)]="nuevoNombre" (keyup.enter)="guardarCambios()" placeholder="Escribe tu nombre + Enter" style="border: 2px solid #4E1A0A; border-radius: 10px; padding: 5px;"></ion-input>
+        </div>
+
+        <form class="perfil-formulario ion-text-left" id="form-perfil">
+
+          <ion-item lines="none" style="--background: transparent; margin-bottom: 15px;">
+            <ion-label position="stacked" style="color: #4E1A0A; font-weight: bold; text-transform: uppercase;">Correo Electrónico</ion-label>
+            <ion-input type="email" class="input-oscuro" [value]="emailUsuario" readonly style="border: 3px solid #4E1A0A; border-radius: 15px; padding-left: 15px; margin-top: 10px;"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" style="--background: transparent; margin-bottom: 20px;">
+            <ion-label position="stacked" style="color: #4E1A0A; font-weight: bold; text-transform: uppercase;">Tu plan actual</ion-label>
+            <div class="contenedor-plan" style="width: 100%; margin-top: 10px;">
+              <div class="etiqueta-plan" id="texto-plan">{{ planUsuario }}</div>
+              <ion-button color="dark" size="small" fill="outline" style="--border-width: 2px;" (click)="irAPlanes()">Gestionar</ion-button>
+            </div>
+          </ion-item>
+
+          <ion-button expand="block" color="dark" class="ion-margin-top" style="--border-radius: 60px; height: 50px; font-weight: bold;" (click)="guardarCambios()">Guardar Cambios</ion-button>
+
+          <hr class="perfil-separador">
+
+          <ion-button fill="outline" expand="block" color="dark" style="--border-width: 3px; --border-radius: 60px; height: 50px; font-weight: bold;" (click)="mostrarCamposPassword()">Cambiar Contraseña</ion-button>
+
+          <div *ngIf="editandoPassword" class="contenedor-editar-pass ion-margin-top">
+            <ion-item lines="none" style="--background: transparent;">
+              <ion-label position="stacked" style="color: #4E1A0A; font-weight: bold;">Contraseña Actual</ion-label>
+              <ion-input type="password" [(ngModel)]="passActual" name="passActual" placeholder="********" style="border: 2px solid #4E1A0A; border-radius: 10px; padding-left: 10px; margin-top: 5px;"></ion-input>
+            </ion-item>
+            <ion-item lines="none" style="--background: transparent;">
+              <ion-label position="stacked" style="color: #4E1A0A; font-weight: bold;">Nueva Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="passNueva" name="passNueva" placeholder="********" style="border: 2px solid #4E1A0A; border-radius: 10px; padding-left: 10px; margin-top: 5px;"></ion-input>
+            </ion-item>
+            <ion-button expand="block" color="success" class="ion-margin-top" (click)="actualizarPassword()">Confirmar Nueva</ion-button>
+            <ion-button expand="block" fill="clear" color="medium" (click)="cancelarEdicionPassword()">Cancelar</ion-button>
           </div>
+
+        </form>
+
+        <div class="perfil-enlaces-inferiores ion-margin-top">
+          <p>¿Has terminado de cocinar por hoy?</p>
+          <ion-button fill="clear" color="danger" (click)="cerrarSesion()">Cerrar Sesión</ion-button>
         </div>
 
-        <button type="button" class="btn-perfil" id="btn-guardar" (click)="guardarCambios()">Guardar Cambios</button>
+      </ion-card-content>
+    </ion-card>
 
-        <hr class="perfil-separador">
+    <ion-card class="perfil-aside-recetas">
+      <ion-card-header class="cabecera-aside" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <h3 class="titulo-mis-recetas">Mis Recetas ({{misRecetas.length}})</h3>
+        <ion-button color="dark" fill="outline" style="--border-width: 2px;" (click)="irASubirReceta()">+ Sube otra receta</ion-button>
+      </ion-card-header>
 
-        <button type="button" class="btn-perfil" id="btn-cambiar-password" (click)="mostrarCamposPassword()">Cambiar Contraseña</button>
+      <ion-card-content>
+        <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside">
 
-        <div *ngIf="editandoPassword" class="contenedor-editar-pass">
-          <div class="form-grupo">
-            <label>Contraseña Actual</label>
-            <input type="password" [(ngModel)]="passActual" name="passActual" class="input-dummy" placeholder="********" required>
+          <div *ngIf="misRecetas.length === 0" class="mensaje-vacio-recetas">
+            <p>Aún no has creado ninguna receta.</p>
+            <p>¡Anímate a compartir tus platos favoritos!</p>
           </div>
-          <div class="form-grupo">
-            <label>Nueva Contraseña</label>
-            <input type="password" [(ngModel)]="passNueva" name="passNueva" class="input-dummy" placeholder="********" required minlength="6">
+
+          <div class="grid-recetas-perfil">
+            <app-tarjeta_receta_vertical
+              *ngFor="let receta of misRecetas"
+              [recetaData]="receta">
+            </app-tarjeta_receta_vertical>
           </div>
-          <button type="button" class="btn-perfil btn-confirmar-pass" (click)="actualizarPassword()">Confirmar Nueva Contraseña</button>
-          <button type="button" class="btn-perfil btn-secundario btn-pequeno btn-cancelar-pass" (click)="cancelarEdicionPassword()">Cancelar</button>
+
         </div>
-
-      </form>
-
-      <div class="perfil-enlaces-inferiores">
-        <p>¿Has terminado de cocinar por hoy?</p>
-        <a href="javascript:void(0)" id="btn-logout" (click)="cerrarSesion()">Cerrar Sesión</a>
-      </div>
-    </section>
-
-    <aside class="perfil-aside-recetas">
-      <div class="cabecera-aside">
-        <h3 class="titulo-mis-recetas">Mis Recetas Creadas ({{misRecetas.length}})</h3>
-        <button type="button" class="btn-nueva-receta-aside" id="btn-ir-nueva-receta" (click)="irASubirReceta()">+ Sube otra receta</button>
-      </div>
-
-      <div id="contenedor-mis-recetas" class="contenedor-lista-recetas-aside">
-
-        <!-- Si NO tiene recetas -->
-        <div *ngIf="misRecetas.length === 0" class="mensaje-vacio-recetas">
-          <p>Aún no has creado ninguna receta.</p>
-          <p>¡Anímate a compartir tus platos favoritos!</p>
-        </div>
-
-        <div class="grid-recetas-perfil">
-          <!-- Tu componente de la tarjeta vertical con el *ngFor -->
-          <app-tarjeta_receta_vertical
-            *ngFor="let receta of misRecetas"
-            [recetaData]="receta">
-          </app-tarjeta_receta_vertical>
-        </div>
-
-      </div>
-    </aside>
+      </ion-card-content>
+    </ion-card>
 
   </div>
-</main>
 
-<!-- Si Firebase resuelve pero el usuario es null -->
-<div *ngIf="!cargandoAuth && !usuarioActual" class="pantalla-aviso-perfil">
-  <h2>No has iniciado sesión.</h2>
-  <button class="btn-perfil" (click)="cerrarSesion()" style="width: auto; padding: 10px 30px;">Ir al Login</button>
-</div>
+  <div *ngIf="!cargandoAuth && !usuarioActual" class="pantalla-aviso-perfil ion-text-center">
+    <h2 style="color: #4E1A0A;">No has iniciado sesión.</h2>
+    <ion-button color="dark" (click)="cerrarSesion()" class="ion-margin-top">Ir al Login</ion-button>
+  </div>
+
+</ion-content>

@@ -1,14 +1,16 @@
-
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
+// Importamos los componentes nativos de Ionic
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButton, IonCheckbox } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  // Añadimos las etiquetas de Ionic a los imports
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonInput, IonButton, IonCheckbox],
   templateUrl: './login.component.html',
   styleUrl: './login_registro.component.css'
 })

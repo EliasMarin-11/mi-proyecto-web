@@ -1,29 +1,31 @@
-<a [routerLink]="['/ver-receta', receta.id]" class="enlace-tarjeta">
-  <article class="tarjeta-receta">
+<ion-card [routerLink]="['/ver-receta', receta.id]" class="tarjeta-receta" button="true">
 
-    <div class="receta-dummy-img"
-         [style.backgroundImage]="'url(' + receta.imagen + ')'"
-         style="background-size: cover; background-position: center;">
-    </div>
+  <div class="receta-dummy-img"
+       [style.backgroundImage]="'url(' + receta.imagen + ')'"
+       style="background-size: cover; background-position: center;">
+  </div>
 
-    <div class="receta-info">
-      <header class="receta-header">
-        <h2 class="receta-titulo">{{ receta.titulo }}</h2>
+  <div class="receta-info">
+    <ion-card-header style="padding: 0;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <ion-card-title class="receta-titulo">{{ receta.titulo }}</ion-card-title>
+
         <div class="btn-fav-receta"
              title="Guardar receta"
              (click)="clickFavorito($event)"
-             [style.color]="esFavorito ? 'red' : '#ccc'">
+             [style.color]="esFavorito ? '#E3412B' : '#ccc'">
           ❤
         </div>
-      </header>
+      </div>
+    </ion-card-header>
 
+    <ion-card-content style="padding: 0; margin-top: 15px;">
       <div class="receta-detalles">
         <div class="detalles-datos">
           <ul class="lista-mini">
             <li>⏱️ {{ receta.tiempo }}</li>
             <li>👨‍🍳 {{ receta.dificultad }}</li>
             <li>🍽️ {{ receta.tipo_plato }}</li>
-            <!-- NUEVO: Mostrar el nombre del autor en la tarjeta -->
             <li *ngIf="receta.autorNombre">👤 {{ receta.autorNombre }}</li>
           </ul>
         </div>
@@ -32,7 +34,7 @@
           <p>{{ receta.descripcion }}</p>
         </div>
       </div>
-    </div>
+    </ion-card-content>
+  </div>
 
-  </article>
-</a>
+</ion-card>
